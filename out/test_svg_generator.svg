@@ -1,0 +1,137 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1024" height="1324">
+<defs>
+<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7"/>
+</marker>
+<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+<line x1="0" y1="0" x2="10" y2="10" style="stroke:black;stroke-width:1"/>
+<line x1="0" y1="10" x2="10" y2="0" style="stroke:black;stroke-width:1"/>
+</marker>
+
+<marker id="reverse_arrow_head" markerWidth="10" markerHeight="7" refX="-3.5" refY="3.5" orient="auto">
+<polygon points="0 0, -10 3.5, 0 7"/>
+</marker>
+<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">
+<line x1="5" y1="5" x2="-3" y2="11" style="stroke:black;stroke-width:1"/>
+<line x1="-2" y1="-2" x2="5" y2="5" style="stroke:black;stroke-width:1"/>
+</marker>
+</defs>
+<rect id="title_rectangle_1" x="0" y="0" rx="0" ry="0" width="1024" height="70" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="title_text_2" x="469" y="41" font-size="16" font-weight="normal" font-family="sans-serif">Test Diagram</text>
+
+<!-- Task 1 Node -->
+<rect id="task_rectangle_3" x="50" y="70" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_4" x="133" y="102" font-size="14" font-weight="normal" font-family="sans-serif">One</text>
+<rect id="task_rectangle_5" x="50" y="1272" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_6" x="133" y="1304" font-size="14" font-weight="normal" font-family="sans-serif">One</text>
+<!-- Task 1 Upper Lower Connector -->
+<path id="line_task_1" d="M 146 120 L 146 1272" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Task 2 Node -->
+<rect id="task_rectangle_7" x="293" y="70" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_8" x="376" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Two</text>
+<rect id="task_rectangle_9" x="293" y="1272" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_10" x="376" y="1304" font-size="14" font-weight="normal" font-family="sans-serif">Two</text>
+<!-- Task 2 Upper Lower Connector -->
+<path id="line_task_2" d="M 389 120 L 389 1272" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Task 3 Node -->
+<rect id="task_rectangle_11" x="536" y="70" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_12" x="613" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Three</text>
+<rect id="task_rectangle_13" x="536" y="1272" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_14" x="613" y="1304" font-size="14" font-weight="normal" font-family="sans-serif">Three</text>
+<!-- Task 3 Upper Lower Connector -->
+<path id="line_task_3" d="M 632 120 L 632 1272" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Task 4 Node -->
+<rect id="task_rectangle_15" x="779" y="70" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_16" x="787" y="84" font-size="14" font-weight="normal" font-family="sans-serif">Lorem ipsum dolor sit amet,</text>
+<text id="task_text_17" x="790" y="99" font-size="14" font-weight="normal" font-family="sans-serif">consectetur  adipiscing elit.</text>
+<text id="task_text_18" x="791" y="114" font-size="14" font-weight="normal" font-family="sans-serif">Donec  ante ex, luctus non</text>
+<rect id="task_rectangle_19" x="779" y="1272" rx="10" ry="10" width="193" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_20" x="787" y="1286" font-size="14" font-weight="normal" font-family="sans-serif">Lorem ipsum dolor sit amet,</text>
+<text id="task_text_21" x="790" y="1301" font-size="14" font-weight="normal" font-family="sans-serif">consectetur  adipiscing elit.</text>
+<text id="task_text_22" x="791" y="1316" font-size="14" font-weight="normal" font-family="sans-serif">Donec  ante ex, luctus non</text>
+<!-- Task 4 Upper Lower Connector -->
+<path id="line_task_4" d="M 875 120 L 875 1272" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Divider #0, object #0 -->
+<rect id="divider_rectangle_23" x="50" y="130" rx="0" ry="0" width="924" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="divider_text_24" x="433" y="162" font-size="14" font-weight="bold" font-family="sans-serif">Divider 1 : Call Customer</text>
+<path id="divider_line_0" d="M 50 180 L 974 180" stroke="black" stroke-width="2" fill="none" />
+
+<!-- Connection 1 -->
+<rect id="connection_text_rectangle_25" x="146" y="180" rx="0" ry="0" width="243" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_26" x="230" y="212" font-size="14" font-weight="normal" font-family="sans-serif">One to Two</text>
+<path id="connection_arrow_1" d="M 146 230 L 389 230" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)" marker-start="url(#reverse_arrow_head)"/>
+<!-- Connection 2 -->
+<rect id="connection_text_rectangle_27" x="389" y="230" rx="0" ry="0" width="179" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_28" x="436" y="262" font-size="14" font-weight="normal" font-family="sans-serif">Two to Three</text>
+<path id="connection_arrow_2" d="M 389 280 L 568 280" stroke="black" stroke-width="2" fill="none"  marker-end="url(#lost_arrow_head)"/>
+<!-- Note #1, object #4 -->
+<rect id="note_1_rectangle_29" x="379" y="300" rx="0" ry="0" width="263" height="368" style="fill:rgb(255, 253, 238);stroke:rgb(221, 219, 204);stroke-width:2"/>
+<text id="note_1_text_30" x="383" y="314" font-size="14" font-weight="normal" font-family="sans-serif">"Contribution" shall mean any work of</text>
+<text id="note_1_text_31" x="383" y="329" font-size="14" font-weight="normal" font-family="sans-serif">authorship,  including the original version</text>
+<text id="note_1_text_32" x="383" y="344" font-size="14" font-weight="normal" font-family="sans-serif">of  the Work and any modifications or</text>
+<text id="note_1_text_33" x="383" y="358" font-size="14" font-weight="normal" font-family="sans-serif">additions  to that Work or Derivative</text>
+<text id="note_1_text_34" x="383" y="373" font-size="14" font-weight="normal" font-family="sans-serif">Works  thereof, that is intentionally</text>
+<text id="note_1_text_35" x="383" y="388" font-size="14" font-weight="normal" font-family="sans-serif">submitted  to Licensor for inclusion in the</text>
+<text id="note_1_text_36" x="383" y="402" font-size="14" font-weight="normal" font-family="sans-serif">Work  by the copyright owner or by an</text>
+<text id="note_1_text_37" x="383" y="417" font-size="14" font-weight="normal" font-family="sans-serif">individual  or Legal Entity authorized to</text>
+<text id="note_1_text_38" x="383" y="432" font-size="14" font-weight="normal" font-family="sans-serif">submit  on behalf of the copyright owner.</text>
+<text id="note_1_text_39" x="383" y="447" font-size="14" font-weight="normal" font-family="sans-serif">For  the purposes of this definition,</text>
+<text id="note_1_text_40" x="383" y="461" font-size="14" font-weight="normal" font-family="sans-serif">"submitted"  means any form of</text>
+<text id="note_1_text_41" x="383" y="476" font-size="14" font-weight="normal" font-family="sans-serif">electronic,  verbal, or written</text>
+<text id="note_1_text_42" x="383" y="491" font-size="14" font-weight="normal" font-family="sans-serif">communication  sent to the Licensor or</text>
+<text id="note_1_text_43" x="383" y="505" font-size="14" font-weight="normal" font-family="sans-serif">its  representatives, including but not</text>
+<text id="note_1_text_44" x="383" y="520" font-size="14" font-weight="normal" font-family="sans-serif">limited  to communication on electronic</text>
+<text id="note_1_text_45" x="383" y="535" font-size="14" font-weight="normal" font-family="sans-serif">mailing  lists, source code control</text>
+<text id="note_1_text_46" x="383" y="549" font-size="14" font-weight="normal" font-family="sans-serif">systems,  and issue tracking systems</text>
+<text id="note_1_text_47" x="383" y="564" font-size="14" font-weight="normal" font-family="sans-serif">that  are managed by, or on behalf of,</text>
+<text id="note_1_text_48" x="383" y="579" font-size="14" font-weight="normal" font-family="sans-serif">the  Licensor for the purpose of</text>
+<text id="note_1_text_49" x="383" y="594" font-size="14" font-weight="normal" font-family="sans-serif">discussing  and improving the Work, but</text>
+<text id="note_1_text_50" x="383" y="608" font-size="14" font-weight="normal" font-family="sans-serif">excluding  communication that is</text>
+<text id="note_1_text_51" x="383" y="623" font-size="14" font-weight="normal" font-family="sans-serif">conspicuously  marked or otherwise</text>
+<text id="note_1_text_52" x="383" y="638" font-size="14" font-weight="normal" font-family="sans-serif">designated  in writing by the copyright</text>
+
+<!-- Divider #1, object #4 -->
+<rect id="divider_rectangle_53" x="50" y="668" rx="0" ry="0" width="924" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="divider_text_54" x="422" y="700" font-size="14" font-weight="bold" font-family="sans-serif">Divider 2 : Manufacture Item</text>
+<path id="divider_line_4" d="M 50 718 L 974 718" stroke="black" stroke-width="3" fill="none" stroke-dasharray=" 10 5"/>
+
+<!-- Connection 3 -->
+<rect id="self_connection_text_3_rectangle_55" x="536" y="728" rx="0" ry="0" width="193" height="40" style="fill:white;stroke:none;stroke-width:2"/>
+<text id="self_connection_text_3_text_56" x="584" y="755" font-size="14" font-weight="normal" font-family="sans-serif">Three to Three</text>
+<path id="self_connection_arrow_3" d="M 632 778 L 682 778 L 682 808 632 808 " stroke="black" stroke-linejoin="round" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Connection 4 -->
+<rect id="connection_text_rectangle_57" x="632" y="818" rx="0" ry="0" width="243" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_58" x="709" y="850" font-size="14" font-weight="normal" font-family="sans-serif">Three to Four</text>
+<path id="connection_arrow_4" d="M 632 868 L 875 868" stroke="black" stroke-width="2" fill="none"  marker-end="url(#open_arrow_head)"/>
+<!-- Connection 5 -->
+<rect id="connection_text_rectangle_59" x="632" y="868" rx="0" ry="0" width="243" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_60" x="709" y="900" font-size="14" font-weight="normal" font-family="sans-serif">Four to Three</text>
+<path id="connection_arrow_5" d="M 875 918 L 632 918" stroke="black" stroke-width="3" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Connection 6 -->
+<rect id="connection_text_rectangle_61" x="389" y="918" rx="0" ry="0" width="486" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_62" x="593" y="950" font-size="14" font-weight="normal" font-family="sans-serif">Four to Two</text>
+<path id="connection_arrow_6" d="M 875 968 L 389 968" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Divider #2, object #9 -->
+<rect id="divider_rectangle_63" x="50" y="968" rx="0" ry="0" width="924" height="100" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="divider_text_64" x="403" y="1024" font-size="14" font-weight="bold" font-family="sans-serif">Divider 3 : Delay in Shipping Items</text>
+<path id="delay_vertical_9_0_back" d="M 146 968 L146 1068" stroke-width="4" fill="none" stroke="white" />
+<path id="delay_vertical_9_0_front" d="M 146 968 L146 1068" stroke-width="2" fill="none" stroke="black" stroke-dasharray=" 10 5"/>
+<path id="delay_vertical_9_1_back" d="M 389 968 L389 1068" stroke-width="4" fill="none" stroke="white" />
+<path id="delay_vertical_9_1_front" d="M 389 968 L389 1068" stroke-width="2" fill="none" stroke="black" stroke-dasharray=" 10 5"/>
+<path id="delay_vertical_9_2_back" d="M 632 968 L632 1068" stroke-width="4" fill="none" stroke="white" />
+<path id="delay_vertical_9_2_front" d="M 632 968 L632 1068" stroke-width="2" fill="none" stroke="black" stroke-dasharray=" 10 5"/>
+<path id="delay_vertical_9_3_back" d="M 875 968 L875 1068" stroke-width="4" fill="none" stroke="white" />
+<path id="delay_vertical_9_3_front" d="M 875 968 L875 1068" stroke-width="2" fill="none" stroke="black" stroke-dasharray=" 10 5"/>
+
+<!-- Connection 7 -->
+<rect id="connection_text_rectangle_65" x="146" y="1068" rx="0" ry="0" width="729" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_66" x="472" y="1100" font-size="14" font-weight="normal" font-family="sans-serif">One to Four</text>
+<path id="connection_arrow_7" d="M 146 1118 L 875 1118" stroke="black" stroke-width="3" fill="none" stroke-dasharray=" 10 5" marker-end="url(#arrow_head)"/>
+<!-- Note #2, object #12 -->
+<rect id="note_2_rectangle_67" x="136" y="1138" rx="0" ry="0" width="749" height="16" style="fill:rgb(255, 253, 238);stroke:rgb(221, 219, 204);stroke-width:2"/>
+<text id="note_2_text_68" x="140" y="1152" font-size="14" font-weight="normal" font-family="sans-serif">After introducing yourself, you want to grab the professors attention by providing a few lines about your research</text>
+</svg>

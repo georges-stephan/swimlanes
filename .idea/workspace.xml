@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Unit Test" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1egPjef9N6mlkExBTHJpjdpH7yP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\parser" />
+      <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\templates" />
+      <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\swimlane" />
+      <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\in" />
+      <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\out" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.setup">
+    <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="SwimlanesDiagram" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/setup.py" />
+      <option name="PARAMETERS" value="sdist" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for Parser_test.TestParser" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="SwimlanesDiagram" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parsing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;Parser_test.TestParser&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for parsing.Parser_test.TestParser" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="SwimlanesDiagram" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parsing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;parsing.Parser_test.TestParser&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for parsing.Parser_test.TestParser.test_parser" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="SwimlanesDiagram" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parsing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;parsing.Parser_test.TestParser.test_parser&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in Parser_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="SwimlanesDiagram" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parsing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/parsing/Parser_test.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.setup" />
+      <item itemvalue="Python tests.Unittests for Parser_test.TestParser" />
+      <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser" />
+      <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser.test_parser" />
+      <item itemvalue="Python tests.Unittests in Parser_test.py" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.setup" />
+        <item itemvalue="Python tests.Unittests for Parser_test.TestParser" />
+        <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser" />
+        <item itemvalue="Python tests.Unittests in Parser_test.py" />
+        <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser.test_parser" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="" />
+      <created>1594740398811</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594740398811</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="96" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599303123282">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="96" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.720@0.0.1280.720" timestamp="1599303123282" />
+    <state x="393" y="171" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599303250145">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="393" y="171" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1599303250145" />
+    <state x="371" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595056264468">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="371" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.720@0.0.1280.720" timestamp="1595056264468" />
+    <state width="1259" height="151" key="GridCell.Tab.0.bottom" timestamp="1600095997326">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="151" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1600095997326" />
+    <state width="1259" height="151" key="GridCell.Tab.0.center" timestamp="1600095997325">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="151" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1600095997325" />
+    <state width="1259" height="151" key="GridCell.Tab.0.left" timestamp="1600095997319">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="151" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1600095997319" />
+    <state width="1259" height="151" key="GridCell.Tab.0.right" timestamp="1600095997325">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="151" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1600095997325" />
+    <state width="1259" height="220" key="GridCell.Tab.1.bottom" timestamp="1598293240964">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="220" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
+    <state width="1259" height="220" key="GridCell.Tab.1.center" timestamp="1598293240964">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="220" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
+    <state width="1259" height="220" key="GridCell.Tab.1.left" timestamp="1598293240964">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="220" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
+    <state width="1259" height="220" key="GridCell.Tab.1.right" timestamp="1598293240964">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state width="1259" height="220" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
+    <state x="144" y="6" key="SettingsEditor" timestamp="1596091863285">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="144" y="6" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1596091863285" />
+    <state x="349" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1600192163852">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="349" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1600192163852" />
+    <state x="216" y="100" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1596264911155">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="216" y="100" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.720@0.0.1280.720" timestamp="1596264911155" />
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1598802933244">
+      <screen x="0" y="0" width="1280" height="720" />
+    </state>
+    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1598802933244" />
+  </component>
+</project>

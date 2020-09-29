@@ -1,0 +1,17 @@
+<svg viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg">
+  <!-- Effect of the "round" value -->
+  <path d="M1,5 l2,-3 l2,3" stroke="black" fill="none"
+        stroke-linejoin="round" />
+
+  <!--
+  the following pink lines highlight the
+  position of the path for each stroke
+  -->
+  <g id="p">
+    <path d="M1,5 l2,-3 l2,3"
+          stroke="pink" fill="none" stroke-width="0.025" />
+    <circle cx="1" cy="5" r="0.05" fill="pink" />
+    <circle cx="3" cy="2" r="0.05" fill="pink" />
+    <circle cx="5" cy="5" r="0.05" fill="pink" />
+  </g>
+</svg>

@@ -1,0 +1,71 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="682">
+<defs>
+<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7"/>
+</marker>
+<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+<line x1="0" y1="0" x2="10" y2="10" style="stroke:black;stroke-width:1"/>
+<line x1="0" y1="10" x2="10" y2="0" style="stroke:black;stroke-width:1"/>
+</marker>
+
+<marker id="reverse_arrow_head" markerWidth="10" markerHeight="7" refX="-3.5" refY="3.5" orient="auto">
+<polygon points="0 0, -10 3.5, 0 7"/>
+</marker>
+<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">
+<line x1="5" y1="5" x2="-3" y2="11" style="stroke:black;stroke-width:1"/>
+<line x1="-2" y1="-2" x2="5" y2="5" style="stroke:black;stroke-width:1"/>
+</marker>
+</defs>
+<rect id="title_rectangle_1" x="0" y="0" rx="0" ry="0" width="800" height="70" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="title_text_2" x="318" y="42" font-size="16" font-weight="normal" font-family="sans-serif"> Welcome to swimlanes.io</text>
+
+<!-- Task 1 Node -->
+<rect id="task_rectangle_3" x="50" y="70" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_4" x="136" y="102" font-size="14" font-weight="normal" font-family="sans-serif">One</text>
+<rect id="task_rectangle_5" x="50" y="630" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_6" x="136" y="662" font-size="14" font-weight="normal" font-family="sans-serif">One</text>
+<!-- Task 1 Upper Lower Connector -->
+<path id="line_task_1" d="M 150 120 L 150 630" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Task 2 Node -->
+<rect id="task_rectangle_7" x="300" y="70" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_8" x="386" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Two</text>
+<rect id="task_rectangle_9" x="300" y="630" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_10" x="386" y="662" font-size="14" font-weight="normal" font-family="sans-serif">Two</text>
+<!-- Task 2 Upper Lower Connector -->
+<path id="line_task_2" d="M 400 120 L 400 630" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 1 -->
+<rect id="connection_text_rectangle_11" x="150" y="130" rx="0" ry="0" width="250" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_12" x="246" y="161" font-size="14" font-weight="normal" font-family="sans-serif">Message</text>
+<path id="connection_arrow_1" d="M 150 180 L 400 180" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Note #1, object #2 -->
+<rect id="note_1_rectangle_13" x="140" y="200" rx="0" ry="0" width="270" height="112" style="fill:rgb(255, 253, 238);stroke:rgb(221, 219, 204);stroke-width:2"/>
+<text id="note_1_text_14" x="144" y="214" font-size="14" font-weight="normal" font-family="sans-serif">**swimlanes.io** is a simple online tool for</text>
+<text id="note_1_text_15" x="144" y="229" font-size="14" font-weight="normal" font-family="sans-serif">creating  _sequence diagrams_.Edit the</text>
+<text id="note_1_text_16" x="144" y="244" font-size="14" font-weight="normal" font-family="sans-serif">text  to the left to update the</text>
+<text id="note_1_text_17" x="144" y="258" font-size="14" font-weight="normal" font-family="sans-serif">diagram.**Copy  the url** to save or share</text>
+<text id="note_1_text_18" x="144" y="273" font-size="14" font-weight="normal" font-family="sans-serif">the  diagram, _note that the url changes</text>
+<text id="note_1_text_19" x="144" y="288" font-size="14" font-weight="normal" font-family="sans-serif">whenever  you update the diagram_.Or</text>
+<text id="note_1_text_20" x="144" y="302" font-size="14" font-weight="normal" font-family="sans-serif">`Sign  in {fa-sign-in-alt}` to create an</text>
+
+<!-- Connection 2 -->
+<rect id="self_connection_text_2_rectangle_21" x="300" y="322" rx="0" ry="0" width="200" height="40" style="fill:white;stroke:none;stroke-width:2"/>
+<text id="self_connection_text_2_text_22" x="378" y="349" font-size="14" font-weight="normal" font-family="sans-serif">To self</text>
+<path id="self_connection_arrow_2" d="M 400 372 L 450 372 L 450 402 400 402 " stroke="black" stroke-linejoin="round" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Task 3 Node -->
+<rect id="task_rectangle_23" x="550" y="70" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_24" x="631" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Three</text>
+<rect id="task_rectangle_25" x="550" y="630" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_26" x="631" y="662" font-size="14" font-weight="normal" font-family="sans-serif">Three</text>
+<!-- Task 3 Upper Lower Connector -->
+<path id="line_task_3" d="M 650 120 L 650 630" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 3 -->
+<rect id="connection_text_rectangle_27" x="400" y="412" rx="0" ry="0" width="250" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_28" x="481" y="443" font-size="14" font-weight="normal" font-family="sans-serif">_Notification_</text>
+<path id="connection_arrow_3" d="M 400 462 L 650 462" stroke="black" stroke-width="3" fill="none" stroke-dasharray=" 10 5" marker-end="url(#open_arrow_head)"/>
+<!-- Connection 4 -->
+<rect id="connection_text_rectangle_29" x="150" y="462" rx="0" ry="0" width="250" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_30" x="262" y="494" font-size="14" font-weight="normal" font-family="sans-serif">`ok`</text>
+<path id="connection_arrow_4" d="M 400 512 L 150 512" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/></svg>

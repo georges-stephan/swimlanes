@@ -1,0 +1,11 @@
+<svg width="200" height="200"
+    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <!-- define lines for text lies on -->
+  <path id="path1" d="M10,30 H190 M10,60 H190 M10,90 H190 M10,120 H190"></path>
+ </defs>
+ <use xlink:href="#path1" x="0" y="35" stroke="blue" stroke-width="1" />
+ <text transform="translate(0,35)" fill="red" font-size="20">
+  <textPath xlink:href="#path1">This is a long long long text ......</textPath>
+ </text>
+</svg>
