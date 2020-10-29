@@ -1,0 +1,101 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="702">
+<defs>
+<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7"/>
+</marker>
+<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+<line x1="0" y1="0" x2="10" y2="10" style="stroke:black;stroke-width:1"/>
+<line x1="0" y1="10" x2="10" y2="0" style="stroke:black;stroke-width:1"/>
+</marker>
+
+<marker id="reverse_arrow_head" markerWidth="10" markerHeight="7" refX="-3.5" refY="3.5" orient="auto">
+<polygon points="0 0, -10 3.5, 0 7"/>
+</marker>
+<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">
+<line x1="5" y1="5" x2="-3" y2="11" style="stroke:black;stroke-width:1"/>
+<line x1="-2" y1="-2" x2="5" y2="5" style="stroke:black;stroke-width:1"/>
+</marker>
+</defs>
+<rect id="title_rectangle_1" x="0" y="0" rx="0" ry="0" width="800" height="70" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="title_text_2" x="329" y="41" font-size="16" font-weight="normal" font-family="sans-serif"> Searching for an Item</text>
+
+<!-- Task 1 Node -->
+<rect id="task_rectangle_3" x="50" y="70" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_4" x="69" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Customer</text>
+<rect id="task_rectangle_5" x="50" y="650" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_6" x="69" y="682" font-size="14" font-weight="normal" font-family="sans-serif">Customer</text>
+<!-- Task 1 Upper Lower Connector -->
+<path id="line_task_1" d="M 100 120 L 100 650" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Task 2 Node -->
+<rect id="task_rectangle_7" x="200" y="70" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_8" x="213" y="96" font-size="14" font-weight="normal" font-family="sans-serif">AMSH Web</text>
+<text id="task_text_9" x="213" y="111" font-size="14" font-weight="normal" font-family="sans-serif">Interface </text>
+<rect id="task_rectangle_10" x="200" y="650" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_11" x="213" y="676" font-size="14" font-weight="normal" font-family="sans-serif">AMSH Web</text>
+<text id="task_text_12" x="213" y="691" font-size="14" font-weight="normal" font-family="sans-serif">Interface </text>
+<!-- Task 2 Upper Lower Connector -->
+<path id="line_task_2" d="M 250 120 L 250 650" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 1 -->
+<rect id="connection_text_rectangle_13" x="100" y="130" rx="0" ry="0" width="150" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_14" x="126" y="161" font-size="14" font-weight="normal" font-family="sans-serif">Free text query</text>
+<path id="connection_arrow_1" d="M 100 180 L 250 180" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Task 3 Node -->
+<rect id="task_rectangle_15" x="350" y="70" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_16" x="368" y="102" font-size="14" font-weight="normal" font-family="sans-serif">REST API</text>
+<rect id="task_rectangle_17" x="350" y="650" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_18" x="368" y="682" font-size="14" font-weight="normal" font-family="sans-serif">REST API</text>
+<!-- Task 3 Upper Lower Connector -->
+<path id="line_task_3" d="M 400 120 L 400 650" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 2 -->
+<rect id="connection_text_rectangle_19" x="250" y="180" rx="0" ry="0" width="150" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_20" x="281" y="211" font-size="14" font-weight="normal" font-family="sans-serif">Search Query</text>
+<path id="connection_arrow_2" d="M 250 230 L 400 230" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Task 4 Node -->
+<rect id="task_rectangle_21" x="500" y="70" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_22" x="505" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Elastic Search</text>
+<rect id="task_rectangle_23" x="500" y="650" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_24" x="505" y="682" font-size="14" font-weight="normal" font-family="sans-serif">Elastic Search</text>
+<!-- Task 4 Upper Lower Connector -->
+<path id="line_task_4" d="M 550 120 L 550 650" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 3 -->
+<rect id="connection_text_rectangle_25" x="400" y="230" rx="0" ry="0" width="150" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_26" x="401" y="261" font-size="14" font-weight="normal" font-family="sans-serif">Full Text Search Query</text>
+<path id="connection_arrow_3" d="M 400 280 L 550 280" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Connection 4 -->
+<rect id="connection_text_rectangle_27" x="400" y="280" rx="0" ry="0" width="150" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_28" x="412" y="306" font-size="14" font-weight="normal" font-family="sans-serif">Search Results with</text>
+<text id="connection_text_text_29" x="459" y="321" font-size="14" font-weight="normal" font-family="sans-serif">Item  IDs</text>
+<path id="connection_arrow_4" d="M 550 330 L 400 330" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Task 5 Node -->
+<rect id="task_rectangle_30" x="650" y="70" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_31" x="668" y="96" font-size="14" font-weight="normal" font-family="sans-serif">AMSH DB</text>
+<text id="task_text_32" x="668" y="111" font-size="14" font-weight="normal" font-family="sans-serif">(Cassandra) </text>
+<rect id="task_rectangle_33" x="650" y="650" rx="10" ry="10" width="100" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_34" x="668" y="676" font-size="14" font-weight="normal" font-family="sans-serif">AMSH DB</text>
+<text id="task_text_35" x="668" y="691" font-size="14" font-weight="normal" font-family="sans-serif">(Cassandra) </text>
+<!-- Task 5 Upper Lower Connector -->
+<path id="line_task_5" d="M 700 120 L 700 650" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 5 -->
+<rect id="connection_text_rectangle_36" x="400" y="330" rx="0" ry="0" width="300" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_37" x="523" y="362" font-size="14" font-weight="normal" font-family="sans-serif">Item IDs</text>
+<path id="connection_arrow_5" d="M 400 380 L 700 380" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Note #1, object #6 -->
+<rect id="note_1_rectangle_38" x="390" y="400" rx="0" ry="0" width="320" height="32" style="fill:rgb(255, 253, 238);stroke:rgb(221, 219, 204);stroke-width:2"/>
+<text id="note_1_text_39" x="394" y="414" font-size="14" font-weight="normal" font-family="sans-serif">Adds item specific features such as Author for</text>
+<text id="note_1_text_40" x="394" y="429" font-size="14" font-weight="normal" font-family="sans-serif">books,  memory for computers, etc.</text>
+
+<!-- Connection 6 -->
+<rect id="connection_text_rectangle_41" x="250" y="432" rx="0" ry="0" width="150" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_42" x="272" y="458" font-size="14" font-weight="normal" font-family="sans-serif">Enriched Search</text>
+<text id="connection_text_text_43" x="272" y="473" font-size="14" font-weight="normal" font-family="sans-serif">Results </text>
+<path id="connection_arrow_6" d="M 400 482 L 250 482" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Connection 7 -->
+<rect id="connection_text_rectangle_44" x="100" y="482" rx="0" ry="0" width="150" height="50" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="connection_text_text_45" x="104" y="505" font-size="14" font-weight="normal" font-family="sans-serif">Web Page with search</text>
+<text id="connection_text_text_46" x="104" y="520" font-size="14" font-weight="normal" font-family="sans-serif">results </text>
+<path id="connection_arrow_7" d="M 250 532 L 100 532" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/></svg>

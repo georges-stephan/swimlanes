@@ -1,6 +1,6 @@
 from PIL import ImageFont
 
-debug = False
+debug = True
 
 
 def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int):
@@ -36,10 +36,12 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
 
     space_width = font.getsize(' ')[0]
 
-    words = text.split()
+    words = text.split()  # Split a line of text into words
     remaining_words_count = len(words)
 
     current_string = ""
+    current_string_font_width=0
+    current_string_font_height=0
     while remaining_words_count > 0:
         for word in words:
             size_current_string = font.getsize(current_string)
@@ -49,7 +51,7 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
             size_new_word = font.getsize(word.strip())
             new_word_font_width = size_new_word[0]
 
-            if new_word_font_width + space_width + current_string_font_width < box_width:
+            if (new_word_font_width + space_width + current_string_font_width) < box_width:
                 # The word can be added to the current line
                 if len(current_string) < 1:
                     current_string = word.strip()
@@ -61,4 +63,6 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
                 current_string = word.strip() + ' '
 
             remaining_words_count -= 1
+    if len(current_string)>0:
+        lines.append((current_string, current_string_font_width, current_string_font_height))
     return lines

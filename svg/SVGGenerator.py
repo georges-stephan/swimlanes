@@ -46,6 +46,7 @@ class SVGRenderer:
         self.svg.write('<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">')
         self.svg.write('\n<polygon points="0 0, 10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
+
         # Lost Connection Arrow Style
         self.svg.write(
             '<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">\n')
@@ -56,11 +57,13 @@ class SVGRenderer:
                        f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
+
         # Reverse Arrow Head Style
         self.svg.write('\n<marker id="reverse_arrow_head" markerWidth="10" '
                        'markerHeight="7" refX="-3.5" refY="3.5" orient="auto">\n')
         self.svg.write('<polygon points="0 0, -10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
+
         # Open Arrow Head Style
         self.svg.write(
             '<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">\n')

@@ -1,0 +1,17 @@
+title: Searching for an Item
+
+
+Customer -> AMSH Web Interface: Free text query
+AMSH Web Interface -> REST API: Search Query
+REST API -> Elastic Search: Full Text Search Query
+Elastic Search -> REST API: Search Results with Item IDs
+REST API -> AMSH DB (Cassandra): Item IDs
+AMSH DB (Cassandra)-> REST API: Enriched Search Results
+note: Adds item specific features such as Author for books, memory for computers, etc.
+REST API -> AMSH Web Interface: Enriched Search Results
+AMSH Web Interface -> Customer: Web Page with search results
+
+
+
+
+

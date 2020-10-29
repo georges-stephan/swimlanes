@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="" />
+    <list default="true" id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/examples/swimlanes-search-integration.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/debug.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/search_integration.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsing/Parser_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsing/Parser_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsing/SwimlaneParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsing/SwimlaneParser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svg/FontFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/FontFunctions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svg/FontFunctions_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/FontFunctions_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/svg/SVGGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/SVGGenerator.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,17 +26,30 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1egPjef9N6mlkExBTHJpjdpH7yP" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/examples" />
+    <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\georges\Documents\GitHub\swimlanes\examples" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\parser" />
       <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\templates" />
@@ -34,7 +58,7 @@
       <recent name="C:\Users\georges\PycharmProjects\SwimlanesDiagram\out" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.setup">
+  <component name="RunManager" selected="Python tests.Unittests in Parser_test.py">
     <configuration name="setup" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SwimlanesDiagram" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -56,6 +80,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for FontFunctions_test.MyTestCase.test_something" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="SwimlanesDiagram" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/svg" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;FontFunctions_test.MyTestCase.test_something&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Unittests for Parser_test.TestParser" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="SwimlanesDiagram" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -70,32 +108,18 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for parsing.Parser_test.TestParser" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests in FontFunctions_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="SwimlanesDiagram" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parsing" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/svg" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;parsing.Parser_test.TestParser&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests for parsing.Parser_test.TestParser.test_parser" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="SwimlanesDiagram" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parsing" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;parsing.Parser_test.TestParser.test_parser&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/svg/FontFunctions_test.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Unittests in Parser_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
@@ -115,17 +139,17 @@
     <list>
       <item itemvalue="Python.setup" />
       <item itemvalue="Python tests.Unittests for Parser_test.TestParser" />
-      <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser" />
-      <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser.test_parser" />
       <item itemvalue="Python tests.Unittests in Parser_test.py" />
+      <item itemvalue="Python tests.Unittests for FontFunctions_test.MyTestCase.test_something" />
+      <item itemvalue="Python tests.Unittests in FontFunctions_test.py" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Unittests in Parser_test.py" />
+        <item itemvalue="Python tests.Unittests for FontFunctions_test.MyTestCase.test_something" />
+        <item itemvalue="Python tests.Unittests in FontFunctions_test.py" />
         <item itemvalue="Python.setup" />
         <item itemvalue="Python tests.Unittests for Parser_test.TestParser" />
-        <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser" />
-        <item itemvalue="Python tests.Unittests in Parser_test.py" />
-        <item itemvalue="Python tests.Unittests for parsing.Parser_test.TestParser.test_parser" />
       </list>
     </recent_temporary>
   </component>
@@ -142,6 +166,9 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="96" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599303123282">
       <screen x="0" y="0" width="1280" height="720" />
@@ -151,50 +178,50 @@
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="393" y="171" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1599303250145" />
-    <state x="371" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595056264468">
+    <state x="393" y="239" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1602950964404">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="371" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.720@0.0.1280.720" timestamp="1595056264468" />
-    <state width="1259" height="151" key="GridCell.Tab.0.bottom" timestamp="1600095997326">
+    <state x="393" y="239" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1280.720@0.0.1280.720" timestamp="1602950964404" />
+    <state width="1259" height="208" key="GridCell.Tab.0.bottom" timestamp="1603953071264">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="151" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1600095997326" />
-    <state width="1259" height="151" key="GridCell.Tab.0.center" timestamp="1600095997325">
+    <state width="1259" height="208" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
+    <state width="1259" height="208" key="GridCell.Tab.0.center" timestamp="1603953071264">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="151" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1600095997325" />
-    <state width="1259" height="151" key="GridCell.Tab.0.left" timestamp="1600095997319">
+    <state width="1259" height="208" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
+    <state width="1259" height="208" key="GridCell.Tab.0.left" timestamp="1603953071264">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="151" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1600095997319" />
-    <state width="1259" height="151" key="GridCell.Tab.0.right" timestamp="1600095997325">
+    <state width="1259" height="208" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
+    <state width="1259" height="208" key="GridCell.Tab.0.right" timestamp="1603953071264">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="151" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1600095997325" />
-    <state width="1259" height="220" key="GridCell.Tab.1.bottom" timestamp="1598293240964">
+    <state width="1259" height="208" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
+    <state width="1259" height="220" key="GridCell.Tab.1.bottom" timestamp="1603952933804">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
-    <state width="1259" height="220" key="GridCell.Tab.1.center" timestamp="1598293240964">
+    <state width="1259" height="220" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
+    <state width="1259" height="220" key="GridCell.Tab.1.center" timestamp="1603952933804">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
-    <state width="1259" height="220" key="GridCell.Tab.1.left" timestamp="1598293240964">
+    <state width="1259" height="220" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
+    <state width="1259" height="220" key="GridCell.Tab.1.left" timestamp="1603952933804">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
-    <state width="1259" height="220" key="GridCell.Tab.1.right" timestamp="1598293240964">
+    <state width="1259" height="220" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
+    <state width="1259" height="220" key="GridCell.Tab.1.right" timestamp="1603952933804">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1598293240964" />
+    <state width="1259" height="220" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
     <state x="144" y="6" key="SettingsEditor" timestamp="1596091863285">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="144" y="6" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1596091863285" />
-    <state x="349" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1600192163852">
+    <state x="349" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1603947421275">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="349" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1600192163852" />
+    <state x="349" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1603947421275" />
     <state x="216" y="100" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1596264911155">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -203,5 +230,16 @@
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1598802933244" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/svg/FontFunctions.py</url>
+          <line>25</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
