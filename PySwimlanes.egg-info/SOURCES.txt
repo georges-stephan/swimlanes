@@ -7,6 +7,7 @@ PySwimlanes.egg-info/SOURCES.txt
 PySwimlanes.egg-info/dependency_links.txt
 PySwimlanes.egg-info/requires.txt
 PySwimlanes.egg-info/top_level.txt
+parsing/CLParser.py
 parsing/DrawSwimlaneDiagram.py
 parsing/Parser_test.py
 parsing/SwimlaneParser.py
@@ -28,3 +29,5 @@ templates/DefaultTemplate.py
 templates/DefaultTemplate_test.py
 templates/Template.py
 templates/__init__.py
+ui/MainUI.py
+ui/__init__.py

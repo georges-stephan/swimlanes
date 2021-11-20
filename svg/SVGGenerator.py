@@ -46,7 +46,6 @@ class SVGRenderer:
         self.svg.write('<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">')
         self.svg.write('\n<polygon points="0 0, 10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
-
         # Lost Connection Arrow Style
         self.svg.write(
             '<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">\n')
@@ -57,13 +56,11 @@ class SVGRenderer:
                        f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
-
         # Reverse Arrow Head Style
         self.svg.write('\n<marker id="reverse_arrow_head" markerWidth="10" '
                        'markerHeight="7" refX="-3.5" refY="3.5" orient="auto">\n')
         self.svg.write('<polygon points="0 0, -10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
-
         # Open Arrow Head Style
         self.svg.write(
             '<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">\n')
@@ -137,8 +134,8 @@ class SVGRenderer:
 
         self.preferred_height += self.get_y_offset_for_graph_item(graph_item_id)
         if self.preferred_height > self.height:
-            raise SVGSizeError(f"Diagram should have a height of at least"
-                             f" {self.preferred_height} instead of {self.height}.")
+            raise SVGSizeError(f"{self.preferred_height}:Diagram should have a height of at least"
+                               f" {self.preferred_height} instead of {self.height}.")
 
     def add_note_to_svg(self, task_connection: TaskConnection, note: Note, graph_item_no: int, note_id: int):
         note_x, note_y, note_width, note_height = 0, 0, 0, 0
@@ -348,7 +345,8 @@ class SVGRenderer:
 
         if from_task_id == to_task_id:
             to_self = True
-            self.graph_items_height[graph_item_offset] = self.template.get_parameter_value('space_between_connections') * 2
+            self.graph_items_height[graph_item_offset] = self.template.get_parameter_value(
+                'space_between_connections') * 2
         else:
             to_self = False
             self.graph_items_height[graph_item_offset] = self.template.get_parameter_value('space_between_connections')
@@ -365,8 +363,8 @@ class SVGRenderer:
         if to_self:
             # Now add the label associated to that swim lane
             text_y = self.get_y_offset_for_graph_item(graph_item_offset) \
-                       - 2 * self.template.get_parameter_value('space_between_connections') \
-                       + self.template.get_parameter_value('arrow_height')
+                     - 2 * self.template.get_parameter_value('space_between_connections') \
+                     + self.template.get_parameter_value('arrow_height')
 
             self.draw_box_with_text(f"self_connection_text_{connection_no + 1}", task_connection.label
                                     , self.template.get_parameter_value('body-font-size')
@@ -379,8 +377,8 @@ class SVGRenderer:
                                     , stroke_color='none')
 
             arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) \
-                       - self.template.get_parameter_value('space_between_connections') \
-                       + self.template.get_parameter_value('arrow_height')
+                             - self.template.get_parameter_value('space_between_connections') \
+                             + self.template.get_parameter_value('arrow_height')
 
             self.svg.write(
                 f'<path id="self_connection_arrow_{connection_no + 1}" d="M {self.get_mid_task_x(from_task_id)} '
@@ -438,7 +436,7 @@ class SVGRenderer:
 
     def draw_box_with_text(self, box_name: str, text: str, font_size: int, box_x: int, box_y: int, box_width: int
                            , box_height: int, box_corner=0, fill_color='white', stroke_color='black'
-                           , font_family_param='body-font-family',font_weight='normal', justification='center'):
+                           , font_family_param='body-font-family', font_weight='normal', justification='center'):
         """
         Draw a box and render a text inside it. Handle text alignment and text wrapping
         :param font_family_param:

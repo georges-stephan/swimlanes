@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/swimlanes-search-integration.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/debug.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/search_integration.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/doc/Centering-Text.odg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsing/Parser_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsing/Parser_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsing/SwimlaneParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsing/SwimlaneParser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/search_integration.svg" beforeDir="false" afterPath="$PROJECT_DIR$/out/search_integration.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/svg/FontFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/FontFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svg/FontFunctions_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/FontFunctions_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/svg/SVGGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/SVGGenerator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -138,10 +133,10 @@
     </configuration>
     <list>
       <item itemvalue="Python.setup" />
-      <item itemvalue="Python tests.Unittests for Parser_test.TestParser" />
-      <item itemvalue="Python tests.Unittests in Parser_test.py" />
       <item itemvalue="Python tests.Unittests for FontFunctions_test.MyTestCase.test_something" />
+      <item itemvalue="Python tests.Unittests for Parser_test.TestParser" />
       <item itemvalue="Python tests.Unittests in FontFunctions_test.py" />
+      <item itemvalue="Python tests.Unittests in Parser_test.py" />
     </list>
     <recent_temporary>
       <list>
@@ -182,50 +177,42 @@
       <screen x="0" y="0" width="1280" height="720" />
     </state>
     <state x="393" y="239" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1280.720@0.0.1280.720" timestamp="1602950964404" />
-    <state width="1259" height="208" key="GridCell.Tab.0.bottom" timestamp="1603953071264">
+    <state width="1259" height="220" key="GridCell.Tab.0.bottom" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="208" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
-    <state width="1259" height="208" key="GridCell.Tab.0.center" timestamp="1603953071264">
+    <state width="1259" height="220" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state width="1259" height="220" key="GridCell.Tab.0.center" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="208" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
-    <state width="1259" height="208" key="GridCell.Tab.0.left" timestamp="1603953071264">
+    <state width="1259" height="220" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state width="1259" height="220" key="GridCell.Tab.0.left" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="208" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
-    <state width="1259" height="208" key="GridCell.Tab.0.right" timestamp="1603953071264">
+    <state width="1259" height="220" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state width="1259" height="220" key="GridCell.Tab.0.right" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="208" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1603953071264" />
-    <state width="1259" height="220" key="GridCell.Tab.1.bottom" timestamp="1603952933804">
+    <state width="1259" height="220" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state width="1259" height="220" key="GridCell.Tab.1.bottom" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
-    <state width="1259" height="220" key="GridCell.Tab.1.center" timestamp="1603952933804">
+    <state width="1259" height="220" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state width="1259" height="220" key="GridCell.Tab.1.center" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
-    <state width="1259" height="220" key="GridCell.Tab.1.left" timestamp="1603952933804">
+    <state width="1259" height="220" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state width="1259" height="220" key="GridCell.Tab.1.left" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
-    <state width="1259" height="220" key="GridCell.Tab.1.right" timestamp="1603952933804">
+    <state width="1259" height="220" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state width="1259" height="220" key="GridCell.Tab.1.right" timestamp="1604293381066">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1603952933804" />
-    <state x="144" y="6" key="SettingsEditor" timestamp="1596091863285">
+    <state width="1259" height="220" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
+    <state x="349" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1607264728747">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
-    <state x="144" y="6" key="SettingsEditor/0.0.1280.720@0.0.1280.720" timestamp="1596091863285" />
-    <state x="349" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1603947421275">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="349" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1603947421275" />
-    <state x="216" y="100" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1596264911155">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="216" y="100" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.1280.720@0.0.1280.720" timestamp="1596264911155" />
+    <state x="349" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1607264728747" />
     <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1598802933244">
       <screen x="0" y="0" width="1280" height="720" />
     </state>
@@ -235,9 +222,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/svg/FontFunctions.py</url>
-          <line>25</line>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/svg/SVGGenerator.py</url>
+          <line>483</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

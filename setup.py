@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='PySwimlanes',
-    version='1.0',
+    version='1.1',
     author='Georges Stephan',
     author_email='georges.stephan@icloud.com',
     packages=find_packages(),

@@ -3,7 +3,7 @@ from PIL import ImageFont
 debug = True
 
 
-def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int):
+def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int):  # TODO this is buggy, fit it
     """
     A function to return the estimated height of  a text
     :param text: the text to be rendered
@@ -23,6 +23,14 @@ def get_text_height(text: str, font_file_name: str, font_size: int, box_width: i
 
 
 def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
+    """
+    Splits a given line of text into multiple lines
+    :param text: The text to split
+    :param font_file_name: The file name of the font (Ex. Arial.ttf)
+    :param box_width: the with of the area where the text should fit
+    :param font_size: The size of the font in points
+    :return: An array of tuples each storing: A substring of the given text representing a line, the text width and the text height
+    """
     lines = []
     font = ImageFont.truetype(f'{font_file_name}.ttf', font_size)
     size = font.getsize(text)
@@ -40,8 +48,8 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
     remaining_words_count = len(words)
 
     current_string = ""
-    current_string_font_width=0
-    current_string_font_height=0
+    current_string_font_width = 0
+    current_string_font_height = 0
     while remaining_words_count > 0:
         for word in words:
             size_current_string = font.getsize(current_string)
@@ -63,6 +71,6 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
                 current_string = word.strip() + ' '
 
             remaining_words_count -= 1
-    if len(current_string)>0:
+    if len(current_string) > 0:
         lines.append((current_string, current_string_font_width, current_string_font_height))
     return lines
