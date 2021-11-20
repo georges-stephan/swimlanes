@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/doc/Centering-Text.odg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/search_integration.svg" beforeDir="false" afterPath="$PROJECT_DIR$/out/search_integration.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svg/FontFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/FontFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/svg/SVGGenerator.py" beforeDir="false" afterPath="$PROJECT_DIR$/svg/SVGGenerator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,14 +27,13 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/examples" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -155,6 +151,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -170,60 +167,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="96" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1599303123282">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="96" y="19" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.720@0.0.1280.720" timestamp="1599303123282" />
-    <state x="393" y="171" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1599303250145">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="393" y="171" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.720@0.0.1280.720" timestamp="1599303250145" />
-    <state x="393" y="239" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1602950964404">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="393" y="239" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1280.720@0.0.1280.720" timestamp="1602950964404" />
-    <state width="1259" height="220" key="GridCell.Tab.0.bottom" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.0.bottom/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state width="1259" height="220" key="GridCell.Tab.0.center" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.0.center/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state width="1259" height="220" key="GridCell.Tab.0.left" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.0.left/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state width="1259" height="220" key="GridCell.Tab.0.right" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.0.right/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state width="1259" height="220" key="GridCell.Tab.1.bottom" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.bottom/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state width="1259" height="220" key="GridCell.Tab.1.center" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.center/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state width="1259" height="220" key="GridCell.Tab.1.left" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.left/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state width="1259" height="220" key="GridCell.Tab.1.right" timestamp="1604293381066">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state width="1259" height="220" key="GridCell.Tab.1.right/0.0.1280.720@0.0.1280.720" timestamp="1604293381066" />
-    <state x="349" y="189" key="com.intellij.ide.util.TipDialog" timestamp="1607264728747">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="349" y="189" key="com.intellij.ide.util.TipDialog/0.0.1280.720@0.0.1280.720" timestamp="1607264728747" />
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup" timestamp="1598802933244">
-      <screen x="0" y="0" width="1280" height="720" />
-    </state>
-    <state x="303" y="41" width="672" height="678" key="search.everywhere.popup/0.0.1280.720@0.0.1280.720" timestamp="1598802933244" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
