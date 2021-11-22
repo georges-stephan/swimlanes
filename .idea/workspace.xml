@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsing/SwimlaneParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsing/SwimlaneParser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/MainUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/MainUI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,10 +137,10 @@
     </configuration>
     <list>
       <item itemvalue="Python.setup" />
+      <item itemvalue="Python.MainUI" />
       <item itemvalue="Python tests.Unittests for FontFunctions_test.MyTestCase.test_something" />
       <item itemvalue="Python tests.Unittests in FontFunctions_test.py" />
       <item itemvalue="Python tests.Unittests in Parser_test.py" />
-      <item itemvalue="Python.MainUI" />
     </list>
     <recent_temporary>
       <list>
@@ -172,9 +173,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/svg/SVGGenerator.py</url>
-          <line>483</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/ui/MainUI.py</url>
+          <line>164</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

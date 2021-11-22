@@ -40,6 +40,15 @@ def get_diagram_from_lines(lines: list):
     return diagram
 
 
+def get_diagram_from_string(design_as_string: str):
+    lines = list(filter((lambda x: x.strip() != ''), design_as_string.splitlines()))
+    if debug:
+        print(len(lines))
+        print(lines)
+
+    return get_diagram_from_lines(lines)
+
+
 def parse_line(line: str):
     if line.startswith("//"):  # Comment Line
         return
