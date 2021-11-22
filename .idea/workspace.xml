@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc2baa4c-9fad-4c39-a69b-1daedbb2de98" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/swimlanes.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsing/SwimlaneParser.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsing/SwimlaneParser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/MainUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/ui/MainUI.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
