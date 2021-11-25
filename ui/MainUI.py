@@ -7,7 +7,6 @@ from tkinter import Frame, Tk, Label, RAISED, Button, ttk, Scrollbar, Text, HORI
 from tkinter import filedialog as fd
 
 from pathlib import Path
-from tkinter.ttk import Notebook
 
 from parsing import SwimlaneParser
 from svg.Errors import SVGSizeError
