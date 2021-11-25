@@ -2,7 +2,8 @@ import os
 import json
 import tempfile
 
-from tkinter import Frame, Tk, Label, RAISED, Button, ttk, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, END
+from tkinter import Frame, Tk, Label, RAISED, Button, ttk, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
+    messagebox, Menu, BOTH, LEFT, END
 from tkinter import filedialog as fd
 
 from pathlib import Path
@@ -14,62 +15,27 @@ from svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
 
-
-class Window(Frame):
-    def __init__(self, master=None):
-        Frame.__init__(self, master)
-        self.master = master
-
-
+# Global Variables
 dir_name = ""
 design_filename = ""
 home_dir = ""
 config = {}
 config_file = ""
 output_file_name = ""
+text = None
+label_design_file = None
+root = None
 
-# initialize tkinter
-root = Tk()
-app = Window(root)
 
-# set window props
-root.wm_title("Swimlanes Diagram")
-root.resizable(True, True)
-root.geometry('800x600')
+def donothing():
+    pass
 
-# Tabs
-my_notebook = ttk.Notebook(root)
-my_notebook.pack(fill="both")
 
-my_frame1 = Frame(my_notebook)
-my_frame2 = Frame(my_notebook)
+def on_closing():
+    global root
 
-my_frame1.pack(fill="both", expand=1)
-my_frame2.pack(fill="both", expand=1)
-
-my_notebook.add(my_frame1, text="Interactive")
-my_notebook.add(my_frame2, text="Batch")
-
-# Labels
-label_design_file = Label(my_frame2, textvariable="", relief=RAISED)
-label_output_dir = Label(my_frame2, textvariable="", relief=RAISED)
-
-# Textarea
-# Horizontal (x) Scroll bar
-xscrollbar = Scrollbar(my_frame1, orient=HORIZONTAL)
-xscrollbar.pack(side=BOTTOM, fill=X)
-
-# Vertical (y) Scroll Bar
-yscrollbar = Scrollbar(my_frame1)
-yscrollbar.pack(side=RIGHT, fill=Y)
-
-# Text Widget
-text = Text(my_frame1, wrap=NONE, undo=True, xscrollcommand=xscrollbar.set, yscrollcommand=yscrollbar.set)
-text.pack()
-
-# Configure the scrollbars
-xscrollbar.config(command=text.xview)
-yscrollbar.config(command=text.yview)
+    if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
+        root.destroy()
 
 
 # Button to generate the SVG
@@ -79,24 +45,15 @@ def generate_and_view():
 
     svg_text = text.get(1.0, END)
     tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.txt', delete=False)
-    dir_name, xxx = os.path.split(tmp_design_filename.name)
+    dir_name, ignore_attribute = os.path.split(tmp_design_filename.name)
     dir_name = f"{dir_name}\\"
 
     with open(tmp_design_filename.name, 'w') as f:
         f.write(svg_text)
 
     design_filename = tmp_design_filename.name
-
     generate_svg_file(update_conf_file_after_gen=False)
-
     os.startfile(output_file_name)
-
-
-button_frame = Frame(my_frame1)
-button_frame.pack()
-
-generate_svg_button = Button(button_frame, text="View SVG", command=generate_and_view)
-generate_svg_button.grid(row=0, column=0)
 
 
 def create_settings_dir_if_needed():
@@ -105,6 +62,7 @@ def create_settings_dir_if_needed():
     global config_file
     global design_filename
     global dir_name
+    global label_design_file
 
     home_dir = Path(f"{str(Path.home())}/.py-swimlanes/")
     config_file = f"{home_dir}/py-swimlanes-config.json"
@@ -115,7 +73,7 @@ def create_settings_dir_if_needed():
             design_filename = config['design_file']
             dir_name = config['out_dir']
             label_design_file.config(text=design_filename)
-            label_output_dir.config(text=dir_name)
+            # label_output_dir.config(text=dir_name)
     else:
         if home_dir.exists() and home_dir.is_dir():
             pass
@@ -155,11 +113,9 @@ def select_file():
         title='Open a Design File',
         initialdir=str(design_filename),
         filetypes=filetypes)
-    label_design_file.config(text=design_filename)
-
-
-def view_generated_svg():
-    pass
+    # label_design_file.config(text=design_filename)
+    with open(design_filename, 'r') as f:
+        text.insert(1.0, f.read())
 
 
 def generate_svg_file(update_conf_file_after_gen=True):
@@ -203,35 +159,66 @@ def generate_svg_file(update_conf_file_after_gen=True):
                         update_config_file()
 
 
-# open file button
-open_button = Button(
-    my_frame2,
-    text='Open a Design File',
-    command=select_file
-)
+def draw_window():
+    global root
+    global text
+    global label_design_file
+    # initialize tkinter
+    root = Tk()
 
-# output dir button
-output_dir_button = Button(
-    my_frame2,
-    text='Open a Target Dir',
-    command=select_dir
-)
+    # set window props
+    root.wm_title("Swimlanes Diagram")
+    root.resizable(True, True)
+    root.geometry('800x600')
 
-# open_button = Button(
-#     my_frame1,
-#     text='View Diagram',
-#     command=view_generated_svg
-# )
+    # Textarea
+    editor_frame = Frame(root)
+    editor_frame.pack(fill=BOTH, expand=True)
 
-create_settings_dir_if_needed()
+    # Horizontal (x) Scroll bar
+    x_scrollbar = Scrollbar(editor_frame, orient=HORIZONTAL)
+    x_scrollbar.pack(side=BOTTOM, fill=X)
 
-open_button.pack(expand=True)
-label_design_file.pack(expand=True)
+    # Vertical (y) Scroll Bar
+    y_scrollbar = Scrollbar(editor_frame)
+    y_scrollbar.pack(side=RIGHT, fill=Y)
 
-output_dir_button.pack(expand=True)
-label_output_dir.pack(expand=True)
+    # Text Widget
+    text = Text(editor_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set, yscrollcommand=y_scrollbar.set,
+                borderwidth=3)
+    text.pack(expand=True, fill='both')
 
-generate_svg_button.pack(expand=True)
+    # Configure the scrollbars
+    x_scrollbar.config(command=text.xview)
+    y_scrollbar.config(command=text.yview)
 
-# show window
-root.mainloop()
+    button_frame = Frame(root)
+    button_frame.pack(fill=X)
+
+    generate_svg_button = Button(button_frame, text="Generate and View SVG", command=generate_and_view)
+    generate_svg_button.pack(side=RIGHT, padx=5, pady=5)
+
+    label_design_file = Label(button_frame)
+    label_design_file.pack(side=LEFT, padx=5, pady=5)
+
+    # Menu
+    menu_bar = Menu(root)
+    file_menu = Menu(menu_bar, tearoff=0)
+    file_menu.add_command(label="New", command=lambda: text.delete(1.0, END))
+    file_menu.add_command(label="Open", command=select_file)
+    file_menu.add_command(label="Save", command=donothing)
+    file_menu.add_command(label="Save as...", command=select_dir)
+    file_menu.add_command(label="Close", command=on_closing)
+
+    menu_bar.add_cascade(label="File", menu=file_menu)
+
+    create_settings_dir_if_needed()
+
+    # show window
+    root.config(menu=menu_bar)
+    root.protocol("WM_DELETE_WINDOW", on_closing)
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    draw_window()
