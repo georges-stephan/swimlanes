@@ -2,7 +2,7 @@ import os
 import json
 import tempfile
 
-from tkinter import Frame, Tk, Label, RAISED, Button, ttk, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
+from tkinter import Frame, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
     messagebox, Menu, BOTH, LEFT, END
 from tkinter import filedialog as fd
 

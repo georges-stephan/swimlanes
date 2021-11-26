@@ -5,7 +5,4 @@
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/modules.xml
 .idea/vcs.xml
-ui/__pycache__/__init__.cpython-310.pyc
-ui/__pycache__/MainUI.cpython-310.pyc
-
-.idea/workspace.xml
+*.pyc
