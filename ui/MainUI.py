@@ -94,10 +94,7 @@ def update_config_file():
 
 def select_dir():
     global dir_name
-    global label_output_dir
     dir_name = fd.askdirectory()
-
-    label_output_dir.config(text=dir_name)
 
 
 def select_file():

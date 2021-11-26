@@ -215,15 +215,15 @@ class SVGRenderer:
             # Draw the delay divider. A white line to overwrite the background and make it look transparent
             for task_no in range(0, self.diagram.tasks_count):
                 self.svg.write(f'<path id="delay_vertical_{graph_item_no}_{task_no}_back" d="M '
-                               f'{self.get_mid_task_x(task_no)} {divider_to_y - self.graph_items_height[graph_item_no]} L'
-                               f'{self.get_mid_task_x(task_no)} {divider_to_y}'
+                               f'{self.get_mid_task_x(task_no)} {divider_to_y - self.graph_items_height[graph_item_no]}'
+                               f' L{self.get_mid_task_x(task_no)} {divider_to_y}'
                                f'" stroke-width="4" fill="none" '
                                f'stroke="white" '  # TODO parametrize the background color
                                f'/>\n')
                 # And a dashed line above the white line
                 self.svg.write(f'<path id="delay_vertical_{graph_item_no}_{task_no}_front" d="M '
-                               f'{self.get_mid_task_x(task_no)} {divider_to_y - self.graph_items_height[graph_item_no]} L'
-                               f'{self.get_mid_task_x(task_no)} {divider_to_y}'
+                               f'{self.get_mid_task_x(task_no)} {divider_to_y - self.graph_items_height[graph_item_no]}'
+                               f' L{self.get_mid_task_x(task_no)} {divider_to_y}'
                                f'" stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none" '
                                f'stroke="{self.template.get_parameter_value("connection_line_color")}" '
                                f'stroke-dasharray=" 10 5"'
@@ -371,14 +371,13 @@ class SVGRenderer:
                                     , self.get_x_offset(from_task_id)
                                     , text_y
                                     , self.get_task_width()
-                                    , self.template.get_parameter_value(
-                    'space_between_connections') - self.template.get_parameter_value('arrow_height')
+                                    , self.template.get_parameter_value('space_between_connections')
+                                    - self.template.get_parameter_value('arrow_height')
                                     , fill_color='white'
                                     , stroke_color='none')
 
-            arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) \
-                             - self.template.get_parameter_value('space_between_connections') \
-                             + self.template.get_parameter_value('arrow_height')
+            arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) - self.template.get_parameter_value(
+                'space_between_connections') + self.template.get_parameter_value('arrow_height')
 
             self.svg.write(
                 f'<path id="self_connection_arrow_{connection_no + 1}" d="M {self.get_mid_task_x(from_task_id)} '

@@ -29,7 +29,8 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
     :param font_file_name: The file name of the font (Ex. Arial.ttf)
     :param box_width: the with of the area where the text should fit
     :param font_size: The size of the font in points
-    :return: An array of tuples each storing: A substring of the given text representing a line, the text width and the text height
+    :return: An array of tuples each storing: A substring of the given text representing a line, the text width and the
+     text height
     """
     lines = []
     font = ImageFont.truetype(f'{font_file_name}.ttf', font_size)

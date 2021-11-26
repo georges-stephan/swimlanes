@@ -29,13 +29,13 @@ if __name__ == "__main__":
     try:
         p_image_width = int(sys.argv[1])
     except ValueError:
-        print_usage("Invalid width");
+        print_usage("Invalid width")
         sys.exit(-1)
 
     try:
         p_image_height = int(sys.argv[2])
     except ValueError:
-        print_usage("Invalid height");
+        print_usage("Invalid height")
         sys.exit(-1)
 
     if number_of_argument == 3:

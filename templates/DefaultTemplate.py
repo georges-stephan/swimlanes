@@ -28,7 +28,7 @@ class DefaultTemplate(Template):
 
     def get_font_name_from_font_family_name(self, font_family_name):
         if self.parameters_dict[font_family_name] is None:
-            raise TypeError (f'Unknown font family {font_family_name}')
+            raise TypeError(f'Unknown font family {font_family_name}')
 
         if self.parameters_dict[font_family_name] == 'sans-serif':
             if platform.system() == 'Windows':
