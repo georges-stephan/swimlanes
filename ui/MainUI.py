@@ -14,16 +14,19 @@ from svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
 
+from ui.SwimlaneEditorModel import SwimlaneEditorModel
+
 # Global Variables
-dir_name = ""
-design_filename = ""
-home_dir = ""
+dir_name = None
+design_filename = None
+home_dir = None
 config = {}
-config_file = ""
-output_file_name = ""
+config_file = None
+output_file_name = None
 text = None
 label_design_file = None
 root = None
+swimlaneEditorModel = None
 
 
 def donothing():
@@ -34,7 +37,19 @@ def on_closing():
     global root
 
     if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-        root.destroy()
+        if swimlaneEditorModel is not None and swimlaneEditorModel.is_needs_saving(text.get('1.0', END)):
+            # save
+            if messagebox.askyesno("Save", "Content changed, do you want to save it?"):
+                # save
+                root.destroy()
+            else:
+                root.destroy()
+        elif swimlaneEditorModel is None and len(text.get('1.0', END)) > 0:
+            # save as new
+            messagebox.askyesno("Save", "Content not saved, do you want to save it?")
+            root.destroy()
+        else:
+            root.destroy()
 
 
 # Button to generate the SVG
@@ -55,6 +70,12 @@ def generate_and_view():
     os.startfile(output_file_name)
 
 
+def save_file():
+    if design_filename is not None:
+        with open(design_filename.name, 'w') as f:
+            f.write(text.get('1.0', END))
+
+
 def create_settings_dir_if_needed():
     global home_dir
     global config
@@ -71,7 +92,7 @@ def create_settings_dir_if_needed():
             config = json.load(f)
             design_filename = config['design_file']
             dir_name = config['out_dir']
-            label_design_file.config(text=design_filename)
+            # label_design_file.config(text=design_filename)
             # label_output_dir.config(text=dir_name)
     else:
         if home_dir.exists() and home_dir.is_dir():
@@ -105,6 +126,7 @@ def select_file():
 
     global design_filename
     global label_design_file
+    global swimlaneEditorModel
     design_filename = fd.askopenfilename(
         title='Open a Design File',
         initialdir=str(design_filename),
@@ -112,6 +134,7 @@ def select_file():
     # label_design_file.config(text=design_filename)
     with open(design_filename, 'r') as f:
         text.insert(1.0, f.read())
+    swimlaneEditorModel = SwimlaneEditorModel(text.get('1.0', END))
 
 
 def generate_svg_file(update_conf_file_after_gen=True):
@@ -202,7 +225,7 @@ def draw_window():
     file_menu = Menu(menu_bar, tearoff=0)
     file_menu.add_command(label="New", command=lambda: text.delete(1.0, END))
     file_menu.add_command(label="Open", command=select_file)
-    file_menu.add_command(label="Save", command=donothing)
+    file_menu.add_command(label="Save", command=save_file)
     file_menu.add_command(label="Save as...", command=select_dir)
     file_menu.add_command(label="Close", command=on_closing)
 
