@@ -101,7 +101,7 @@ def parse_line(line: str):
             note_task_from = diagram.get_task_id(note_commands[1])
             note_task_to = diagram.get_task_id(note_commands[2])
         else:
-            raise ValueError(f"Un-parasable line command: {line}")
+            raise ValueError(f"Error in file at line {line}, command is not know.")
     elif line.startswith(starts_code[2]):  # Thin Divider
         note_task_from = -1
         note_task_to = -1
