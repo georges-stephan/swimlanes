@@ -28,6 +28,11 @@ label_design_file = None
 root = None
 swimlaneEditorModel = None
 
+filetypes = (
+    ('text files', '*.txt'),
+    ('All files', '*.*')
+)
+
 
 def donothing():
     pass
@@ -70,10 +75,28 @@ def generate_and_view():
     os.startfile(output_file_name)
 
 
-def save_file():
-    if design_filename is not None:
+def save_file_as():
+    global design_filename
+    write_file = False
+
+    if dir_name is not None and Path(dir_name).exists():
+        design_filename = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
+                                           defaultextension=filetypes,
+                                           initialdir=dir_name)
+    else:
+        design_filename = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
+                                           defaultextension=filetypes)
+
+    if Path(design_filename).exists():
+        if askyesno("Overwrite", message=f"The file\n{design_filename}\n Already exists, do you want to overwrite it?"):
+            write_file = True
+        else:
+            write_file = False
+
+    if write_file:
         with open(design_filename.name, 'w') as f:
             f.write(text.get('1.0', END))
+        label_design_file.config(text=design_filename.name)
 
 
 def create_settings_dir_if_needed():
@@ -118,12 +141,7 @@ def select_dir():
     dir_name = fd.askdirectory()
 
 
-def select_file():
-    filetypes = (
-        ('text files', '*.txt'),
-        ('All files', '*.*')
-    )
-
+def select_and_load_file():
     global design_filename
     global label_design_file
     global swimlaneEditorModel
@@ -131,7 +149,8 @@ def select_file():
         title='Open a Design File',
         initialdir=str(design_filename),
         filetypes=filetypes)
-    # label_design_file.config(text=design_filename)
+
+    label_design_file.config(text=design_filename)
     with open(design_filename, 'r') as f:
         text.insert(1.0, f.read())
     swimlaneEditorModel = SwimlaneEditorModel(text.get('1.0', END))
@@ -169,6 +188,7 @@ def generate_svg_file(update_conf_file_after_gen=True):
             except SVGSizeError as svg_error:
                 preferred_height = int(svg_error.__str__().split(':')[0])
                 print(f"preferred_height:{preferred_height}")
+                # TODO find a way to calculate the preferred width instead of hard-coding 800
                 generator = SVGRenderer(diagram, 800, preferred_height)
                 f.close()
                 with open(output_file_name, 'w') as fii:
@@ -224,9 +244,9 @@ def draw_window():
     menu_bar = Menu(root)
     file_menu = Menu(menu_bar, tearoff=0)
     file_menu.add_command(label="New", command=lambda: text.delete(1.0, END))
-    file_menu.add_command(label="Open", command=select_file)
-    file_menu.add_command(label="Save", command=save_file)
-    file_menu.add_command(label="Save as...", command=select_dir)
+    file_menu.add_command(label="Open", command=select_and_load_file)
+    file_menu.add_command(label="Save", command=donothing)
+    file_menu.add_command(label="Save as...", command=save_file_as)
     file_menu.add_command(label="Close", command=on_closing)
 
     menu_bar.add_cascade(label="File", menu=file_menu)
