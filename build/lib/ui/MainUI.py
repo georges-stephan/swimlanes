@@ -1,8 +1,6 @@
 import os
 import json
-import sys
 import tempfile
-from json import JSONDecodeError
 
 from tkinter import Frame, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
     messagebox, Menu, BOTH, LEFT, END
@@ -28,7 +26,7 @@ output_file_name = None
 text = None
 label_design_file = None
 root = None
-swimlaneEditorModel = None # TODO init to blank when starting the UI
+swimlaneEditorModel = None
 
 filetypes = (
     ('text files', '*.txt'),
@@ -42,38 +40,21 @@ def donothing():
 
 def on_closing():
     global root
-    global swimlaneEditorModel
-    global text
 
     if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-        if swimlaneEditorModel is not None:
-            # Text area contains text from a file. Check if contents needs saving
-            if swimlaneEditorModel.is_needs_saving(text.get('1.0', END)):
-                # Content loaded from file and actual content in the text area widget are changed.
-                if messagebox.askyesno("Save", "Content changed, do you want to save it?"):
-                    # save to file
-                    save_file_as()
-                    sys.exit()
-                else:
-                    # Content changed, but the user does not want to keep it
-                    sys.exit()
+        if swimlaneEditorModel is not None and swimlaneEditorModel.is_needs_saving(text.get('1.0', END)):
+            # save
+            if messagebox.askyesno("Save", "Content changed, do you want to save it?"):
+                # save
+                root.destroy()
             else:
-                # loaded and text area content are the same
-                sys.exit()
-        elif len(SwimlaneEditorModel.remove_control_characters(text.get('1.0', END))) > 0:
-            # Nothing was loaded from file, however, the text area is not empty
-            if messagebox.askyesno("Save", "Content not saved, do you want to save it?"):
-                save_file_as()
-                sys.exit()
-            else:
-                # user does not care about the content
-                sys.exit()
+                root.destroy()
+        elif swimlaneEditorModel is None and len(text.get('1.0', END)) > 0:
+            # save as new
+            messagebox.askyesno("Save", "Content not saved, do you want to save it?")
+            root.destroy()
         else:
-            # Text area is empty
-            sys.exit()
-    else:
-        # The user refrained from quitting
-        pass
+            root.destroy()
 
 
 # Button to generate the SVG
@@ -96,24 +77,26 @@ def generate_and_view():
 
 def save_file_as():
     global design_filename
-    global dir_name
+    write_file = False
 
     if dir_name is not None and Path(dir_name).exists():
-        design_file = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
-                                       defaultextension=filetypes,
-                                       initialdir=dir_name)
+        design_filename = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
+                                           defaultextension=filetypes,
+                                           initialdir=dir_name)
     else:
-        design_file = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
-                                       defaultextension=filetypes)
-    if design_file is not None:
-        # design_filename = design_file.name
-        dir_name, design_filename = os.path.split(design_file.name)
-        print(f"Dir name:{dir_name}, design file name:{design_filename}, text is {text.get('1.0',END)}")
-        try:
-            design_file.write(text.get('1.0', END))
-            update_config_file()
-        finally:
-            design_file.close()
+        design_filename = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
+                                           defaultextension=filetypes)
+
+    if Path(design_filename).exists():
+        if askyesno("Overwrite", message=f"The file\n{design_filename}\n Already exists, do you want to overwrite it?"):
+            write_file = True
+        else:
+            write_file = False
+
+    if write_file:
+        with open(design_filename.name, 'w') as f:
+            f.write(text.get('1.0', END))
+        label_design_file.config(text=design_filename.name)
 
 
 def create_settings_dir_if_needed():
@@ -129,16 +112,11 @@ def create_settings_dir_if_needed():
 
     if home_dir.exists() and home_dir.is_dir() and Path(config_file).exists():
         with open(config_file, 'r') as f:
-            try:
-                config = json.load(f)
-                design_filename = config['design_file']
-                dir_name = config['out_dir']
-            except JSONDecodeError as e:
-                print(f"Config file damaged:{e.msg}")
-                config = {"design_file": str(Path.home()), "out_dir": str(Path.home())}
-
-                with open(config_file, 'w') as ff:
-                    json.dump(config, ff)
+            config = json.load(f)
+            design_filename = config['design_file']
+            dir_name = config['out_dir']
+            # label_design_file.config(text=design_filename)
+            # label_output_dir.config(text=dir_name)
     else:
         if home_dir.exists() and home_dir.is_dir():
             pass
@@ -148,9 +126,6 @@ def create_settings_dir_if_needed():
 
         with open(config_file, 'w') as f:
             json.dump(config, f)
-
-    if home_dir is None:
-        home_dir = str(Path.home())
 
 
 def update_config_file():
@@ -170,8 +145,6 @@ def select_and_load_file():
     global design_filename
     global label_design_file
     global swimlaneEditorModel
-    global text
-
     design_filename = fd.askopenfilename(
         title='Open a Design File',
         initialdir=str(design_filename),
@@ -188,8 +161,6 @@ def select_and_load_file():
 
 def generate_svg_file(update_conf_file_after_gen=True):
     global output_file_name
-    global design_filename
-
     print(f"Design filename is {design_filename}, result will be saved in {dir_name}")
 
     input_file_dir, input_file_name = os.path.split(design_filename)
