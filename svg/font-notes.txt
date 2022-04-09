@@ -1,0 +1,8 @@
+font-style="italic" for italic
+font-weight="bold" for bold
+text-decoration="underline" for underline
+text-decoration="line-through"  for strike through
+
+<a xlink:href= "http://example.com/link/" xlink:title="The link leads to an example page that is of little interest">
+     <text x="10" y="25" >An example link.</text>
+</a>
