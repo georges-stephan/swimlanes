@@ -5,7 +5,7 @@ import tempfile
 from json import JSONDecodeError
 
 from tkinter import Frame, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
-    messagebox, Menu, BOTH, LEFT, END
+    messagebox, Menu, BOTH, LEFT, END, PanedWindow, VERTICAL, DISABLED
 from tkinter import filedialog as fd
 
 from pathlib import Path
@@ -28,7 +28,7 @@ output_file_name = None
 text = None
 label_design_file = None
 root = None
-swimlaneEditorModel = None # TODO init to blank when starting the UI
+swimlaneEditorModel = None  # TODO init to blank when starting the UI
 
 filetypes = (
     ('text files', '*.txt'),
@@ -108,7 +108,7 @@ def save_file_as():
     if design_file is not None:
         # design_filename = design_file.name
         dir_name, design_filename = os.path.split(design_file.name)
-        print(f"Dir name:{dir_name}, design file name:{design_filename}, text is {text.get('1.0',END)}")
+        print(f"Dir name:{dir_name}, design file name:{design_filename}, text is {text.get('1.0', END)}")
         try:
             design_file.write(text.get('1.0', END))
             update_config_file()
@@ -214,18 +214,18 @@ def generate_svg_file(update_conf_file_after_gen=True):
         with open(output_file_name, 'w') as f:
             try:
                 f.write(generator.get_svg_string())
-                showinfo("Feedback", "Completed")
+                # showinfo("Feedback", "Completed")
                 if update_conf_file_after_gen:
                     update_config_file()
             except SVGSizeError as svg_error:
                 preferred_height = int(svg_error.__str__().split(':')[0])
                 print(f"preferred_height:{preferred_height}")
-                # TODO find a way to calculate the preferred width instead of hard-coding 800
+                # TODO find a way to calculate the preferred width instead of hard-coding 800. Ex. add a 'width' keyword
                 generator = SVGRenderer(diagram, 800, preferred_height)
                 f.close()
                 with open(output_file_name, 'w') as fii:
                     fii.write(generator.get_svg_string())
-                    showinfo("Feedback", "Completed")
+                    # showinfo("Feedback", "Completed")
                     if update_conf_file_after_gen:
                         update_config_file()
 
@@ -242,26 +242,66 @@ def draw_window():
     root.resizable(True, True)
     root.geometry('800x600')
 
+    panedWindow = PanedWindow(root, orient=HORIZONTAL, showhandle=True)
+    panedWindow.pack(fill=BOTH, expand=1)
+
     # Textarea
-    editor_frame = Frame(root)
+    editor_frame = Frame()
     editor_frame.pack(fill=BOTH, expand=True)
+    panedWindow.add(editor_frame)
+
+    editor_help_frame = Frame(panedWindow)
+    editor_help_frame.pack(fill=BOTH, expand=True)
+    panedWindow.add(editor_help_frame)
 
     # Horizontal (x) Scroll bar
     x_scrollbar = Scrollbar(editor_frame, orient=HORIZONTAL)
     x_scrollbar.pack(side=BOTTOM, fill=X)
 
+    x_scrollbar_help = Scrollbar(editor_help_frame, orient=HORIZONTAL)
+    x_scrollbar_help.pack(side=BOTTOM, fill=X)
+
     # Vertical (y) Scroll Bar
     y_scrollbar = Scrollbar(editor_frame)
     y_scrollbar.pack(side=RIGHT, fill=Y)
+
+    y_scrollbar_help = Scrollbar(editor_help_frame)
+    y_scrollbar_help.pack(side=RIGHT, fill=Y)
 
     # Text Widget
     text = Text(editor_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set, yscrollcommand=y_scrollbar.set,
                 borderwidth=3)
     text.pack(expand=True, fill='both')
 
+    # Help Widget
+    text_help = Text(editor_help_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set,
+                     yscrollcommand=y_scrollbar.set,
+                     borderwidth=3)
+    text_help.insert(1.0, """
+    title: Welcome to Python Swimlanes
+
+    One -> Two: Message
+
+    note:
+    **Python Swimlanes** is a simple online tool for creating _sequence diagrams_.
+
+    Two -> Two: To self
+
+    Two -->> Three: _Notification_
+
+    Two -> One: `ok`
+
+    note: See **Built for Fun** for more details
+    """)
+    text_help.pack(expand=True, fill='both')
+    text_help.config(state=DISABLED)
+
     # Configure the scrollbars
     x_scrollbar.config(command=text.xview)
     y_scrollbar.config(command=text.yview)
+
+    x_scrollbar_help.config(command=text_help.xview)
+    y_scrollbar_help.config(command=text_help.yview)
 
     button_frame = Frame(root)
     button_frame.pack(fill=X)

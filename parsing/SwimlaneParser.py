@@ -30,12 +30,30 @@ def load_file(file_path: str):
         print(len(lines))
         print(lines)
 
+    reset_globals()
     return get_diagram_from_lines(lines)
 
 
+def reset_globals():
+    global diagram
+    global in_note
+    global note_text
+    global note_task_from
+    global note_task_to
+    global task_number
+
+    diagram = Diagram("Diagram")
+    in_note = False
+    note_text = ""
+    note_task_from = -1
+    note_task_to = -1
+    task_number = 0
+
+
 def get_diagram_from_lines(lines: list):
+
     for line in lines:
-        parse_line(line)
+        parse_line(line.strip())
 
     return diagram
 

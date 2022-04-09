@@ -4,3 +4,4 @@
 svg/__pycache__/SVGGenerator.cpython-310.pyc
 svg/__pycache__/FontFunctions.cpython-310.pyc
 templates/__pycache__/DefaultTemplate.cpython-310.pyc
+*.pyc
