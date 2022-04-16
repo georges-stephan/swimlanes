@@ -1,8 +1,11 @@
-font-style="italic" for italic
-font-weight="bold" for bold
+font-style="italic" for italic, represented as *Italic*
+font-weight="bold" for bold, represented as **Bold**
 text-decoration="underline" for underline
-text-decoration="line-through"  for strike through
+text-decoration="line-through"  for strike through represented as ~~strike through~~
+
 
 <a xlink:href= "http://example.com/link/" xlink:title="The link leads to an example page that is of little interest">
      <text x="10" y="25" >An example link.</text>
 </a>
+
+code (monospace font on grey background) represented `inline code`.
