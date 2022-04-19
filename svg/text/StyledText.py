@@ -2,26 +2,26 @@ class StyledText:
 
     def __init__(self, text: str, styles: [str]):
         self.text = text
-        self.styles = []
+        self.styles = {}
 
         for style in styles:
-            # FIXME allow writing multiple times the same entry
             match style.lower():
                 case "bold":
-                    self.styles.append(style.lower())
+                    # self.text = text[2: -2]
+                    self.styles[style.lower()] = style.lower()
                 case "italic":
-                    self.styles.append(style.lower())
+                    self.styles[style.lower()] = style.lower()
                 case "code":
-                    self.styles.append(style.lower())
+                    self.styles[style.lower()] = style.lower()
                 case "strike-through":
-                    self.styles.append(style.lower())
+                    self.styles[style.lower()] = style.lower()
                 case "normal":
-                    self.styles.append(style.lower())
+                    self.styles[style.lower()] = style.lower()
                 case _:
                     raise Exception(f"Un-supported style {style}.")
 
     def __str__(self):
-        return f"{self.styles} applied to {self.text}"
+        return self.__repr__()
 
     def __repr__(self):
-        return f"{self.styles} applied to {self.text}"
+        return f"The style {self.styles} is applied to \"{self.text}\""

@@ -15,85 +15,124 @@ class ParseStyles:
         c: str
 
         text_buffer = ""
+        index: int
+        index = -1
         for c in self.text_to_parse:
+            index += 1
             match state:
                 case 1:
                     match c:
                         case '*':
+                            st = StyledText(text_buffer, [style])
+                            self.styled_texts.append(st)
+                            text_buffer = ""
+                            style = "italic"
                             state = 5
                         case '~':
+                            st = StyledText(text_buffer, [style])
+                            self.styled_texts.append(st)
+                            text_buffer = ""
+                            style = "strike-through"
                             state = 2
                         case '`':
-                            case = 0
+                            st = StyledText(text_buffer, [style])
+                            self.styled_texts.append(st)
+                            text_buffer = ""
+                            style = "code"
+                            state = 9
                         case _:
-                            case = 1
+                            state = 1
+                            style = "normal"
                             text_buffer += c
                 case 2:
                     match c:
                         case '~':
-                            state = 3
+                            state = 4
+                            style = "strike-through"
                         case _:
+                            style = "normal"
                             state = 1
                             text_buffer += c
                 case 3:
                     match c:
-                        case '~':
-                            state = 4
+                        case '*':
+                            # italic
+                            style = "italic"
+                            st = StyledText(text_buffer, [style])
+                            self.styled_texts.append(st)
+                            text_buffer = ""
+                            state = 1
+                            style = "normal"
                         case _:
+                            style = "italic"
                             state = 3
                             text_buffer += c
                 case 4:
                     match c:
                         case '~':
-                            st = StyledText(text_buffer, ["strike-through"])
-                            self.styled_texts.append(st)
-                            text_buffer = ""
-                            state = 1
+                            style = "strike-through"
+                            state = 6
                         case _:
-                            state = 3
+                            state = 4
+                            style = "strike-through"
                             text_buffer += c
                 case 5:
                     match c:
                         case '*':
+                            style = "bold"
                             state = 7
                         case _:
-                            state = 6
+                            style = "italic"
+                            state = 3
                             text_buffer += c
                 case 6:
                     match c:
-                        case '*':
-                            st = StyledText(text_buffer, ["italic"])
+                        case '~':
+                            style = "strike-through"
+                            st = StyledText(text_buffer, [style])
                             self.styled_texts.append(st)
                             text_buffer = ""
                             state = 1
+                            style = "normal"
                         case _:
-                            state = 6
+                            state = 4
+                            style = "strike-through"
                             text_buffer += c
                 case 7:
                     match c:
                         case '*':
+                            style = "bold"
                             state = 8
                         case _:
+                            style = "bold"
+                            state = 7
                             text_buffer += c
                 case 8:
                     match c:
                         case '*':
-                            st = StyledText(text_buffer, ["bold"])
+                            # bold
+                            style = "bold"
+                            st = StyledText(text_buffer, [style])
                             self.styled_texts.append(st)
                             text_buffer = ""
                             state = 1
+                            style = "normal"
                         case _:
                             state = 7
+                            style = "bold"
                             text_buffer += c
                 case 9:
                     match c:
                         case '`':
-                            st = StyledText(text_buffer, ["code"])
+                            style = "code"
+                            st = StyledText(text_buffer, [style])
                             self.styled_texts.append(st)
                             text_buffer = ""
+                            style = "normal"
                             state = 1
                         case _:
                             state = 9
+                            style = "code"
                             text_buffer += c
                 case _:
                     raise Exception(f"Unknown state {state}.")
@@ -102,7 +141,7 @@ class ParseStyles:
         return len(self.styled_texts)
 
     def __str__(self):
-        return f"Text is:{self.text_to_parse}, styles are {self.styled_texts}"
+        return self.__repr__()
 
     def __repr__(self):
-        return f"Text is:{self.text_to_parse}, styles are {self.styled_texts}"
+        return f"Text to style is:{self.text_to_parse}.The styles are: {self.styled_texts}"
