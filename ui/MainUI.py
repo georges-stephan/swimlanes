@@ -277,22 +277,12 @@ def draw_window():
     text_help = Text(editor_help_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set,
                      yscrollcommand=y_scrollbar.set,
                      borderwidth=3)
-    text_help.insert(1.0, """
-    title: Welcome to Python Swimlanes
 
-    One -> Two: Message
+    example_file_name = "example_flow.txt"
+    if Path(example_file_name).exists():
+        with open(example_file_name, 'r') as f:
+            text_help.insert(1.0, f.read())
 
-    note:
-    **Python Swimlanes** is a simple online tool for creating _sequence diagrams_.
-
-    Two -> Two: To self
-
-    Two -->> Three: _Notification_
-
-    Two -> One: `ok`
-
-    note: See **Built for Fun** for more details
-    """)
     text_help.pack(expand=True, fill='both')
     text_help.config(state=DISABLED)
 

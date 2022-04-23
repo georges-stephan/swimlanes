@@ -20,7 +20,11 @@ class DefaultTemplate(Template):
             'title-font-size': 16,
             'body-font-family': 'sans-serif',
             'body-font-size': 14,
-            'arrow_stroke_width': 1
+            'arrow_stroke_width': 1,
+            'text_margin-top': 4,
+            'text_margin-bottom': 4,
+            'text_margin-left': 4,
+            'text_margin-right': 4
         }
 
     def get_parameter_value(self, parameter_name: str):

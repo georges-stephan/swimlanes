@@ -1,9 +1,12 @@
 from PIL import ImageFont
 
+from templates.DefaultTemplate import DefaultTemplate
+
 debug = True
 
 
-def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int):  # TODO this is buggy, fit it
+def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int,
+                    template=DefaultTemplate()):  # TODO this is buggy, fit it
     """
     A function to return the estimated height of  a text
     :param text: the text to be rendered

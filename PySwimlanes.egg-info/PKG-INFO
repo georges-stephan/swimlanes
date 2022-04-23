@@ -1,11 +1,11 @@
 Metadata-Version: 2.1
 Name: PySwimlanes
-Version: 1.1
+Version: 2.0
 Summary: UNKNOWN
 Home-page: https://github.com/georges-stephan/swimlanes
 Author: Georges Stephan
 Author-email: georges.stephan@icloud.com
-License: UNKNOWN
+License: Apache 2.0
 Platform: UNKNOWN
 License-File: LICENSE
 

@@ -125,6 +125,7 @@ class SVGRenderer:
 
             # If we are adding a note
             elif isinstance(self.diagram.items[key], Note):
+                print("r-1")
                 if self.diagram.items[key].start_task_id == -1 or self.diagram.items[key].end_task_id == -1:
                     self.add_note_to_svg(None, self.diagram.items[key], graph_item_id, note_id)
                 else:
@@ -158,7 +159,9 @@ class SVGRenderer:
         note_height = get_text_height(note.note_text
                                       , self.template.get_font_name_from_font_family_name('body-font-family')
                                       , self.template.get_parameter_value('body-font-size')
-                                      , note_width)
+
+                                      , note_width) + self.template.get_parameter_value('text_margin-top') + self.template.get_parameter_value('text_margin-bottom')
+        print(f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:{self.template.get_parameter_value('text_margin-bottom')}")
         if debug:
             print(f'note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}')
 
@@ -173,7 +176,7 @@ class SVGRenderer:
                                 , fill_color='rgb(255, 253, 238)'
                                 , stroke_color='rgb(221, 219, 204)'
                                 , justification='left'
-                                )
+                                , apply_margin=True)
 
         self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2
 
@@ -435,7 +438,8 @@ class SVGRenderer:
 
     def draw_box_with_text(self, box_name: str, text: str, font_size: int, box_x: int, box_y: int, box_width: int
                            , box_height: int, box_corner=0, fill_color='white', stroke_color='black'
-                           , font_family_param='body-font-family', font_weight='normal', justification='center'):
+                           , font_family_param='body-font-family', font_weight='normal', justification='center'
+                           , apply_margin=False):
         """
         Draw a box and render a text inside it. Handle text alignment and text wrapping
         :param font_family_param:
@@ -451,6 +455,7 @@ class SVGRenderer:
         :param stroke_color: the color of the line of the box. Use 'none' for no colors
         :param font_weight: either normal, bold, italic
         :param justification: either left or centered
+        :param apply_margin: wether a top margin should be added between the text and the top of the rectangle
         :return:
         """
         # Draw the box
@@ -486,6 +491,8 @@ class SVGRenderer:
         font_family = self.template.get_parameter_value(font_family_param)
         for line in lines:
             line_y = int(box_y + i * (self.template.get_parameter_value('body-font-size')) * 1.05) + margin_y
+            if apply_margin:
+                line_y = line_y + self.template.get_parameter_value('text_margin-top')
             if justification == 'center':
                 line_x = int((abs(box_width - line[1])) / 2) + box_x  # Center the text
             else:

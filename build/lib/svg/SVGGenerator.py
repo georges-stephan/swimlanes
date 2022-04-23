@@ -103,8 +103,10 @@ class SVGRenderer:
         note_id = 0
         graph_item_id = 0
         last_task_connection = None
+        print("ttttttttttt")
         self.preferred_height = self.template.get_parameter_value('y_offset') + self.get_task_height() * 2
         for key in self.diagram.items:
+            print(f"===> Got a {type(self.diagram.items[key])}")
             # If we are adding a task (or a the label of a lane)
             if isinstance(self.diagram.items[key], Task):
                 self.add_task_to_svg(self.diagram.items[key], task_id)
@@ -125,6 +127,7 @@ class SVGRenderer:
 
             # If we are adding a note
             elif isinstance(self.diagram.items[key], Note):
+                print("111111111111111111")
                 if self.diagram.items[key].start_task_id == -1 or self.diagram.items[key].end_task_id == -1:
                     self.add_note_to_svg(None, self.diagram.items[key], graph_item_id, note_id)
                 else:
@@ -139,7 +142,7 @@ class SVGRenderer:
 
     def add_note_to_svg(self, task_connection: TaskConnection, note: Note, graph_item_no: int, note_id: int):
         note_x, note_y, note_width, note_height = 0, 0, 0, 0
-
+        print("222222222222222")
         if task_connection is None:
             note_x = self.get_mid_task_x(0) - self.template.get_parameter_value('arrow_height')
             note_width = self.get_mid_task_x(self.diagram.tasks_count - 1) \
@@ -170,12 +173,17 @@ class SVGRenderer:
                                 , note_y
                                 , note_width
                                 , note_height
+                                + self.template.get_parameter_value('text_margin-top')
+                                + self.template.get_parameter_value('text_margin-bottom')
                                 , fill_color='rgb(255, 253, 238)'
                                 , stroke_color='rgb(221, 219, 204)'
                                 , justification='left'
                                 )
 
-        self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2
+        self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2 \
+                                                 + self.template.get_parameter_value('text_margin-top') \
+                                                 + self.template.get_parameter_value('text_margin-bottom')
+
 
     def add_divider_to_svg(self, divider: Divider, graph_item_no: int, divider_id: int):
         self.svg.write(f'\n<!-- Divider #{divider_id}, object #{graph_item_no} -->\n')

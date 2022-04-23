@@ -5,6 +5,7 @@ setup.py
 PySwimlanes.egg-info/PKG-INFO
 PySwimlanes.egg-info/SOURCES.txt
 PySwimlanes.egg-info/dependency_links.txt
+PySwimlanes.egg-info/entry_points.txt
 PySwimlanes.egg-info/requires.txt
 PySwimlanes.egg-info/top_level.txt
 parsing/CLParser.py

@@ -1,0 +1,16 @@
+
+title: Welcome to Python Swimlanes
+
+One -> Two: Message
+
+note:
+**Python Swimlanes** is a simple online tool for creating _sequence diagrams_.
+
+Two -> Two: To self
+
+Two -->> Three: _Notification_
+
+Two -> One: `ok`
+
+note: See **Built for Fun** for more details
+

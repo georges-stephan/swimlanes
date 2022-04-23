@@ -2,10 +2,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='PySwimlanes',
-    version='1.5',
+    python_requires='>3.10.0',
+    version='2.0',
     license='Apache 2.0',
     author='Georges Stephan',
     author_email='georges.stephan@icloud.com',
-    packages=find_packages(),
-    url='https://github.com/georges-stephan/swimlanes', install_requires=['Pillow']
+    packages=find_packages(exclude='*_test.py'),
+    url='https://github.com/georges-stephan/swimlanes',
+    install_requires=['Pillow>=9.0'],
+    entry_points={
+        'gui_scripts': ['swimlanes=ui.MainUI:main']
+    }
 )
