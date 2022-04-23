@@ -7,7 +7,6 @@ class StyledText:
         for style in styles:
             match style.lower():
                 case "bold":
-                    # self.text = text[2: -2]
                     self.styles[style.lower()] = style.lower()
                 case "italic":
                     self.styles[style.lower()] = style.lower()
