@@ -13,4 +13,5 @@ The main class is `ui.MainUI`, so this is the class you want to execute. I am us
 ```
 Python ui.MainUI
 ```
-From the root directory of this project to run the program.
+From the root directory of this project to run the program. Windows users can link a shortcut to `swimlanes.vbs` instead
+of using the command line.

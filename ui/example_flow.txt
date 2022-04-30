@@ -10,7 +10,9 @@ Two -> Two: To self
 
 Two -->> Three: _Notification_
 
-Two -> One: `ok`
+Two -> Three: `ok`
 
 note: See **Built for Fun** for more details
+
+order: One, Three, Two
 

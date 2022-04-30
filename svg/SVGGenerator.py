@@ -125,8 +125,7 @@ class SVGRenderer:
 
             # If we are adding a note
             elif isinstance(self.diagram.items[key], Note):
-                print("r-1")
-                if self.diagram.items[key].start_task_id == -1 or self.diagram.items[key].end_task_id == -1:
+                if self.diagram.items[key].get_start_task_id() == -1 or self.diagram.items[key].get_end_task_id() == -1:
                     self.add_note_to_svg(None, self.diagram.items[key], graph_item_id, note_id)
                 else:
                     self.add_note_to_svg(last_task_connection, self.diagram.items[key], graph_item_id, note_id)
@@ -147,13 +146,16 @@ class SVGRenderer:
                          + self.template.get_parameter_value('arrow_height') - note_x
 
         else:
-            from_task_id = self.diagram.get_task_id(task_connection.source_task)
-            to_task_id = self.diagram.get_task_id(task_connection.target_task)
+            from_task_id_ = self.diagram.get_task_id(task_connection.source_task)
+            to_task_id_ = self.diagram.get_task_id(task_connection.target_task)
+
+            from_task_id = min(from_task_id_,to_task_id_)
+            to_task_id = max(from_task_id_,to_task_id_)
 
             note_x = self.get_mid_task_x(from_task_id) - self.template.get_parameter_value('arrow_height')
             # Remove the amount of the distance between 2 tasks from note width
-            note_width = self.get_mid_task_x(to_task_id) \
-                         + self.template.get_parameter_value('arrow_height') - note_x
+            note_width = abs(self.get_mid_task_x(to_task_id) \
+                         + self.template.get_parameter_value('arrow_height') - note_x)
 
         note_y = self.get_y_offset_for_graph_item(graph_item_no) + self.template.get_parameter_value('arrow_height') * 2
         note_height = get_text_height(note.note_text
@@ -161,8 +163,9 @@ class SVGRenderer:
                                       , self.template.get_parameter_value('body-font-size')
 
                                       , note_width) + self.template.get_parameter_value('text_margin-top') + self.template.get_parameter_value('text_margin-bottom')
-        print(f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:{self.template.get_parameter_value('text_margin-bottom')}")
+
         if debug:
+            print(f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:{self.template.get_parameter_value('text_margin-bottom')}")
             print(f'note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}')
 
         self.svg.write(f'\n<!-- Note #{note_id + 1}, object #{graph_item_no + 1} -->\n')

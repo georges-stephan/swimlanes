@@ -51,7 +51,7 @@ def reset_globals():
 
 
 def get_diagram_from_lines(lines: list):
-
+    # TODO maybe find, parse, and apply the sorting command before parsing other objects
     for line in lines:
         parse_line(line.strip())
 
@@ -142,10 +142,14 @@ def parse_line(line: str):
         note_task_from = -1
         note_task_to = -1
         diagram.add_divider(Divider(line[4:len(line)], style="Delay"))
-    elif line.startswith(starts_code[7]): # Order example usage: order: first [,second[,third ...]]
+    elif line.startswith(starts_code[7]):  # Order example usage: order: first [,second[,third ...]]
         order_command = line[:line.find(':')]
         order_text = line[line.find(':') + 1:]
-        print(f"The order command is {order_command}, the parameters are {order_text}")
+        if debug:
+            print(f"The order command is {order_command}, the parameters are {order_text}")
+        items_order = order_text.split(",")
+        diagram.apply_order(items_order)
+        diagram.print_tasks()
     elif arrow is not None:
         label, task_from_label, task_to_label = get_task_connection_from_input_line(line, arrow)
         task_from = Task(task_from_label)
