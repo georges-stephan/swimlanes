@@ -10,7 +10,7 @@ from tkinter import filedialog as fd
 
 from pathlib import Path
 
-from parsing import SwimlaneParser
+from parsing.SwimlaneParser import SwimlaneParser
 from svg.Errors import SVGSizeError
 from svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
@@ -209,17 +209,17 @@ def generate_svg_file(update_conf_file_after_gen=True):
         generate_design = False
 
     if generate_design:
-        diagram = SwimlaneParser.load_file(design_filename)
+        parser = SwimlaneParser()
+        diagram = parser.load_file(design_filename)
         generator = SVGRenderer(diagram, 800, 2)
         with open(output_file_name, 'w') as f:
             try:
                 f.write(generator.get_svg_string())
-                # showinfo("Feedback", "Completed")
                 if update_conf_file_after_gen:
                     update_config_file()
             except SVGSizeError as svg_error:
                 preferred_height = int(svg_error.__str__().split(':')[0])
-                print(f"preferred_height:{preferred_height}")
+                print(f"Exception: {svg_error} preferred_height should be:{preferred_height}")
                 # TODO find a way to calculate the preferred width instead of hard-coding 800. Ex. add a 'width' keyword
                 generator = SVGRenderer(diagram, 800, preferred_height)
                 f.close()

@@ -67,7 +67,6 @@ class Diagram:
         self.items[self.items_count] = note
 
     def get_task_by_name(self, task_description: str):
-        a_task = None
         for key in self.items:
             a_task = self.items[key]
             if isinstance(a_task, Task):
@@ -76,18 +75,14 @@ class Diagram:
         return None
 
     def get_diagram_task_index(self, task: Task):
-        index: int
-        index = -1
         for key in self.items:
             if isinstance(self.items[key], Task):
                 if self.items[key] == task:
                     return key
-
         return -1
 
     def get_task_by_index(self, task_number: int):
         task_number_counter = 0
-        task = None
         for key in self.items:
             task = self.items[key]
             if isinstance(task, Task):
@@ -120,7 +115,7 @@ class Diagram:
             task_a = self.items[key]
             if isinstance(task_a, Task):
                 if task_a.new_location > -1:
-                    task_b = self.get_task_by_index(task_a.new_location);
+                    task_b = self.get_task_by_index(task_a.new_location)
                     task_a_diagram_index = self.get_diagram_task_index(task_a)
                     task_b_diagram_index = self.get_diagram_task_index(task_b)
 

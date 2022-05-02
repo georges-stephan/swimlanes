@@ -10,7 +10,7 @@ from svg.FontFunctions import split_text, get_text_height
 from swimlane.Task import Task
 from swimlane.TaskConnection import TaskConnection
 
-debug = False
+debug = True
 
 
 def get_stroke_from_style_name(style_name: str):
@@ -132,7 +132,8 @@ class SVGRenderer:
                 note_id += 1
                 graph_item_id += 1
 
-        self.preferred_height += self.get_y_offset_for_graph_item(graph_item_id)
+        # self.preferred_height += self.get_y_offset_for_graph_item(graph_item_id)
+        self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id,last_item=True)
         if self.preferred_height > self.height:
             raise SVGSizeError(f"{self.preferred_height}:Diagram should have a height of at least"
                                f" {self.preferred_height} instead of {self.height}.")
@@ -307,17 +308,26 @@ class SVGRenderer:
         return self.height - self.template.get_parameter_value(
             'stroke_width') - self.template.get_parameter_value('task_height')
 
-    @lru_cache(maxsize=256)
-    def get_y_offset_for_graph_item(self, graph_item_no: int):
+    # @lru_cache(maxsize=256)
+    def get_y_offset_for_graph_item(self, graph_item_no: int, last_item=False):
+
         y_offset = 0
         for key in self.graph_items_height:
             if key <= graph_item_no:
                 y_offset = y_offset + self.graph_items_height[key]
 
+        if last_item:
+            multiplier = 2
+        else:
+            multiplier = 1
+
+        item_offset = y_offset + multiplier * ( self.get_task_height() + self.get_y_offset() + self.template.get_parameter_value(
+            'arrow_height'))
+
         if debug:
-            print(f"For graph item #{graph_item_no}, the sum of the widths are {y_offset}.")
-        return y_offset + self.get_task_height() + self.get_y_offset() + self.template.get_parameter_value(
-            'arrow_height')
+            print(f"For graph item #{graph_item_no}, the sum of the widths has y_offset {y_offset} and item offset {item_offset}.")
+
+        return item_offset
 
     @lru_cache(maxsize=256)
     def get_target_x_for_connection(self, to_task_id: int, lost_message=False):

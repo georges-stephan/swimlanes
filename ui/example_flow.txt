@@ -12,7 +12,7 @@ Two -->> Three: _Notification_
 
 Two -> Three: `ok`
 
-note: See **Built for Fun** for more details
+note 1,2: See **Built for Fun** for more details
 
 order: One, Three, Two
 
