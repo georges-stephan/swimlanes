@@ -66,17 +66,14 @@ class SwimlaneParser:
         elif self.in_note and self.is_code_line(line):  # End of Note
             if self.note_task_from == -1 and self.note_task_to == -1:
                 self.diagram.add_diagram_item(Note(self.note_text))
-                # self.note_text = ""
             elif self.note_task_from != -1 and self.note_task_to == -1:
                 self.diagram.add_diagram_item(Note(self.note_text, self.note_task_from, self.diagram.tasks_count - 1))
                 self.note_task_from = -1
                 self.note_task_to = -1
-                # self.note_text = ""
             else:
                 self.diagram.add_diagram_item(Note(self.note_text, self.note_task_from, self.note_task_to))
                 self.note_task_from = -1
                 self.note_task_to = -1
-                # TODO this is causing the parsing to skip the current line
             self.in_note = False
             self.note_text = ""
             self.parse_line(line)
@@ -97,10 +94,8 @@ class SwimlaneParser:
                 # Parsing note: Some text
                 # No start or end task specified, the will horizontally fill the entire diagram
                 pass
-                # self.note_task_from = -1
-                # self.note_task_to = -1
             elif len(note_boundaries) == 2:  # Parsing note 1: Some text
-                self.note_task_from = self.diagram.get_task_id(int(note_boundaries[1]))
+                self.note_task_from = int(note_boundaries[1])
                 self.note_task_to = -1
             elif len(note_boundaries) == 3:  # Parsing note 1,4: Some text
                 self.note_task_from = int(note_boundaries[1])

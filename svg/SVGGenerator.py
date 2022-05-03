@@ -40,12 +40,14 @@ class SVGRenderer:
 
         self.preferred_height = 0
 
-        # Add arrows style
-        # Normal Arrow Style
+        # Start of the styles definition block
         self.svg.write('<defs>\n')
+        # Add the arrows style in the header of the SVG file
+        # Normal Arrow Style
         self.svg.write('<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">')
         self.svg.write('\n<polygon points="0 0, 10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
+
         # Lost Connection Arrow Style
         self.svg.write(
             '<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">\n')
@@ -56,11 +58,13 @@ class SVGRenderer:
                        f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
+
         # Reverse Arrow Head Style
         self.svg.write('\n<marker id="reverse_arrow_head" markerWidth="10" '
                        'markerHeight="7" refX="-3.5" refY="3.5" orient="auto">\n')
         self.svg.write('<polygon points="0 0, -10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
+
         # Open Arrow Head Style
         self.svg.write(
             '<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">\n')
@@ -71,9 +75,15 @@ class SVGRenderer:
                        f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
+
+        # End of the styles definitions block
         self.svg.write('</defs>\n')
 
     def get_svg_string(self):
+        """
+        A function to return the merged string component as a complete SVG string
+        :return: the diagram as a string
+        """
         svg_final = io.StringIO()
 
         self.add_title_to_svg()
@@ -133,7 +143,7 @@ class SVGRenderer:
                 graph_item_id += 1
 
         # self.preferred_height += self.get_y_offset_for_graph_item(graph_item_id)
-        self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id,last_item=True)
+        self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
         if self.preferred_height > self.height:
             raise SVGSizeError(f"{self.preferred_height}:Diagram should have a height of at least"
                                f" {self.preferred_height} instead of {self.height}.")
@@ -150,23 +160,25 @@ class SVGRenderer:
             from_task_id_ = self.diagram.get_task_id(task_connection.source_task)
             to_task_id_ = self.diagram.get_task_id(task_connection.target_task)
 
-            from_task_id = min(from_task_id_,to_task_id_)
-            to_task_id = max(from_task_id_,to_task_id_)
+            from_task_id = min(from_task_id_, to_task_id_)
+            to_task_id = max(from_task_id_, to_task_id_)
 
             note_x = self.get_mid_task_x(from_task_id) - self.template.get_parameter_value('arrow_height')
             # Remove the amount of the distance between 2 tasks from note width
             note_width = abs(self.get_mid_task_x(to_task_id) \
-                         + self.template.get_parameter_value('arrow_height') - note_x)
+                             + self.template.get_parameter_value('arrow_height') - note_x)
 
         note_y = self.get_y_offset_for_graph_item(graph_item_no) + self.template.get_parameter_value('arrow_height') * 2
         note_height = get_text_height(note.note_text
                                       , self.template.get_font_name_from_font_family_name('body-font-family')
                                       , self.template.get_parameter_value('body-font-size')
 
-                                      , note_width) + self.template.get_parameter_value('text_margin-top') + self.template.get_parameter_value('text_margin-bottom')
+                                      , note_width) + self.template.get_parameter_value(
+            'text_margin-top') + self.template.get_parameter_value('text_margin-bottom')
 
         if debug:
-            print(f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:{self.template.get_parameter_value('text_margin-bottom')}")
+            print(
+                f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:{self.template.get_parameter_value('text_margin-bottom')}")
             print(f'note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}')
 
         self.svg.write(f'\n<!-- Note #{note_id + 1}, object #{graph_item_no + 1} -->\n')
@@ -212,7 +224,7 @@ class SVGRenderer:
                                 divider_y,
                                 divider_to_x,
                                 self.graph_items_height[graph_item_no],
-                                fill_color='none',
+                                fill_color='white',
                                 stroke_color='none',
                                 font_weight='bold'
                                 )
@@ -321,11 +333,12 @@ class SVGRenderer:
         else:
             multiplier = 1
 
-        item_offset = y_offset + multiplier * ( self.get_task_height() + self.get_y_offset() + self.template.get_parameter_value(
-            'arrow_height'))
+        item_offset = y_offset + multiplier * (
+                self.get_task_height() + self.get_y_offset() + self.template.get_parameter_value('arrow_height'))
 
         if debug:
-            print(f"For graph item #{graph_item_no}, the sum of the widths has y_offset {y_offset} and item offset {item_offset}.")
+            print(
+                f"For graph item #{graph_item_no}, the sum of the widths has y_offset {y_offset} and item offset {item_offset}.")
 
         return item_offset
 
@@ -373,9 +386,6 @@ class SVGRenderer:
         self.svg.write(f'\n<!-- Connection {connection_no + 1} -->\n')
         stroke, style = get_stroke_from_style_name(task_connection.style)
 
-        # arrow_y = self.get_y_offset_for_graph_item(graph_item_offset) \
-        #           + self.template.get_parameter_value("space_between_connections")
-
         if to_self:
             # Now add the label associated to that swim lane
             text_y = self.get_y_offset_for_graph_item(graph_item_offset) \
@@ -407,6 +417,7 @@ class SVGRenderer:
                 f'" stroke="{self.template.get_parameter_value("connection_line_color")}" stroke-linejoin="round" ')
         else:
             # Now add the label associated to that swim lane
+            # TODO add a background color to the label or apply Z-Index
             self.draw_box_with_text("connection_text", task_connection.label,
                                     self.template.get_parameter_value('body-font-size')
                                     , min(self.get_mid_task_x(from_task_id),
@@ -415,7 +426,7 @@ class SVGRenderer:
                     graph_item_offset) - self.template.get_parameter_value('space_between_connections')
                                     , self.get_label_box_width(from_task_id, to_task_id, task_connection.lost_message)
                                     , self.template.get_parameter_value('space_between_connections')
-                                    , fill_color='none'
+                                    , fill_color='white'
                                     , stroke_color='none')
             self.svg.write(
                 f'<path id="connection_arrow_{connection_no + 1}" d="M {self.get_mid_task_x(from_task_id)} '
