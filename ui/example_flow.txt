@@ -4,7 +4,7 @@ title: Welcome to Python Swimlanes
 One -> Two: Message
 
 note:
-**Python Swimlanes** is a simple online tool for creating _sequence diagrams_.
+**Python Swimlanes** is a simple Python tool for creating _sequence diagrams_.
 
 Two -> Two: To self
 
