@@ -36,9 +36,14 @@ class SVGRenderer:
 
         self.svg = io.StringIO()
         self.box_id = 0
-        self.graph_items_height = {}
-
         self.preferred_height = 0
+
+        self.graph_items_height = {}
+        self.notes_svg_ids = []
+
+        self.add_definitions_to_svg()
+
+    def add_definitions_to_svg(self):
 
         # Start of the styles definition block
         self.svg.write('<defs>\n')
@@ -68,16 +73,75 @@ class SVGRenderer:
         # Open Arrow Head Style
         self.svg.write(
             '<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">\n')
-        self.svg.write(f'<line x1="5" y1="5" x2="-3" y2="11" '
+        self.svg.write(f'<line x1="5" y1="5" x2="-3" y2="8" '
                        f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
-        self.svg.write(f'<line x1="-2" y1="-2" x2="5" y2="5" '
+        self.svg.write(f'<line x1="5" y1="5" x2="-3" y2="2" '
                        f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
+        # TODO Fix the tip of the open arrow so that it look pointy
 
         # End of the styles definitions block
         self.svg.write('</defs>\n')
+
+    # def get_svg_string_v2(self):
+    #     """
+    #     Render items is order
+    #     :return: an SVG diagram as a text string containing the graph rendered in proper order
+    #     """
+    #     task_id = 0
+    #     connection_id = 0
+    #     divider_id = 0
+    #     note_id = 0
+    #     graph_item_id = 0
+    #     last_task_connection = None
+    #
+    #     svg_final = io.StringIO()
+    #
+    #     # 1 - Add title
+    #     self.add_title_to_svg()
+    #     # 2 - Add tasks with vertical connectors
+    #     for key in self.diagram.items:
+    #         if isinstance(self.diagram.items[key], Task):
+    #             self.add_task_to_svg(self.diagram.items[key], task_id)
+    #             task_id += 1
+    #     # 3 - Add tasks arrow connection
+    #     for key in self.diagram.items:
+    #         if isinstance(self.diagram.items[key], TaskConnection):
+    #             last_task_connection = self.diagram.items[key]
+    #             self.add_connection_to_svg(self.diagram.items[key], graph_item_id, connection_id)
+    #             connection_id += 1
+    #             graph_item_id += 1
+    #     # 4 - Add arrow text (done in previous step)
+    #     # TODO make sure that add_connection_to_svg adds the arrows before adding the text
+    #     # 5 - Add dividers
+    #     for key in self.diagram.items:
+    #         if isinstance(self.diagram.items[key], Divider):
+    #             self.add_divider_to_svg(self.diagram.items[key], graph_item_id, divider_id)
+    #             divider_id += 1
+    #             graph_item_id += 1
+    #     # 6 - Add notes
+    #     for key in self.diagram.items:
+    #         if isinstance(self.diagram.items[key], Note):
+    #             if self.diagram.items[key].get_start_task_id() == -1 or self.diagram.items[key].get_end_task_id() == -1:
+    #                 self.add_note_to_svg(None, self.diagram.items[key], graph_item_id, note_id)
+    #             else:
+    #                 self.add_note_to_svg(last_task_connection, self.diagram.items[key], graph_item_id, note_id)
+    #             note_id += 1
+    #             graph_item_id += 1
+    #
+    #     self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
+    #     if self.preferred_height > self.height:
+    #         raise SVGSizeError(f"{self.preferred_height}:Diagram should have a height of at least"
+    #                            f" {self.preferred_height} instead of {self.height}.")
+    #
+    #     self.svg.write('</svg>')
+    #
+    #     svg_final.write(self.get_svg_header())
+    #     svg_final.write(self.svg.getvalue())
+    #
+    #     return svg_final.getvalue()
 
     def get_svg_string(self):
         """
@@ -88,6 +152,11 @@ class SVGRenderer:
 
         self.add_title_to_svg()
         self.add_diagram_items_to_svg()
+
+        # pop notes: <use xlink:href="#one" />
+        for o_id in self.notes_svg_ids:
+            self.svg.write(f'<use xlink:href="#{o_id}" />\n')
+
         self.svg.write('</svg>')
 
         svg_final.write(self.get_svg_header())
@@ -106,7 +175,7 @@ class SVGRenderer:
 
         return svg_header.getvalue()
 
-    def add_diagram_items_to_svg(self):
+    def add_diagram_items_to_svg(self):  # Ici
         task_id = 0
         connection_id = 0
         divider_id = 0
@@ -114,6 +183,7 @@ class SVGRenderer:
         graph_item_id = 0
         last_task_connection = None
         self.preferred_height = self.template.get_parameter_value('y_offset') + self.get_task_height() * 2
+
         for key in self.diagram.items:
             # If we are adding a task (or a the label of a lane)
             if isinstance(self.diagram.items[key], Task):
@@ -142,7 +212,6 @@ class SVGRenderer:
                 note_id += 1
                 graph_item_id += 1
 
-        # self.preferred_height += self.get_y_offset_for_graph_item(graph_item_id)
         self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
         if self.preferred_height > self.height:
             raise SVGSizeError(f"{self.preferred_height}:Diagram should have a height of at least"
@@ -192,7 +261,8 @@ class SVGRenderer:
                                 , fill_color='rgb(255, 253, 238)'
                                 , stroke_color='rgb(221, 219, 204)'
                                 , justification='left'
-                                , apply_margin=True)
+                                , apply_margin=True
+                                , is_note=True)
 
         self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2
 
@@ -417,21 +487,29 @@ class SVGRenderer:
                 f'" stroke="{self.template.get_parameter_value("connection_line_color")}" stroke-linejoin="round" ')
         else:
             # Now add the label associated to that swim lane
-            # TODO add a background color to the label or apply Z-Index
-            self.draw_box_with_text("connection_text", task_connection.label,
-                                    self.template.get_parameter_value('body-font-size')
-                                    , min(self.get_mid_task_x(from_task_id),
-                                          self.get_target_x_for_connection(to_task_id, task_connection.lost_message))
-                                    , self.get_y_offset_for_graph_item(
-                    graph_item_offset) - self.template.get_parameter_value('space_between_connections')
+            # TODO add a background color to the label
+            self.draw_box_with_text("connection_text",
+                                    task_connection.label,
+                                    self.template.get_parameter_value('body-font-size'),
+                                    min(self.get_mid_task_x(from_task_id),
+                                        self.get_target_x_for_connection(to_task_id, task_connection.lost_message))
+                                    + self.template.get_parameter_value('arrow_height')
+                                    , self.get_y_offset_for_graph_item(graph_item_offset) -
+                                    self.template.get_parameter_value('space_between_connections')
                                     , self.get_label_box_width(from_task_id, to_task_id, task_connection.lost_message)
                                     , self.template.get_parameter_value('space_between_connections')
                                     , fill_color='white'
-                                    , stroke_color='none')
+                                    , stroke_color='pink')
+
+            path_l = self.get_target_x_for_connection(to_task_id, task_connection.lost_message)
+            if task_connection.open_arrow:
+                # For a dotted arrow, reduce the value of length og the path so that it crosses the vertical task line
+                path_l = path_l - 10
+
             self.svg.write(
                 f'<path id="connection_arrow_{connection_no + 1}" d="M {self.get_mid_task_x(from_task_id)} '
                 f'{self.get_y_offset_for_graph_item(graph_item_offset)} L '
-                f'{self.get_target_x_for_connection(to_task_id, task_connection.lost_message)} '
+                f'{path_l} '
                 f'{self.get_y_offset_for_graph_item(graph_item_offset)}" '
                 f'stroke="{self.template.get_parameter_value("connection_line_color")}" ')
         self.svg.write(f'stroke-width="{stroke}" fill="none" {style}')
@@ -453,7 +531,8 @@ class SVGRenderer:
         if from_task_id == to_task_id:
             return self.get_task_width()
         else:
-            return abs(self.get_target_x_for_connection(to_task_id, lost_message) - self.get_mid_task_x(from_task_id))
+            return abs(self.get_target_x_for_connection(to_task_id, lost_message) - self.get_mid_task_x(
+                from_task_id) + 2 * self.template.get_parameter_value('arrow_height'))
 
     def add_title_to_svg(self):
         self.draw_box_with_text("title", self.diagram.title, self.template.get_parameter_value('title-font-size')
@@ -463,7 +542,7 @@ class SVGRenderer:
     def draw_box_with_text(self, box_name: str, text: str, font_size: int, box_x: int, box_y: int, box_width: int
                            , box_height: int, box_corner=0, fill_color='white', stroke_color='black'
                            , font_family_param='body-font-family', font_weight='normal', justification='center'
-                           , apply_margin=False):
+                           , apply_margin=False, is_note=False):
         """
         Draw a box and render a text inside it. Handle text alignment and text wrapping
         :param font_family_param:
@@ -479,13 +558,16 @@ class SVGRenderer:
         :param stroke_color: the color of the line of the box. Use 'none' for no colors
         :param font_weight: either normal, bold, italic
         :param justification: either left or centered
-        :param apply_margin: wether a top margin should be added between the text and the top of the rectangle
+        :param apply_margin: whether a top margin should be added between the text and the top of the rectangle
         :return:
         """
         # Draw the box
         self.box_id += 1
+        svg_object_id = f"{box_name}_rectangle_{self.box_id}"
+        if is_note:
+            self.notes_svg_ids.append(svg_object_id)
         self.svg.write(
-            f'<rect id="{box_name}_rectangle_{self.box_id}" x="{box_x}" y="{box_y}" rx="{box_corner}" ry="{box_corner}"'
+            f'<rect id="{svg_object_id}" x="{box_x}" y="{box_y}" rx="{box_corner}" ry="{box_corner}"'
             f' width="{box_width}" height="{box_height}" '
             f'style="fill:{fill_color};stroke:{stroke_color}'
             f';stroke-width:{self.template.get_parameter_value("stroke_width")}"/>\n')
@@ -522,8 +604,11 @@ class SVGRenderer:
             else:
                 line_x = box_x + self.template.get_parameter_value("stroke_width") * 2
             self.box_id += 1
+            svg_text_object_id = f'{box_name}_text_{self.box_id}'
+            if is_note:
+                self.notes_svg_ids.append(svg_text_object_id)
             self.svg.write(
-                f'<text id="{box_name}_text_{self.box_id}" x="{line_x}" y="{line_y}" '
+                f'<text id="{svg_text_object_id}" x="{line_x}" y="{line_y}" '
                 f'font-size="{font_size}" font-weight="{font_weight}" '
                 f'font-family="{font_family}">'
                 f'{line[0]}'

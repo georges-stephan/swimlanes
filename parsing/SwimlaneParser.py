@@ -42,6 +42,11 @@ class SwimlaneParser:
         for line in lines:
             self.parse_line(line.strip())
 
+        # Since notes can span over multiple lines, we need to check if the last line/command was part of node
+        # and if so, add the note to the diagram
+        if self.in_note:
+            self.diagram.add_diagram_item(Note(self.note_text, self.note_task_from, self.note_task_to))
+
         return self.diagram
 
     def get_diagram_from_string(self, design_as_string: str):
@@ -61,7 +66,7 @@ class SwimlaneParser:
 
         arrow = self.is_line_declaring_a_task_and_a_connection(line)
 
-        if self.in_note and not self.is_code_line(line):  # In Note
+        if self.in_note and not self.is_code_line(line):  # In Note #TODO memo is not being added if it is the last command
             self.note_text += line
         elif self.in_note and self.is_code_line(line):  # End of Note
             if self.note_task_from == -1 and self.note_task_to == -1:
