@@ -1,3 +1,5 @@
+from configparser import ParsingError
+
 from parsing import constant
 from swimlane.Diagram import Diagram
 from swimlane.Divider import Divider
@@ -39,8 +41,10 @@ class SwimlaneParser:
         self.task_number = 0
 
     def get_diagram_from_lines(self, lines: list):
+        line_number = 1
         for line in lines:
-            self.parse_line(line.strip())
+            self.parse_line(line.strip(),line_number)
+            line_number += 1
 
         # Since notes can span over multiple lines, we need to check if the last line/command was part of node
         # and if so, add the note to the diagram
@@ -57,7 +61,7 @@ class SwimlaneParser:
 
         return self.get_diagram_from_lines(lines)
 
-    def parse_line(self, line: str):
+    def parse_line(self, line: str, line_number: int):
         if line.startswith("//"):  # Comment Line
             return
         if line.strip().lower() == 'autonumber':  # Mark tasks as needing auto-number
@@ -66,7 +70,7 @@ class SwimlaneParser:
 
         arrow = self.is_line_declaring_a_task_and_a_connection(line)
 
-        if self.in_note and not self.is_code_line(line):  # In Note #TODO memo is not being added if it is the last command
+        if self.in_note and not self.is_code_line(line):  # In Note
             self.note_text += line
         elif self.in_note and self.is_code_line(line):  # End of Note
             if self.note_task_from == -1 and self.note_task_to == -1:
@@ -81,7 +85,10 @@ class SwimlaneParser:
                 self.note_task_to = -1
             self.in_note = False
             self.note_text = ""
-            self.parse_line(line)
+
+            # In the previous iteration, we had a one-line comment, so we are in comment mode. Since the current line
+            # has a command in it, we need to turn off the in comment mode and re-invoke the same function
+            self.parse_line(line,line_number)
         elif line.lower().startswith(constant.START_CODE[0]):  # Title
             self.diagram.title = line[6:len(line)]
         elif line.lower().startswith(constant.START_CODE[1]):  # Note Declaration
@@ -103,6 +110,15 @@ class SwimlaneParser:
                 self.note_task_from = int(note_boundaries[1])
                 self.note_task_to = -1
             elif len(note_boundaries) == 3:  # Parsing note 1,4: Some text
+                if int(note_boundaries[1]) < 0:
+                    raise ParsingError(f"At line {line_number}:Note boundaries should be a positive integer, not"
+                                       f"{note_boundaries[1]}")
+                if int(note_boundaries[2]) < int(note_boundaries[1]):
+                    raise ParsingError(f"At line {line_number}:Second note boundary:{note_boundaries[2]} cannot be "
+                                       f"smaller than the first:{note_boundaries[1]}.")
+                if int(note_boundaries[2]) == int(note_boundaries[1]):
+                    raise ParsingError(f"At line {line_number}:Note boundary should not be equal:{note_boundaries[1]}.")
+
                 self.note_task_from = int(note_boundaries[1])
                 self.note_task_to = int(note_boundaries[2])
             else:

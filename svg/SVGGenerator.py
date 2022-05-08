@@ -1,5 +1,5 @@
 from templates.DefaultTemplate import DefaultTemplate
-from svg.Errors import SVGSizeError
+from svg.SVGSizeError import SVGSizeError
 from swimlane.Diagram import Diagram
 from functools import lru_cache
 import io
@@ -221,10 +221,16 @@ class SVGRenderer:
         note_x, note_y, note_width, note_height = 0, 0, 0, 0
 
         if task_connection is None:
+            # No boundaries was specified, spawn the note from the first task till the last
             note_x = self.get_mid_task_x(0) - self.template.get_parameter_value('arrow_height')
             note_width = self.get_mid_task_x(self.diagram.tasks_count - 1) \
                          + self.template.get_parameter_value('arrow_height') - note_x
-
+        elif note.is_boundary_defined():
+            # A boundaries were specified, spawn the start task till the end task
+            note_x = self.get_mid_task_x(note.get_start_task_id()) - self.template.get_parameter_value('arrow_height')
+            note_width = self.get_mid_task_x(note.get_end_task_id()) - self.template.get_parameter_value('arrow_height')
+            # note_x = self.get_mid_task_x(note.get_start_task_id()) - self.template.get_parameter_value('arrow_height')
+            # note_width = self.get_mid_task_x(note.get_end_task_id()) - note_x + self.template.get_parameter_value('arrow_height')
         else:
             from_task_id_ = self.diagram.get_task_id(task_connection.source_task)
             to_task_id_ = self.diagram.get_task_id(task_connection.target_task)
@@ -354,38 +360,39 @@ class SVGRenderer:
             f'{self.get_y_lower_node_offset()}" stroke="{self.template.get_parameter_value("connection_line_color")}" '
             f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none"/>\n')
 
-    @lru_cache(maxsize=256)
+    # @lru_cache(maxsize=256)
     def get_mid_task_x(self, task_no: int):
         """
         Returns the point x where x is: (_Task__x__One_)
         :param task_no: The id of the task
         :return: the horizontal coordinate of the point in the middle of the task label
         """
-        return self.get_x_offset(task_no) + int(self.get_task_width() / 2)
+        i = self.get_x_offset(task_no) + int(self.get_task_width() / 2)
+        return i
 
-    @lru_cache(maxsize=2)
+    # @lru_cache(maxsize=2)
     def get_task_width(self):
         return int((self.width - self.template.get_parameter_value('x_offset')) / self.diagram.tasks_count) \
                - self.template.get_parameter_value('x_offset')
 
-    @lru_cache(maxsize=256)
+    # @lru_cache(maxsize=256)
     def get_x_offset(self, task_no: int):
         return self.template.get_parameter_value('x_offset') + (
                 (self.get_task_width() + self.template.get_parameter_value('x_offset')) * task_no)
 
-    @lru_cache(maxsize=2)
+    # @lru_cache(maxsize=2)
     def get_task_upper_mid(self):
         return self.template.get_parameter_value('task_height') + self.get_y_offset()
 
-    @lru_cache(maxsize=2)
+    # @lru_cache(maxsize=2)
     def get_y_offset(self):
         return self.template.get_parameter_value('y_offset')
 
-    @lru_cache(maxsize=2)
+    # @lru_cache(maxsize=2)
     def get_task_height(self):
         return self.template.get_parameter_value('task_height')
 
-    @lru_cache(maxsize=2)
+    # @lru_cache(maxsize=2)
     def get_y_lower_node_offset(self):
         return self.height - self.template.get_parameter_value(
             'stroke_width') - self.template.get_parameter_value('task_height')
@@ -412,7 +419,7 @@ class SVGRenderer:
 
         return item_offset
 
-    @lru_cache(maxsize=256)
+    # @lru_cache(maxsize=256)
     def get_target_x_for_connection(self, to_task_id: int, lost_message=False):
         """
         Calculate where a connection should en
@@ -425,7 +432,7 @@ class SVGRenderer:
         else:
             return self.get_mid_task_x(to_task_id)
 
-    @lru_cache(maxsize=2)
+    # @lru_cache(maxsize=2)
     def get_self_connection_height(self):
         return self.template.get_parameter_value('space_between_connections') - self.template.get_parameter_value(
             'arrow_height') * 2
@@ -527,12 +534,12 @@ class SVGRenderer:
 
         # TODO re-calculate the this item's height
 
-    def get_label_box_width(self, from_task_id: int, to_task_id: int, lost_message: bool):
+    def get_label_box_width(self, from_task_id: int, to_task_id: int, lost_message=False):
         if from_task_id == to_task_id:
             return self.get_task_width()
         else:
             return abs(self.get_target_x_for_connection(to_task_id, lost_message) - self.get_mid_task_x(
-                from_task_id) + 2 * self.template.get_parameter_value('arrow_height'))
+                from_task_id)) - 2 * self.template.get_parameter_value('arrow_height')
 
     def add_title_to_svg(self):
         self.draw_box_with_text("title", self.diagram.title, self.template.get_parameter_value('title-font-size')

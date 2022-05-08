@@ -11,7 +11,7 @@ from tkinter import filedialog as fd
 from pathlib import Path
 
 from parsing.SwimlaneParser import SwimlaneParser
-from svg.Errors import SVGSizeError
+from svg.SVGSizeError import SVGSizeError
 from svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
@@ -29,6 +29,7 @@ text = None
 label_design_file = None
 root = None
 swimlaneEditorModel = None  # TODO init to blank when starting the UI
+debug = True
 
 filetypes = (
     ('text files', '*.txt'),
@@ -41,6 +42,10 @@ def donothing():
 
 
 def on_closing():
+    if debug:
+        print("Exiting immediatly when running in Debug mode")
+        sys.exit()
+
     global root
     global swimlaneEditorModel
     global text
@@ -240,7 +245,7 @@ def draw_window():
     # set window props
     root.wm_title("Swimlanes Diagram")
     root.resizable(True, True)
-    root.geometry('800x600')
+    root.geometry('800x500')
 
     panedWindow = PanedWindow(root, orient=HORIZONTAL, showhandle=True)
     panedWindow.pack(fill=BOTH, expand=1)
@@ -282,6 +287,8 @@ def draw_window():
     if Path(example_file_name).exists():
         with open(example_file_name, 'r') as f:
             text_help.insert(1.0, f.read())
+            if debug:
+                text.insert(1.0, text_help.get(1.0, END))
 
     text_help.pack(expand=True, fill='both')
     text_help.config(state=DISABLED)

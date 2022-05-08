@@ -37,7 +37,7 @@ class TaskConnection(DiagramItem):
             self.looping_connection = False
             self.target_task = target_task
 
-    def __str__(self):
+    def __repr__(self):
         task_connection_as_string = io.StringIO()
         task_connection_as_string.write("From ")
         task_connection_as_string.write(str(self.source_task))
