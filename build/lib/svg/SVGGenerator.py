@@ -1,5 +1,5 @@
 from templates.DefaultTemplate import DefaultTemplate
-from svg.Errors import SVGSizeError
+from svg.SVGSizeError import SVGSizeError
 from swimlane.Diagram import Diagram
 from functools import lru_cache
 import io

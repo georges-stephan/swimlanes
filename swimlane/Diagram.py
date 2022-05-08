@@ -11,7 +11,6 @@ class Diagram:
 
     def __init__(self, title: str):
         self.title = title
-        self.items = {}
         self.items_count = 0
         self.tasks_count = 0
         self.dividers_count = 0
@@ -19,6 +18,7 @@ class Diagram:
         self.notes_count = 0
         self.auto_number = False
         self.swapped_items = {}
+        self.items = {}
 
     def add_diagram_item(self, diagram_item: DiagramItem):
         if isinstance(diagram_item, Task):
@@ -30,9 +30,24 @@ class Diagram:
         elif isinstance(diagram_item, Note):
             self.add_note(diagram_item)
 
+    def get_item_index_for_task_number(self, task_index: int):
+        item_counter = 0
+        task_counter = 0
+        for key in self.items:
+            if isinstance(self.items[key], Task):
+                if task_counter == task_index:
+                    return item_counter + 1
+                else:
+                    task_counter += 1
+                    item_counter += 1
+            else:
+                item_counter += 1
+        raise Exception(f"Can't find a task with index {task_index}.")
+
     def add_task(self, task: Task):
         if task is None:
             return
+
         if self.get_task_id(task) != -1:
             # Task already added
             return
@@ -74,7 +89,12 @@ class Diagram:
                     return a_task
         return None
 
-    def get_diagram_task_index(self, task: Task):
+    def __get_diagram_task_index(self, task: Task):
+        """
+        <b>Does not consider the re-ordering index of tasks</b>
+        :param task:
+        :return: the index of the given task.
+        """
         for key in self.items:
             if isinstance(self.items[key], Task):
                 if self.items[key] == task:
@@ -82,6 +102,11 @@ class Diagram:
         return -1
 
     def get_task_by_index(self, task_number: int):
+        """
+
+        :param task_number: task index
+        :return: a task
+        """
         task_number_counter = 0
         for key in self.items:
             task = self.items[key]
@@ -92,7 +117,7 @@ class Diagram:
                     task_number_counter += 1
         return None
 
-    def get_task_id(self, task: Task):
+    def get_task_id(self, task: Task):  # TODO test me
         task_id = 0
         for key in self.items:
             if isinstance(self.items[key], Task):
@@ -103,49 +128,47 @@ class Diagram:
         return -1
 
     def apply_order(self, items_oder: [str]):
-        index: int
-        index = 0
-        for item_name in items_oder:
-            task = self.get_task_by_name(item_name)
-            if task is not None:
-                task.set_new_location(index)
-            index += 1
+        temp = [0] * len(items_oder)
 
-        for key in self.items:
-            task_a = self.items[key]
-            if isinstance(task_a, Task):
-                if task_a.new_location > -1:
-                    task_b = self.get_task_by_index(task_a.new_location)
-                    task_a_diagram_index = self.get_diagram_task_index(task_a)
-                    task_b_diagram_index = self.get_diagram_task_index(task_b)
+        i = 0
+        for task_name in items_oder:
+            temp[i] = self.get_task_id(self.get_task_by_name(task_name))
+            i += 1
 
-                    if task_a_diagram_index != task_b_diagram_index:
-                        self.swapped_items[task_a_diagram_index] = task_b_diagram_index
-                        self.swapped_items[task_b_diagram_index] = task_a_diagram_index
+        self.__reorder(temp)
 
-                    # Swap task_a and task_b
-                    tmp = task_a
-                    self.items[key] = task_b
+    def __reorder(self, index: [int]):  # Fuck
 
-                    if isinstance(self.items[task_b_diagram_index], Task):
-                        self.items[task_b_diagram_index] = tmp
-                    else:
-                        raise Exception(
-                            f"Iteration {key}:Can't replace Task with a {type(self.items[task_b_diagram_index])}.")
+        temp = {}
+        n = len(self.items) + 1
 
-        # Notes are sensitive to tasks locations and need to be updated
-        for key in self.items:
-            a_note = self.items[key]
-            if isinstance(a_note, Note):
-                if a_note.get_start_task_id() in self.swapped_items:
-                    a_note.set_start_task_id(self.swapped_items[a_note.get_start_task_id()])
-                if a_note.get_end_task_id() in self.swapped_items:
-                    a_note.set_end_task_id(self.swapped_items[a_note.get_end_task_id()])
+        # items[i] should be
+        # present at index[i] index
+        j = 0
+        for i in range(1, n):
+
+            if isinstance(self.items[i], Task):
+                item_index = self.get_item_index_for_task_number(index[j])
+                if item_index in temp:
+                    raise Exception(f"Entry {item_index} is not empty (has {self.items[item_index]} at iteration {i}.")
+                temp[item_index] = self.items[i]
+                j += 1
+            else:
+                temp[i] = self.items[i]
+
+        # Copy temp[] to items[]
+        for i in range(1, n):
+            self.items[i] = temp[i]
 
     def print_tasks(self):
+        index = 0
         for key in self.items:
             if isinstance(self.items[key], Task):
-                print(str(self.items[key]))
+                print(f"At {index}, task is {str(self.items[key])}.")
+                index += 1
+
+    def __repr__(self):
+        return self.__str__()
 
     def __str__(self):
         diagram_as_text = io.StringIO()

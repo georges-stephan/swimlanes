@@ -1,0 +1,76 @@
+
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="595">
+<defs>
+<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">
+<polygon points="0 0, 10 3.5, 0 7"/>
+</marker>
+<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+<line x1="0" y1="0" x2="10" y2="10" style="stroke:black;stroke-width:1"/>
+<line x1="0" y1="10" x2="10" y2="0" style="stroke:black;stroke-width:1"/>
+</marker>
+
+<marker id="reverse_arrow_head" markerWidth="10" markerHeight="7" refX="-3.5" refY="3.5" orient="auto">
+<polygon points="0 0, -10 3.5, 0 7"/>
+</marker>
+<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">
+<line x1="5" y1="5" x2="-3" y2="8" style="stroke:black;stroke-width:1"/>
+<line x1="5" y1="5" x2="-3" y2="2" style="stroke:black;stroke-width:1"/>
+</marker>
+</defs>
+<rect id="title_rectangle_1" x="0" y="0" rx="0" ry="0" width="800" height="70" style="fill:none;stroke:none;stroke-width:2"/>
+<text id="title_text_2" x="300" y="41" font-size="16" font-weight="normal" font-family="sans-serif"> Welcome to Python Swimlanes</text>
+
+<!-- Task 1 Node -->
+<rect id="task_rectangle_3" x="50" y="70" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_4" x="136" y="102" font-size="14" font-weight="normal" font-family="sans-serif">One</text>
+<rect id="task_rectangle_5" x="50" y="543" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_6" x="136" y="575" font-size="14" font-weight="normal" font-family="sans-serif">One</text>
+<!-- Task 1 Upper Lower Connector -->
+<path id="line_task_1" d="M 150 120 L 150 543" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Task 2 Node -->
+<rect id="task_rectangle_7" x="300" y="70" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_8" x="386" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Two</text>
+<rect id="task_rectangle_9" x="300" y="543" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_10" x="386" y="575" font-size="14" font-weight="normal" font-family="sans-serif">Two</text>
+<!-- Task 2 Upper Lower Connector -->
+<path id="line_task_2" d="M 400 120 L 400 543" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 1 -->
+<rect id="connection_text_rectangle_11" x="160" y="130" rx="0" ry="0" width="230" height="50" style="fill:white;stroke:pink;stroke-width:2"/>
+<text id="connection_text_text_12" x="246" y="161" font-size="14" font-weight="normal" font-family="sans-serif">Message</text>
+<path id="connection_arrow_1" d="M 150 180 L 400 180" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Note #1, object #2 -->
+<rect id="note_1_rectangle_13" x="140" y="200" rx="0" ry="0" width="520" height="24" style="fill:rgb(255, 253, 238);stroke:rgb(221, 219, 204);stroke-width:2"/>
+<text id="note_1_text_14" x="144" y="218" font-size="14" font-weight="normal" font-family="sans-serif">**Python Swimlanes** is a simple Python tool for creating _sequence diagrams_.</text>
+
+<!-- Connection 2 -->
+<rect id="self_connection_text_2_rectangle_15" x="300" y="234" rx="0" ry="0" width="200" height="40" style="fill:white;stroke:red;stroke-width:2"/>
+<text id="self_connection_text_2_text_16" x="378" y="261" font-size="14" font-weight="normal" font-family="sans-serif">To self</text>
+<path id="self_connection_arrow_2" d="M 400 284 L 450 284 L 450 314 400 314 " stroke="black" stroke-linejoin="round" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Task 3 Node -->
+<rect id="task_rectangle_17" x="550" y="70" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_18" x="631" y="102" font-size="14" font-weight="normal" font-family="sans-serif">Three</text>
+<rect id="task_rectangle_19" x="550" y="543" rx="10" ry="10" width="200" height="50" style="fill:white;stroke:grey;stroke-width:2"/>
+<text id="task_text_20" x="631" y="575" font-size="14" font-weight="normal" font-family="sans-serif">Three</text>
+<!-- Task 3 Upper Lower Connector -->
+<path id="line_task_3" d="M 650 120 L 650 543" stroke="black" stroke-width="2" fill="none"/>
+
+<!-- Connection 3 -->
+<rect id="connection_text_rectangle_21" x="410" y="324" rx="0" ry="0" width="230" height="50" style="fill:white;stroke:pink;stroke-width:2"/>
+<text id="connection_text_text_22" x="481" y="355" font-size="14" font-weight="normal" font-family="sans-serif">_Notification_</text>
+<path id="connection_arrow_3" d="M 400 374 L 650 374" stroke="black" stroke-width="3" fill="none" stroke-dasharray=" 10 5" marker-end="url(#open_arrow_head)"/>
+<!-- Connection 4 -->
+<rect id="connection_text_rectangle_23" x="410" y="374" rx="0" ry="0" width="230" height="50" style="fill:white;stroke:pink;stroke-width:2"/>
+<text id="connection_text_text_24" x="512" y="406" font-size="14" font-weight="normal" font-family="sans-serif">`ok`</text>
+<path id="connection_arrow_4" d="M 400 424 L 650 424" stroke="black" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
+<!-- Note #2, object #6 -->
+<rect id="note_2_rectangle_25" x="390" y="444" rx="0" ry="0" width="270" height="21" style="fill:rgb(255, 253, 238);stroke:rgb(221, 219, 204);stroke-width:2"/>
+<text id="note_2_text_26" x="394" y="462" font-size="14" font-weight="normal" font-family="sans-serif"> See **Built for Fun** for more details</text>
+<use xlink:href="#note_1_rectangle_13" />
+<use xlink:href="#note_1_text_14" />
+<use xlink:href="#self_connection_text_2_rectangle_15" />
+<use xlink:href="#self_connection_text_2_text_16" />
+<use xlink:href="#note_2_rectangle_25" />
+<use xlink:href="#note_2_text_26" />
+</svg>

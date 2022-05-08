@@ -11,7 +11,7 @@ from tkinter import filedialog as fd
 from pathlib import Path
 
 from parsing import SwimlaneParser
-from svg.Errors import SVGSizeError
+from svg.SVGSizeError import SVGSizeError
 from svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
