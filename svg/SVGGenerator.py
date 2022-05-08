@@ -305,7 +305,7 @@ class SVGRenderer:
             f'{self.get_y_lower_node_offset()}" stroke="{self.template.get_parameter_value("connection_line_color")}" '
             f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none"/>\n')
 
-    # @lru_cache(maxsize=256)
+    @lru_cache(maxsize=256)
     def get_mid_task_x(self, task_no: int):
         """
         Returns the point x where x is: (_Task__x__One_)
@@ -423,7 +423,7 @@ class SVGRenderer:
                                     , self.template.get_parameter_value('space_between_connections')
                                     - self.template.get_parameter_value('arrow_height')
                                     , fill_color='white'
-                                    , stroke_color='red'
+                                    , stroke_color='none'
                                     , move_to_front=True)
 
             arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) - self.template.get_parameter_value(
@@ -453,12 +453,15 @@ class SVGRenderer:
                                     , self.get_label_box_width(from_task_id, to_task_id, task_connection.lost_message)
                                     , self.template.get_parameter_value('space_between_connections')
                                     , fill_color='white'
-                                    , stroke_color='pink')
+                                    , stroke_color='none')
 
             path_l = self.get_target_x_for_connection(to_task_id, task_connection.lost_message)
             if task_connection.open_arrow:
-                # For a dotted arrow, reduce the value of length og the path so that it crosses the vertical task line
-                path_l = path_l - 10
+                # For a dotted arrow, reduce the value of length of the path so that it crosses the vertical task line
+                if from_task_id > to_task_id:
+                    path_l = path_l - 10
+                else:
+                    path_l = path_l + 10
 
             self.svg.write(
                 f'<path id="connection_arrow_{connection_no + 1}" d="M {self.get_mid_task_x(from_task_id)} '

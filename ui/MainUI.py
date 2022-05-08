@@ -29,7 +29,7 @@ text = None
 label_design_file = None
 root = None
 swimlaneEditorModel = None  # TODO init to blank when starting the UI
-debug = True
+debug = False
 
 filetypes = (
     ('text files', '*.txt'),
