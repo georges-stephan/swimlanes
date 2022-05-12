@@ -9,7 +9,7 @@ setup(
     author_email='georges.stephan@icloud.com',
     packages=find_packages(exclude='*_test.py'),
     url='https://github.com/georges-stephan/swimlanes',
-    install_requires=['Pillow>=9.0'],
+    install_requires=['Pillow>=9.0','pyaml'],
     entry_points={
         'gui_scripts': ['swimlanes=ui.MainUI:main']
     }

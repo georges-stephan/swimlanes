@@ -7,11 +7,13 @@ from swimlane.Note import Note
 from swimlane.Task import Task
 from swimlane.TaskConnection import TaskConnection
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class SwimlaneParser:
 
     def __init__(self, diagram_name="Diagram"):
-        self.debug = False
         self.diagram_name = diagram_name
         self.diagram = Diagram(diagram_name)
         self.in_note = False
@@ -25,9 +27,8 @@ class SwimlaneParser:
             file_content = f.read()
 
         lines = list(filter((lambda x: x.strip() != ''), file_content.splitlines()))
-        if self.debug:
-            print(len(lines))
-            print(lines)
+        logger.debug(len(lines))
+        logger.debug(lines)
 
         self.reset_globals()
         return self.get_diagram_from_lines(lines)
@@ -55,9 +56,9 @@ class SwimlaneParser:
 
     def get_diagram_from_string(self, design_as_string: str):
         lines = list(filter((lambda x: x.strip() != ''), design_as_string.splitlines()))
-        if self.debug:
-            print(len(lines))
-            print(lines)
+
+        logger.debug(len(lines))
+        logger.debug(lines)
 
         return self.get_diagram_from_lines(lines)
 
@@ -148,8 +149,9 @@ class SwimlaneParser:
         elif line.startswith(constant.START_CODE[7]):  # Order example usage: order: first [,second[,third ...]]
             order_command = line[:line.find(':')]
             order_text = line[line.find(':') + 1:]
-            if self.debug:
-                print(f"The order command is {order_command}, the parameters are {order_text}")
+
+            logger.debug(f"The order command is {order_command}, the parameters are {order_text}")
+
             items_order = order_text.split(",")
             self.diagram.apply_order(items_order)
             self.diagram.print_tasks()
@@ -203,8 +205,7 @@ class SwimlaneParser:
         task_from = line[0:line.find(an_arrow_operator)].strip()
         task_to = line[line.find(an_arrow_operator) + len(an_arrow_operator):line.find(':')].strip()
 
-        if self.debug:
-            print(f"The message label is '{message_label}', Task FROM is '{task_from}', Task TO is '{task_to}'.")
+        logger.debug(f"The message label is '{message_label}', Task FROM is '{task_from}', Task TO is '{task_to}'.")
 
         return message_label, task_from, task_to
 

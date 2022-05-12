@@ -1,10 +1,13 @@
 import io
+import logging
 
 from swimlane.DiagramItems import DiagramItem
 from swimlane.Divider import Divider
 from swimlane.Note import Note
 from swimlane.Task import Task
 from swimlane.TaskConnection import TaskConnection
+
+logger = logging.getLogger(__name__)
 
 
 class Diagram:
@@ -164,7 +167,7 @@ class Diagram:
         index = 0
         for key in self.items:
             if isinstance(self.items[key], Task):
-                print(f"At {index}, task is {str(self.items[key])}.")
+                logger.info(f"At {index}, task is {str(self.items[key])}.")
                 index += 1
 
     def __repr__(self):

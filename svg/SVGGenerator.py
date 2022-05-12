@@ -4,6 +4,7 @@ from svg.SVGSizeError import SVGSizeError
 from swimlane.Diagram import Diagram
 from functools import lru_cache
 import io
+import logging
 
 from swimlane.Divider import Divider
 from swimlane.Note import Note
@@ -11,7 +12,7 @@ from svg.FontFunctions import split_text, get_text_height
 from swimlane.Task import Task
 from swimlane.TaskConnection import TaskConnection
 
-debug = True
+logger = logging.getLogger(__name__)
 
 
 def get_stroke_from_style_name(style_name: str):
@@ -194,10 +195,10 @@ class SVGRenderer:
                                       , note_width) + self.template.get_parameter_value(
             'text_margin-top') + self.template.get_parameter_value('text_margin-bottom')
 
-        if debug:
-            print(
-                f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:{self.template.get_parameter_value('text_margin-bottom')}")
-            print(f'note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}')
+        logger.debug(
+                f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:"
+                f"{self.template.get_parameter_value('text_margin-bottom')}. Variable "
+                f"note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}")
 
         self.svg.write(f'\n<!-- Note #{note_id + 1}, object #{graph_item_no + 1} -->\n')
         self.draw_box_with_text(f"note_{note_id + 1}"
@@ -358,9 +359,9 @@ class SVGRenderer:
         item_offset = y_offset + multiplier * (
                 self.get_task_height() + self.get_y_offset() + self.template.get_parameter_value('arrow_height'))
 
-        if debug:
-            print(
-                f"For graph item #{graph_item_no}, the sum of the widths has y_offset {y_offset} and item offset {item_offset}.")
+        logger.debug(
+            f"For graph item #{graph_item_no}, the sum of the widths has y_offset {y_offset} and item offset"
+            f" {item_offset}.")
 
         return item_offset
 
@@ -538,9 +539,8 @@ class SVGRenderer:
             return
 
         if lines[0][2] < 1:  # Use a logger and write a warning
-            if debug:
-                print(f"Text '{text}' was width {lines[0][1]} and height {lines[0][2]} "
-                      f"in a rectangle of heigh {box_height} and width {box_width}.")
+            logger.warning(f"Text '{text}' was width {lines[0][1]} and height {lines[0][2]} in a rectangle of height "
+                           f"{box_height} and width {box_width}.")
             return
         # How many lines of text can be displayed in the defined box?
         number_of_lines_that_can_be_printed = int(box_height / lines[0][2])
