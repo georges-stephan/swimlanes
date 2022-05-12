@@ -46,7 +46,7 @@ filetypes = (
 )
 
 
-def donothing():
+def do_nothing():
     pass
 
 
@@ -323,7 +323,7 @@ def draw_window():
     file_menu = Menu(menu_bar, tearoff=0)
     file_menu.add_command(label="New", command=lambda: text.delete(1.0, END))
     file_menu.add_command(label="Open", command=select_and_load_file)
-    file_menu.add_command(label="Save", command=donothing)
+    file_menu.add_command(label="Save", command=do_nothing)
     file_menu.add_command(label="Save as...", command=save_file_as)
     file_menu.add_command(label="Close", command=on_closing)
 
