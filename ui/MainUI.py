@@ -2,6 +2,9 @@ import os
 import json
 import sys
 import tempfile
+import logging.config
+import yaml
+
 from json import JSONDecodeError
 
 from tkinter import Frame, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
@@ -17,6 +20,12 @@ from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
 
 from ui.SwimlaneEditorModel import SwimlaneEditorModel
+
+with open(f'{os.path.abspath("..//")}{os.path.sep}logging-properties.yml', 'r') as stream:
+    config = yaml.load(stream, Loader=yaml.FullLoader)
+
+logging.config.dictConfig(config)
+logger = logging.getLogger(__name__)
 
 # Global Variables
 dir_name = None
@@ -43,7 +52,7 @@ def donothing():
 
 def on_closing():
     if debug:
-        print("Exiting immediatly when running in Debug mode")
+        logger.info("Exiting immediately when running in Debug mode")
         sys.exit()
 
     global root
@@ -113,7 +122,7 @@ def save_file_as():
     if design_file is not None:
         # design_filename = design_file.name
         dir_name, design_filename = os.path.split(design_file.name)
-        print(f"Dir name:{dir_name}, design file name:{design_filename}, text is {text.get('1.0', END)}")
+        logger.info(f"Dir name:{dir_name}, design file name:{design_filename}, text is {text.get('1.0', END)}")
         try:
             design_file.write(text.get('1.0', END))
             update_config_file()
@@ -139,7 +148,7 @@ def create_settings_dir_if_needed():
                 design_filename = config['design_file']
                 dir_name = config['out_dir']
             except JSONDecodeError as e:
-                print(f"Config file damaged:{e.msg}")
+                logger.info(f"Config file damaged:{e.msg}")
                 config = {"design_file": str(Path.home()), "out_dir": str(Path.home())}
 
                 with open(config_file, 'w') as ff:
@@ -195,7 +204,7 @@ def generate_svg_file(update_conf_file_after_gen=True):
     global output_file_name
     global design_filename
 
-    print(f"Design filename is {design_filename}, result will be saved in {dir_name}")
+    logger.info(f"Design filename is {design_filename}, result will be saved in {dir_name}")
 
     input_file_dir, input_file_name = os.path.split(design_filename)
     output_file_name = f"{dir_name}{input_file_name}.svg"
@@ -224,7 +233,7 @@ def generate_svg_file(update_conf_file_after_gen=True):
                     update_config_file()
             except SVGSizeError as svg_error:
                 preferred_height = int(svg_error.__str__().split(':')[0])
-                print(f"Exception: {svg_error} preferred_height should be:{preferred_height}")
+                logger.debug(f"Exception: {svg_error} preferred_height should be:{preferred_height}")
                 # TODO find a way to calculate the preferred width instead of hard-coding 800. Ex. add a 'width' keyword
                 generator = SVGRenderer(diagram, 800, preferred_height)
                 f.close()
