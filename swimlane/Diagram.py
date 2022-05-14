@@ -140,26 +140,31 @@ class Diagram:
 
         self.__reorder(temp)
 
-    def __reorder(self, index: [int]):  # Fuck
+    def __reorder(self, new_order_indexes: [int]):  # TODO still needs testing and probably fixing
+        # example new_order_indexes was [0,3,1,2]
+        diagram_tasks_items = []
+        i = 0
+        for task_index in new_order_indexes:
+            # Convert the relative task index to an  index in the graph
+            # ie find the diagram item index
+            diagram_task_item_id = self.get_item_index_for_task_number(new_order_indexes[i])
+            diagram_tasks_items.append(diagram_task_item_id)
+            i += 1
+
+        # Here, diagram_tasks_items is [1, 8, 2, 4]
+        # Diagram is                   [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        # Diagram is                   [t, t, 3, t, 5, 6, 7, t, 9]
 
         temp = {}
-        n = len(self.items) + 1
-
-        # items[i] should be
-        # present at index[i] index
-        j = 0
-        for i in range(1, n):
-
-            if isinstance(self.items[i], Task):
-                item_index = self.get_item_index_for_task_number(index[j])
-                if item_index in temp:
-                    raise Exception(f"Entry {item_index} is not empty (has {self.items[item_index]} at iteration {i}.")
-                temp[item_index] = self.items[i]
-                j += 1
+        task_key = 1
+        for key in self.items:
+            if isinstance(self.items[key], Task):
+                temp[key] = self.items[diagram_tasks_items[task_key-1]]
+                task_key += 1
             else:
-                temp[i] = self.items[i]
+                temp[key] = self.items[key]
 
-        # Copy temp[] to items[]
+        n = len(self.items) + 1
         for i in range(1, n):
             self.items[i] = temp[i]
 

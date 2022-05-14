@@ -150,8 +150,6 @@ class SwimlaneParser:
             order_command = line[:line.find(':')]
             order_text = line[line.find(':') + 1:]
 
-            logger.debug(f"The order command is {order_command}, the parameters are {order_text}")
-
             items_order = order_text.split(",")
             self.diagram.apply_order(items_order)
             self.diagram.print_tasks()
