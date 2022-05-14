@@ -11,6 +11,35 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def is_code_line(line: str):
+    for sc in constant.START_CODE:
+        if line.lower().startswith(sc):
+            return True
+
+    for ao in constant.ARROW_OPERATORS:
+        if line.find(ao) and line.find(':') != -1:
+            return True
+
+    return False
+
+
+def get_task_connection_from_input_line(line: str, an_arrow_operator: str):
+    message_label = line[line.find(':') + 1:len(line)].strip()
+    task_from = line[0:line.find(an_arrow_operator)].strip()
+    task_to = line[line.find(an_arrow_operator) + len(an_arrow_operator):line.find(':')].strip()
+
+    logger.debug(f"The message label is '{message_label}', Task FROM is '{task_from}', Task TO is '{task_to}'.")
+
+    return message_label, task_from, task_to
+
+
+def is_line_declaring_a_task_and_a_connection(line: str):
+    for arrow in constant.ARROW_OPERATORS:
+        if line.find(arrow) >= 0:
+            return arrow
+    return None
+
+
 class SwimlaneParser:
 
     def __init__(self, diagram_name="Diagram"):
@@ -30,10 +59,10 @@ class SwimlaneParser:
         logger.debug(len(lines))
         logger.debug(lines)
 
-        self.reset_globals()
+        self.reset_attributes()
         return self.get_diagram_from_lines(lines)
 
-    def reset_globals(self):
+    def reset_attributes(self):
         self.diagram = Diagram(self.diagram_name)
         self.in_note = False
         self.note_text = ""
@@ -69,11 +98,11 @@ class SwimlaneParser:
             self.diagram.auto_number = True
             return
 
-        arrow = self.is_line_declaring_a_task_and_a_connection(line)
+        arrow = is_line_declaring_a_task_and_a_connection(line)
 
-        if self.in_note and not self.is_code_line(line):  # In Note
+        if self.in_note and not is_code_line(line):  # In Note
             self.note_text += line
-        elif self.in_note and self.is_code_line(line):  # End of Note
+        elif self.in_note and is_code_line(line):  # End of Note
             if self.note_task_from == -1 and self.note_task_to == -1:
                 self.diagram.add_diagram_item(Note(self.note_text))
             elif self.note_task_from != -1 and self.note_task_to == -1:
@@ -154,7 +183,7 @@ class SwimlaneParser:
             self.diagram.apply_order(items_order)
             self.diagram.print_tasks()
         elif arrow is not None:
-            label, task_from_label, task_to_label = self.get_task_connection_from_input_line(line, arrow)
+            label, task_from_label, task_to_label = get_task_connection_from_input_line(line, arrow)
             task_from = Task(task_from_label)
             task_to = Task(task_to_label)
 
@@ -191,29 +220,3 @@ class SwimlaneParser:
                                              , style, bi_directional, open_arrow, self.diagram.auto_number,
                                              self.task_number)
             self.diagram.add_diagram_item(task_connection)
-
-    def is_line_declaring_a_task_and_a_connection(self, line: str):
-        for arrow in constant.ARROW_OPERATORS:
-            if line.find(arrow) >= 0:
-                return arrow
-        return None
-
-    def get_task_connection_from_input_line(self, line: str, an_arrow_operator: str):
-        message_label = line[line.find(':') + 1:len(line)].strip()
-        task_from = line[0:line.find(an_arrow_operator)].strip()
-        task_to = line[line.find(an_arrow_operator) + len(an_arrow_operator):line.find(':')].strip()
-
-        logger.debug(f"The message label is '{message_label}', Task FROM is '{task_from}', Task TO is '{task_to}'.")
-
-        return message_label, task_from, task_to
-
-    def is_code_line(self, line: str):
-        for sc in constant.START_CODE:
-            if line.lower().startswith(sc):
-                return True
-
-        for ao in constant.ARROW_OPERATORS:
-            if line.find(ao) and line.find(':') != -1:
-                return True
-
-        return False
