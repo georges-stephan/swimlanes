@@ -17,11 +17,13 @@ class Task(DiagramItem):
     def __eq__(self, other):
         if other is None:
             return False
-        if isinstance(other, Task):
-            if self.description == cast(Task, other).description:
-                return True
-            else:
-                return False
+
+        if not isinstance(other, Task):
+            return False
+
+        if self.description == cast(Task, other).description:
+            return True
         else:
             return False
+
         return False
