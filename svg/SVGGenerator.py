@@ -43,9 +43,6 @@ class SVGRenderer:
         self.graph_items_height = {}
         self.objects_to_move_to_front_ids = []
 
-        # TODO move the next invocation out of the constructor
-        self.add_definitions_to_svg()
-
     def add_definitions_to_svg(self):
 
         # Start of the styles definition block
@@ -93,11 +90,14 @@ class SVGRenderer:
         A function to return the merged string component as a complete SVG string
         :return: the diagram as a string
         """
+        self.add_definitions_to_svg()
+
         svg_final = io.StringIO()
 
         self.add_title_to_svg()
         self.add_diagram_items_to_svg()
 
+        self.svg.write(f'\n<!-- List of objects to moved to top -->\n')
         # pop notes: <use xlink:href="#one" />
         for o_id in self.objects_to_move_to_front_ids:
             self.svg.write(f'<use xlink:href="#{o_id}" />\n')
