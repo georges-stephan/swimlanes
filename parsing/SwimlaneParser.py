@@ -73,7 +73,7 @@ class SwimlaneParser:
     def get_diagram_from_lines(self, lines: list):
         line_number = 1
         for line in lines:
-            self.parse_line(line.strip(),line_number)
+            self.parse_line(line, line_number) # Used to strip the line, but it interferences with note's text
             line_number += 1
 
         # Since notes can span over multiple lines, we need to check if the last line/command was part of node
@@ -83,13 +83,13 @@ class SwimlaneParser:
 
         return self.diagram
 
-    def get_diagram_from_string(self, design_as_string: str):
-        lines = list(filter((lambda x: x.strip() != ''), design_as_string.splitlines()))
-
-        logger.debug(len(lines))
-        logger.debug(lines)
-
-        return self.get_diagram_from_lines(lines)
+    # def get_diagram_from_string(self, design_as_string: str):
+    #     lines = list(filter((lambda x: x.strip() != ''), design_as_string.splitlines()))
+    #
+    #     logger.debug(len(lines))
+    #     logger.debug(lines)
+    #
+    #     return self.get_diagram_from_lines(lines)
 
     def parse_line(self, line: str, line_number: int):
         if line.startswith("//"):  # Comment Line
@@ -132,13 +132,15 @@ class SwimlaneParser:
             # Check if the user specified the start and optionally the end task id
             note_boundaries = note_command.replace(',', ' ').split()
 
-            if len(note_boundaries) == 1:
-                # Parsing note: Some text
+            if len(note_boundaries) == 1: # Parsing note: Some text
                 # No start or end task specified, the will horizontally fill the entire diagram
-                pass
+                # TODO when no boundaries are specified, get the "node from" and "node to" of the previous arrow entry
+                self.note_task_from, self.note_task_to = self.diagram.get_last_arrow_connections()
+
             elif len(note_boundaries) == 2:  # Parsing note 1: Some text
                 self.note_task_from = int(note_boundaries[1])
                 self.note_task_to = -1
+
             elif len(note_boundaries) == 3:  # Parsing note 1,4: Some text
                 if int(note_boundaries[1]) < 0:
                     raise ParsingError(f"At line {line_number}:Note boundaries should be a positive integer, not"

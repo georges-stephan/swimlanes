@@ -10,9 +10,10 @@ Kitchen -->> Customer: Pizza is Cooking Notification
 Kitchen -> Kitchen: Prepare Pizza
 
 Kitchen -> Driver: Pizza is Ready
-note:
-Driver rides to the customer's house
 
 Driver -> Customer: Hot Pizza
+note:
+The driver quickly rides his
+bike to the customer's house
 
 order: Customer, Driver, Pizza Call Center,Kitchen

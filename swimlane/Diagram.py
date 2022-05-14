@@ -23,6 +23,10 @@ class Diagram:
         self.swapped_items = {}
         self.items = {}
 
+        # For Notes
+        self.last_arrow_connection_from = 0
+        self.last_arrow_connection_to = 0
+
     def add_diagram_item(self, diagram_item: DiagramItem):
         if isinstance(diagram_item, Task):
             self.add_task(diagram_item)
@@ -76,6 +80,12 @@ class Diagram:
         self.items_count += 1
         self.items[self.items_count] = task_connection
 
+        self.last_arrow_connection_from = self.get_task_id(task_connection.source_task)
+        self.last_arrow_connection_to = self.get_task_id(task_connection.target_task)
+
+    def get_last_arrow_connections(self) -> (int, int):
+        return self.last_arrow_connection_from,self.last_arrow_connection_to
+
     def add_note(self, note: Note):
         if note is None:
             return
@@ -120,7 +130,7 @@ class Diagram:
                     task_number_counter += 1
         return None
 
-    def get_task_id(self, task: Task):  # TODO test me
+    def get_task_id(self, task: Task) -> int:  # TODO test me
         task_id = 0
         for key in self.items:
             if isinstance(self.items[key], Task):
