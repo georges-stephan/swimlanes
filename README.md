@@ -27,7 +27,7 @@ order: Customer, Driver, Pizza Call Center,Kitchen
 
 The following SVG image will be generated:
 
-![alt text](https://github.com/georges-stephan/swimlanes/tree/master/doc/pizza_example.svg?raw=true)
+![alt text](https://raw.githubusercontent.com/georges-stephan/swimlanes/master/doc/pizza_example.svg)
 
 The other constraint is to avoid, as much as possible, any dependency on any library (because I am still learning). The only library I am using is called Pillow, for measuring the dimension of a text given font size, Yaml to read configuration files and setuptools for the build.
 
