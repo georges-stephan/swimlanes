@@ -43,6 +43,7 @@ class SVGRenderer:
         self.graph_items_height = {}
         self.objects_to_move_to_front_ids = []
 
+        # TODO move the next invocation out of the constructor
         self.add_definitions_to_svg()
 
     def add_definitions_to_svg(self):
@@ -119,7 +120,7 @@ class SVGRenderer:
 
         return svg_header.getvalue()
 
-    def add_diagram_items_to_svg(self):  # Ici
+    def add_diagram_items_to_svg(self):
         task_id = 0
         connection_id = 0
         divider_id = 0
@@ -184,7 +185,7 @@ class SVGRenderer:
 
             note_x = self.get_mid_task_x(from_task_id) - self.template.get_parameter_value('arrow_height')
             # Remove the amount of the distance between 2 tasks from note width
-            note_width = abs(self.get_mid_task_x(to_task_id) \
+            note_width = abs(self.get_mid_task_x(to_task_id)
                              + self.template.get_parameter_value('arrow_height') - note_x)
 
         note_y = self.get_y_offset_for_graph_item(graph_item_no) + self.template.get_parameter_value('arrow_height') * 2
@@ -196,9 +197,9 @@ class SVGRenderer:
             'text_margin-top') + self.template.get_parameter_value('text_margin-bottom')
 
         logger.debug(
-                f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:"
-                f"{self.template.get_parameter_value('text_margin-bottom')}. Variable "
-                f"note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}")
+            f"Margins: Top:{self.template.get_parameter_value('text_margin-top')} and Bottom:"
+            f"{self.template.get_parameter_value('text_margin-bottom')}. Variable "
+            f"note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}")
 
         self.svg.write(f'\n<!-- Note #{note_id + 1}, object #{graph_item_no + 1} -->\n')
         self.draw_box_with_text(f"note_{note_id + 1}"
@@ -395,16 +396,18 @@ class SVGRenderer:
         from_task_id = self.diagram.get_task_id(task_connection.source_task)
         to_task_id = self.diagram.get_task_id(task_connection.target_task)
 
+        if from_task_id < 0 or to_task_id < 0:
+            raise RenderingError(f"Failed to find connection {connection_no}")
+
         if from_task_id == to_task_id:
             to_self = True
             self.graph_items_height[graph_item_offset] = self.template.get_parameter_value(
                 'space_between_connections') * 2
         else:
             to_self = False
-            self.graph_items_height[graph_item_offset] = self.template.get_parameter_value('space_between_connections')
-
-        if from_task_id < 0 or to_task_id < 0:
-            raise RenderingError(f"Failed to find connection {connection_no}")
+            self.graph_items_height[graph_item_offset] = \
+                self.template.get_parameter_value('space_between_connections') + \
+                int(self.template.get_parameter_value('arrow_height'))
 
         self.svg.write(f'\n<!-- Connection {connection_no + 1} -->\n')
         stroke, style = get_stroke_from_style_name(task_connection.style)
@@ -415,7 +418,6 @@ class SVGRenderer:
                      - 2 * self.template.get_parameter_value('space_between_connections') \
                      + self.template.get_parameter_value('arrow_height')
 
-            # TODO move the label of the self-arrow arrow to the front
             self.draw_box_with_text(f"self_connection_text_{connection_no + 1}", task_connection.label
                                     , self.template.get_parameter_value('body-font-size')
                                     , self.get_x_offset(from_task_id)
@@ -442,27 +444,27 @@ class SVGRenderer:
                 f'" stroke="{self.template.get_parameter_value("connection_line_color")}" stroke-linejoin="round" ')
         else:
             # Now add the label associated to that swim lane
-            # TODO add a background color to the label (check the template if we can use one of the existing parameters)
             self.draw_box_with_text("connection_text",
                                     task_connection.label,
                                     self.template.get_parameter_value('body-font-size'),
                                     min(self.get_mid_task_x(from_task_id),
                                         self.get_target_x_for_connection(to_task_id, task_connection.lost_message))
-                                    + self.template.get_parameter_value('arrow_height')
-                                    , self.get_y_offset_for_graph_item(graph_item_offset)
-                                    - self.template.get_parameter_value('space_between_connections')
-                                    , self.get_label_box_width(from_task_id, to_task_id, task_connection.lost_message)
-                                    , self.template.get_parameter_value('space_between_connections')
-                                    , fill_color='white'
-                                    , stroke_color='none')
+                                    + self.template.get_parameter_value('arrow_height'),
+                                    self.get_y_offset_for_graph_item(graph_item_offset)
+                                    - self.template.get_parameter_value('space_between_connections'),
+                                    self.get_label_box_width(from_task_id, to_task_id, task_connection.lost_message),
+                                    self.template.get_parameter_value('space_between_connections')
+                                    - self.template.get_parameter_value('arrow_height'),
+                                    fill_color='white',
+                                    stroke_color='none')
 
             path_l = self.get_target_x_for_connection(to_task_id, task_connection.lost_message)
             if task_connection.open_arrow:
                 # For a dotted arrow, reduce the value of length of the path so that it crosses the vertical task line
                 if from_task_id > to_task_id:
-                    path_l = path_l - 10
+                    path_l = path_l - self.template.get_parameter_value('arrow_height')
                 else:
-                    path_l = path_l + 10
+                    path_l = path_l + self.template.get_parameter_value('arrow_height')
 
             self.svg.write(
                 f'<path id="connection_arrow_{connection_no + 1}" d="M {self.get_mid_task_x(from_task_id)} '
@@ -483,7 +485,8 @@ class SVGRenderer:
             self.svg.write(' marker-start="url(#reverse_arrow_head)"')
         self.svg.write('/>')
 
-        # TODO re-calculate the this item's height
+        # TODO re-calculate the this item's height. When the arrow is from right to left, the height is ok,
+        #  else it needs a half arrow height increase
 
     def get_label_box_width(self, from_task_id: int, to_task_id: int, lost_message=False):
         if from_task_id == to_task_id:
@@ -517,7 +520,7 @@ class SVGRenderer:
         :param font_weight: either normal, bold, italic
         :param justification: either left or centered
         :param apply_margin: whether a top margin should be added between the text and the top of the rectangle
-        :param should the text be moved to the front of all SVG components?
+        :param move_to_front: should the text be moved to the front of all SVG components?
         :return:
         """
         # Draw the box
