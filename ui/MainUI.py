@@ -8,7 +8,7 @@ import yaml
 from json import JSONDecodeError
 
 from tkinter import Frame, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
-    messagebox, Menu, BOTH, LEFT, END, PanedWindow, VERTICAL, DISABLED
+    messagebox, Menu, BOTH, LEFT, END, PanedWindow, DISABLED
 from tkinter import filedialog as fd
 
 from pathlib import Path
@@ -21,9 +21,9 @@ from tkinter.messagebox import showinfo
 
 from ui.SwimlaneEditorModel import SwimlaneEditorModel
 
+# Logging configuration
 with open(f'{os.path.abspath("..//")}{os.path.sep}logging-properties.yml', 'r') as stream:
     config = yaml.load(stream, Loader=yaml.FullLoader)
-
 logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ text = None
 label_design_file = None
 root = None
 swimlaneEditorModel = None  # TODO init to blank when starting the UI
-debug = False
+debug = True
 
 filetypes = (
     ('text files', '*.txt'),

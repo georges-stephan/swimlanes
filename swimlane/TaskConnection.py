@@ -2,6 +2,7 @@ import io
 
 from swimlane.DiagramItems import DiagramItem
 from swimlane.Task import Task
+from dataclasses import dataclass
 
 
 def check_style(style: str):
@@ -13,6 +14,7 @@ def check_style(style: str):
         return False
 
 
+@dataclass(slots=True)
 class TaskConnection(DiagramItem):
 
     def __init__(self, label: str, source_task: Task, target_task: Task, lost_message=False, style="Regular",
@@ -37,7 +39,7 @@ class TaskConnection(DiagramItem):
             self.looping_connection = False
             self.target_task = target_task
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         task_connection_as_string = io.StringIO()
         task_connection_as_string.write("From ")
         task_connection_as_string.write(str(self.source_task))

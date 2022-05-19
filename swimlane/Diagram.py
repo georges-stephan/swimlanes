@@ -1,6 +1,7 @@
 import io
 import logging
 
+from swimlane.DiagramError import DiagramError
 from swimlane.DiagramItems import DiagramItem
 from swimlane.Divider import Divider
 from swimlane.Note import Note
@@ -23,7 +24,7 @@ class Diagram:
         self.swapped_items = {}
         self.items = {}
 
-        # For Notes
+        # Will be needed by by Note
         self.last_arrow_connection_from = 0
         self.last_arrow_connection_to = 0
 
@@ -37,6 +38,26 @@ class Diagram:
         elif isinstance(diagram_item, Note):
             self.add_note(diagram_item)
 
+    def get_id_of_last_task(self) -> int:
+        last_task_id = -1
+        for key in self.items:
+            if isinstance(self.items[key], Task):
+                last_task_id += 1
+
+        if last_task_id == -1:
+            raise DiagramError("No task was found in diagram")
+
+        return last_task_id
+
+    def get_first_task(self) -> Task:
+        if self.tasks_count == 0:
+            raise DiagramError("Diagram has no tasks attached.")
+        else:
+            for key in self.items:
+                if isinstance(self.items[key], Task):
+                    return self.items[key]
+        raise DiagramError("No task was found in diagram")
+
     def get_item_index_for_task_number(self, task_index: int):
         item_counter = 0
         task_counter = 0
@@ -49,7 +70,7 @@ class Diagram:
                     item_counter += 1
             else:
                 item_counter += 1
-        raise Exception(f"Can't find a task with index {task_index}.")
+        raise DiagramError(f"Can't find a task with index {task_index}.")
 
     def add_task(self, task: Task):
         if task is None:
@@ -80,11 +101,12 @@ class Diagram:
         self.items_count += 1
         self.items[self.items_count] = task_connection
 
+        # The coordinates of the last added connection is maintained so it can be used if a note is added
         self.last_arrow_connection_from = self.get_task_id(task_connection.source_task)
         self.last_arrow_connection_to = self.get_task_id(task_connection.target_task)
 
     def get_last_arrow_connections(self) -> (int, int):
-        return self.last_arrow_connection_from,self.last_arrow_connection_to
+        return self.last_arrow_connection_from, self.last_arrow_connection_to
 
     def add_note(self, note: Note):
         if note is None:
@@ -94,7 +116,12 @@ class Diagram:
         self.items_count += 1
         self.items[self.items_count] = note
 
-    def get_task_by_name(self, task_description: str):
+    def get_task_by_name(self, task_description: str) -> Task | None:
+        """
+        Returns a task given its description
+        :param task_description:
+        :return: the task
+        """
         for key in self.items:
             a_task = self.items[key]
             if isinstance(a_task, Task):
@@ -114,11 +141,11 @@ class Diagram:
                     return key
         return -1
 
-    def get_task_by_index(self, task_number: int):
+    def get_task_by_index(self, task_number: int) -> Task | None:
         """
-
-        :param task_number: task index
-        :return: a task
+        Given a zero-based index, will return the task at this index
+        :param task_number: task index, zero based
+        :return: the task at this index
         """
         task_number_counter = 0
         for key in self.items:
@@ -131,6 +158,11 @@ class Diagram:
         return None
 
     def get_task_id(self, task: Task) -> int:  # TODO test me
+        """
+        Get the index of the task in the diagram
+        :param task: a task object
+        :return: 0 if it is the first task, 1 if it is the second, etc.
+        """
         task_id = 0
         for key in self.items:
             if isinstance(self.items[key], Task):
@@ -169,7 +201,7 @@ class Diagram:
         task_key = 1
         for key in self.items:
             if isinstance(self.items[key], Task):
-                temp[key] = self.items[diagram_tasks_items[task_key-1]]
+                temp[key] = self.items[diagram_tasks_items[task_key - 1]]
                 task_key += 1
             else:
                 temp[key] = self.items[key]
@@ -185,10 +217,10 @@ class Diagram:
                 logger.info(f"At {index}, task is {str(self.items[key])}.")
                 index += 1
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.__str__()
 
-    def __str__(self):
+    def __str__(self) -> str:
         diagram_as_text = io.StringIO()
 
         for key in self.items:

@@ -56,8 +56,7 @@ class SwimlaneParser:
             file_content = f.read()
 
         lines = list(filter((lambda x: x.strip() != ''), file_content.splitlines()))
-        logger.debug(len(lines))
-        logger.debug(lines)
+        logger.debug(f" Got {len(lines)} number of lines which are:{lines}")
 
         self.reset_attributes()
         return self.get_diagram_from_lines(lines)
@@ -82,14 +81,6 @@ class SwimlaneParser:
             self.diagram.add_diagram_item(Note(self.note_text, self.note_task_from, self.note_task_to))
 
         return self.diagram
-
-    # def get_diagram_from_string(self, design_as_string: str):
-    #     lines = list(filter((lambda x: x.strip() != ''), design_as_string.splitlines()))
-    #
-    #     logger.debug(len(lines))
-    #     logger.debug(lines)
-    #
-    #     return self.get_diagram_from_lines(lines)
 
     def parse_line(self, line: str, line_number: int):
         if line.startswith("//"):  # Comment Line
@@ -156,29 +147,16 @@ class SwimlaneParser:
             else:
                 raise ValueError(f"Error in file at line {line}, command is not know.")
         elif line.startswith(constant.START_CODE[2]):  # Thin Divider
-            note_task_from = -1
-            note_task_to = -1
             self.diagram.add_divider(Divider(line[2:len(line)], style="Thin"))
         elif line.startswith(constant.START_CODE[3]):  # Regular Divider
-            note_task_from = -1
-            note_task_to = -1
             self.diagram.add_divider(Divider(line[2:len(line)], style="Regular"))
-            note_task_from = -1
-            note_task_to = -1
         elif line.startswith(constant.START_CODE[4]):  # Dashed Divider
             self.diagram.add_divider(Divider(line[3:len(line)], style="Dashed"))
-            note_task_from = -1
-            note_task_to = -1
         elif line.startswith(constant.START_CODE[5]):  # Bold Divider
             self.diagram.add_divider(Divider(line[2:len(line)], style="Bold"))
-            note_task_from = -1
-            note_task_to = -1
         elif line.startswith(constant.START_CODE[6]):  # Delay Divider
-            note_task_from = -1
-            note_task_to = -1
             self.diagram.add_divider(Divider(line[4:len(line)], style="Delay"))
         elif line.startswith(constant.START_CODE[7]):  # Order example usage: order: first [,second[,third ...]]
-            order_command = line[:line.find(':')]
             order_text = line[line.find(':') + 1:]
 
             items_order = order_text.split(",")
@@ -191,10 +169,6 @@ class SwimlaneParser:
 
             self.diagram.add_diagram_item(task_from)
             self.diagram.add_diagram_item(task_to)
-
-            # In case the connection is followed up by a note
-            note_task_from = self.diagram.get_task_id(task_from)
-            note_task_to = self.diagram.get_task_id(task_to)
 
             if arrow.find('x') != -1:
                 lost_message = True
