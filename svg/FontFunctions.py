@@ -2,25 +2,27 @@ from PIL import ImageFont
 
 from templates.DefaultTemplate import DefaultTemplate
 
-debug = False
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int,
-                    template = DefaultTemplate()):  # TODO this is buggy, fit it
+                    template=DefaultTemplate()):
     """
     A function to return the estimated height of  a text
     :param text: the text to be rendered
     :param font_file_name: the filename of the font
     :param font_size: the size of the font
     :param box_width: the width of the box to contain the text
+    :param template: the template to use
     :return: the height of the text given the text, box width, font name and size
     """
     lines = split_text(text, font_file_name, box_width, font_size)
     font = ImageFont.truetype(f'{font_file_name}.ttf', font_size)
 
-    if debug:
-        print(f'Text will split over {len(lines)} lines. Text height is {font.getsize(text)[1]},'
-              f' text width is {font.getsize(text)[0]}. Box width={box_width}')
+    logger.debug(f'Text will split over {len(lines)} lines. Text height is {font.getsize(text)[1]},'
+                 f' text width is {font.getsize(text)[0]}. Box width={box_width}')
 
     return font.getsize(text)[1] * len(lines)
 
