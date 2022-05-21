@@ -27,315 +27,270 @@ with open(f'{os.path.abspath("..//")}{os.path.sep}logging-properties.yml', 'r') 
 logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
 
-# Global Variables
-dir_name = None
-design_filename = None
-home_dir = None
-config = {}
-config_file = None
-output_file_name = None
-text = None
-label_design_file = None
-root = None
-swimlaneEditorModel = None  # TODO init to blank when starting the UI
-debug = True
+class MainUI:
 
-filetypes = (
-    ('text files', '*.txt'),
-    ('All files', '*.*')
-)
+    def __init__(self):
+        self.dir_name = None
+        self.design_filename = None
+        self.home_dir = None
+        self.config = {}
+        self.config_file = None
+        self.output_file_name = None
+        self.text = None
+        self.label_design_file = None
+        self.root = None
+        self.swimlaneEditorModel = None  # TODO init to blank when starting the UI
+        self.debug = False  # This flag changes the behavior of the application to make testing easier
 
+        self.filetypes = (
+            ('text files', '*.txt'),
+            ('All files', '*.*')
+        )
 
-def do_nothing():
-    pass
+    def on_closing(self) -> None:
+        if self.debug:
+            logger.info("Exiting immediately when running in Debug mode")
+            sys.exit(0)
 
+        if self.swimlaneEditorModel is None \
+                and len(SwimlaneEditorModel.remove_control_characters(self.text.get('1.0', END))) < 1:
+            logger.debug("Exiting immediately when textarea is empty")
+            sys.exit(0)
 
-def on_closing():
-    if debug:
-        logger.info("Exiting immediately when running in Debug mode")
-        sys.exit()
+        # Editor model is None (no data loaded from a previous file) and there is content in the text area
+        self.save_file(save_as=True)
 
-    global root
-    global swimlaneEditorModel
-    global text
+    def generate_and_view(self) -> None:
+        """
+        Button to generate the SVG diagram
+        :return:
+        """
+        svg_text = self.text.get(1.0, END)
+        tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.txt', delete=False)
+        self.dir_name, ignore_attribute = os.path.split(tmp_design_filename.name)
+        self.dir_name = f"{self.dir_name}\\"
 
-    if messagebox.askokcancel("Quit", "Are you sure you want to quit?"):
-        if swimlaneEditorModel is not None:
-            # Text area contains text from a file. Check if contents needs saving
-            if swimlaneEditorModel.is_needs_saving(text.get('1.0', END)):
-                # Content loaded from file and actual content in the text area widget are changed.
-                if messagebox.askyesno("Save", "Content changed, do you want to save it?"):
-                    # save to file
-                    save_file_as()
-                    sys.exit()
-                else:
-                    # Content changed, but the user does not want to keep it
-                    sys.exit()
-            else:
-                # loaded and text area content are the same
-                sys.exit()
-        elif len(SwimlaneEditorModel.remove_control_characters(text.get('1.0', END))) > 0:
-            # Nothing was loaded from file, however, the text area is not empty
-            if messagebox.askyesno("Save", "Content not saved, do you want to save it?"):
-                save_file_as()
-                sys.exit()
-            else:
-                # user does not care about the content
-                sys.exit()
+        with open(tmp_design_filename.name, 'w') as f:
+            f.write(svg_text)
+
+        self.design_filename = tmp_design_filename.name
+        self.generate_svg_file(update_conf_file_after_gen=False)
+        os.startfile(self.output_file_name)
+
+    def save_file_as(self) -> None:
+        self.save_file(save_as=True)
+
+    def save_file(self, save_as=False) -> None:
+        if save_as:
+            logger.debug("Saving file as...")
         else:
-            # Text area is empty
-            sys.exit()
-    else:
-        # The user refrained from quitting
-        pass
+            logger.debug("Saving file")
 
-
-# Button to generate the SVG
-def generate_and_view():
-    global design_filename
-    global dir_name
-
-    svg_text = text.get(1.0, END)
-    tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.txt', delete=False)
-    dir_name, ignore_attribute = os.path.split(tmp_design_filename.name)
-    dir_name = f"{dir_name}\\"
-
-    with open(tmp_design_filename.name, 'w') as f:
-        f.write(svg_text)
-
-    design_filename = tmp_design_filename.name
-    generate_svg_file(update_conf_file_after_gen=False)
-    os.startfile(output_file_name)
-
-
-def save_file_as():
-    global design_filename
-    global dir_name
-
-    if dir_name is not None and Path(dir_name).exists():
-        design_file = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
-                                       defaultextension=filetypes,
-                                       initialdir=dir_name)
-    else:
-        design_file = fd.asksaveasfile(title='Save a Design File as', filetypes=filetypes,
-                                       defaultextension=filetypes)
-    if design_file is not None:
-        # design_filename = design_file.name
-        dir_name, design_filename = os.path.split(design_file.name)
-        logger.info(f"Dir name:{dir_name}, design file name:{design_filename}, text is {text.get('1.0', END)}")
-        try:
-            design_file.write(text.get('1.0', END))
-            update_config_file()
-        finally:
-            design_file.close()
-
-
-def create_settings_dir_if_needed():
-    global home_dir
-    global config
-    global config_file
-    global design_filename
-    global dir_name
-    global label_design_file
-
-    home_dir = Path(f"{str(Path.home())}/.py-swimlanes/")
-    config_file = f"{home_dir}/py-swimlanes-config.json"
-
-    if home_dir.exists() and home_dir.is_dir() and Path(config_file).exists():
-        with open(config_file, 'r') as f:
+        if self.design_filename is None or save_as:
+            # Got a save request, but we don't know the name of the file to save
+            if self.dir_name is not None and Path(self.dir_name).exists():
+                design_file_text_io = fd.asksaveasfile(title='Save a Design file as', filetypes=self.filetypes,
+                                                       defaultextension=self.filetypes,
+                                                       initialdir=self.dir_name)
+            else:
+                design_file_text_io = fd.asksaveasfile(title='Save a Design File as', filetypes=self.filetypes,
+                                                       defaultextension=self.filetypes)
             try:
-                config = json.load(f)
-                design_filename = config['design_file']
-                dir_name = config['out_dir']
-            except JSONDecodeError as e:
-                logger.info(f"Config file damaged:{e.msg}")
-                config = {"design_file": str(Path.home()), "out_dir": str(Path.home())}
-
-                with open(config_file, 'w') as ff:
-                    json.dump(config, ff)
-    else:
-        if home_dir.exists() and home_dir.is_dir():
-            pass
+                design_file_text_io.write(self.text.get('1.0', END))
+                self.update_config_file()
+            finally:
+                if design_file_text_io is not None:
+                    design_file_text_io.close()
+                    logger.info("Saved content.")
+                sys.exit(0)
         else:
-            os.mkdir(home_dir)
-        config = {"design_file": str(Path.home()), "out_dir": str(Path.home())}
+            # A design file name is defined at the class level
+            with open(self.design_filename, 'w') as f:
+                f.write(self.text.get('1.0', END))
+                logger.info(f"Saved content to {self.design_filename}.")
+                sys.exit(0)
 
-        with open(config_file, 'w') as f:
-            json.dump(config, f)
+    def create_settings_dir_if_needed(self) -> None:
+        self.home_dir = Path(f"{str(Path.home())}/.py-swimlanes/")
+        self.config_file = f"{self.home_dir}/py-swimlanes-config.json"
 
-    if home_dir is None:
-        home_dir = str(Path.home())
+        if self.home_dir.exists() and self.home_dir.is_dir() and Path(self.config_file).exists():
+            with open(self.config_file, 'r') as f:
+                try:
+                    self.config = json.load(f)
+                    self.design_filename = self.config['design_file']
+                    self.dir_name = self.config['out_dir']
+                except JSONDecodeError as e:
+                    logger.info(f"Config file damaged:{e.msg}")
+                    self.config = {"design_file": str(Path.home()), "out_dir": str(Path.home())}
 
+                    with open(self.config_file, 'w') as ff:
+                        json.dump(self.config, ff)
+        else:
+            if self.home_dir.exists() and self.home_dir.is_dir():
+                pass
+            else:
+                os.mkdir(self.home_dir)
+            self.config = {"design_file": str(Path.home()), "out_dir": str(Path.home())}
 
-def update_config_file():
-    global config
-    config = {"design_file": design_filename, "out_dir": dir_name}
+            with open(self.config_file, 'w') as f:
+                json.dump(self.config, f)
 
-    with open(config_file, 'w') as f:
-        json.dump(config, f)
+        if self.home_dir is None:
+            self.home_dir = str(Path.home())
 
+    def update_config_file(self) -> None:
+        self.config = {"design_file": self.design_filename, "out_dir": self.dir_name}
 
-def select_dir():
-    global dir_name
-    dir_name = fd.askdirectory()
+        with open(self.config_file, 'w') as f:
+            json.dump(self.config, f)
 
+    def select_and_load_file(self) -> None:
+        self.design_filename = fd.askopenfilename(
+            title='Open a Design File',
+            initialdir=str(self.design_filename),
+            filetypes=self.filetypes)
 
-def select_and_load_file():
-    global design_filename
-    global label_design_file
-    global swimlaneEditorModel
-    global text
+        if self.design_filename is None or self.design_filename == "":
+            return
 
-    design_filename = fd.askopenfilename(
-        title='Open a Design File',
-        initialdir=str(design_filename),
-        filetypes=filetypes)
+        self.label_design_file.config(text=self.design_filename)
+        with open(self.design_filename, 'r') as f:
+            self.text.insert(1.0, f.read())
+        self.swimlaneEditorModel = SwimlaneEditorModel(self.text.get('1.0', END))
 
-    if design_filename is None or design_filename == "":
-        return
+    def generate_svg_file(self, update_conf_file_after_gen=True) -> None:
 
-    label_design_file.config(text=design_filename)
-    with open(design_filename, 'r') as f:
-        text.insert(1.0, f.read())
-    swimlaneEditorModel = SwimlaneEditorModel(text.get('1.0', END))
+        logger.info(f"Design filename is {self.design_filename}, result will be saved in {self.dir_name}")
 
+        input_file_dir, input_file_name = os.path.split(self.design_filename)
+        self.output_file_name = f"{self.dir_name}{input_file_name}.svg"
 
-def generate_svg_file(update_conf_file_after_gen=True):
-    global output_file_name
-    global design_filename
+        override = True
+        if Path(self.output_file_name).exists():
+            override = askyesno(title='Confirmation',
+                                message=f'The file:\n{self.output_file_name}\nalready exists, overwrite it?')
 
-    logger.info(f"Design filename is {design_filename}, result will be saved in {dir_name}")
+        generate_design = True
+        if override:
+            if Path(self.output_file_name).exists():
+                Path(self.output_file_name).unlink(True)
+        else:
+            showinfo("Feedback", "Ok, Nothing was generated")
+            generate_design = False
 
-    input_file_dir, input_file_name = os.path.split(design_filename)
-    output_file_name = f"{dir_name}{input_file_name}.svg"
-
-    override = True
-    if Path(output_file_name).exists():
-        override = askyesno(title='Confirmation',
-                            message=f'The file:\n{output_file_name}\nalready exists, overwrite it?')
-
-    generate_design = True
-    if override:
-        if Path(output_file_name).exists():
-            Path(output_file_name).unlink(True)
-    else:
-        showinfo("Feedback", "Ok, Nothing was generated")
-        generate_design = False
-
-    if generate_design:
-        parser = SwimlaneParser()
-        diagram = parser.load_file(design_filename)
-        generator = SVGRenderer(diagram, 800, 2)
-        with open(output_file_name, 'w') as f:
-            try:
-                f.write(generator.get_svg_string())
-                if update_conf_file_after_gen:
-                    update_config_file()
-            except SVGSizeError as svg_error:
-                preferred_height = int(svg_error.__str__().split(':')[0])
-                logger.debug(f"Exception: {svg_error} preferred_height should be:{preferred_height}")
-                # TODO find a way to calculate the preferred width instead of hard-coding 800. Ex. add a 'width' keyword
-                generator = SVGRenderer(diagram, 800, preferred_height)
-                f.close()
-                with open(output_file_name, 'w') as fii:
-                    fii.write(generator.get_svg_string())
-                    # showinfo("Feedback", "Completed")
+        if generate_design:
+            parser = SwimlaneParser()
+            diagram = parser.load_file(self.design_filename)
+            generator = SVGRenderer(diagram, 800, 2)
+            with open(self.output_file_name, 'w') as f:
+                try:
+                    f.write(generator.get_svg_string())
                     if update_conf_file_after_gen:
-                        update_config_file()
+                        self.update_config_file()
+                except SVGSizeError as svg_error:
+                    preferred_height = int(svg_error.__str__().split(':')[0])
+                    logger.debug(f"Exception: {svg_error} preferred_height should be:{preferred_height}")
+                    # TODO find a way to calculate the preferred width instead of hard-coding 800 on the first pass
+                    generator = SVGRenderer(diagram, 800, preferred_height)
+                    f.close()
+                    with open(self.output_file_name, 'w') as fii:
+                        fii.write(generator.get_svg_string())
+                        # showinfo("Feedback", "Completed")
+                        if update_conf_file_after_gen:
+                            self.update_config_file()
 
+    def draw_window(self) -> None:
+        # initialize tkinter
+        self.root = Tk()
 
-def draw_window():
-    global root
-    global text
-    global label_design_file
-    # initialize tkinter
-    root = Tk()
+        # set window props
+        self.root.wm_title("Swimlanes Diagram")
+        self.root.resizable(True, True)
+        self.root.geometry('800x500')
 
-    # set window props
-    root.wm_title("Swimlanes Diagram")
-    root.resizable(True, True)
-    root.geometry('800x500')
+        paned_window = PanedWindow(self.root, orient=HORIZONTAL, showhandle=True)
+        paned_window.pack(fill=BOTH, expand=1)
 
-    panedWindow = PanedWindow(root, orient=HORIZONTAL, showhandle=True)
-    panedWindow.pack(fill=BOTH, expand=1)
+        # Text area - User Input
+        editor_frame = Frame()
+        editor_frame.pack(fill=BOTH, expand=True)
+        paned_window.add(editor_frame)
 
-    # Textarea
-    editor_frame = Frame()
-    editor_frame.pack(fill=BOTH, expand=True)
-    panedWindow.add(editor_frame)
+        # Text area - Help Window
+        editor_help_frame = Frame(paned_window)
+        editor_help_frame.pack(fill=BOTH, expand=True)
+        paned_window.add(editor_help_frame)
 
-    editor_help_frame = Frame(panedWindow)
-    editor_help_frame.pack(fill=BOTH, expand=True)
-    panedWindow.add(editor_help_frame)
+        # Horizontal (x) Scroll bar
+        x_scrollbar = Scrollbar(editor_frame, orient=HORIZONTAL)
+        x_scrollbar.pack(side=BOTTOM, fill=X)
 
-    # Horizontal (x) Scroll bar
-    x_scrollbar = Scrollbar(editor_frame, orient=HORIZONTAL)
-    x_scrollbar.pack(side=BOTTOM, fill=X)
+        x_scrollbar_help = Scrollbar(editor_help_frame, orient=HORIZONTAL)
+        x_scrollbar_help.pack(side=BOTTOM, fill=X)
 
-    x_scrollbar_help = Scrollbar(editor_help_frame, orient=HORIZONTAL)
-    x_scrollbar_help.pack(side=BOTTOM, fill=X)
+        # Vertical (y) Scroll Bar
+        y_scrollbar = Scrollbar(editor_frame)
+        y_scrollbar.pack(side=RIGHT, fill=Y)
 
-    # Vertical (y) Scroll Bar
-    y_scrollbar = Scrollbar(editor_frame)
-    y_scrollbar.pack(side=RIGHT, fill=Y)
+        y_scrollbar_help = Scrollbar(editor_help_frame)
+        y_scrollbar_help.pack(side=RIGHT, fill=Y)
 
-    y_scrollbar_help = Scrollbar(editor_help_frame)
-    y_scrollbar_help.pack(side=RIGHT, fill=Y)
+        # Text Widget
+        self.text = Text(editor_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set,
+                         yscrollcommand=y_scrollbar.set, borderwidth=3)
+        self.text.pack(expand=True, fill='both')
 
-    # Text Widget
-    text = Text(editor_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set, yscrollcommand=y_scrollbar.set,
-                borderwidth=3)
-    text.pack(expand=True, fill='both')
+        # Help Widget
+        text_help = Text(editor_help_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set,
+                         yscrollcommand=y_scrollbar.set,
+                         borderwidth=3)
 
-    # Help Widget
-    text_help = Text(editor_help_frame, wrap=NONE, undo=True, xscrollcommand=x_scrollbar.set,
-                     yscrollcommand=y_scrollbar.set,
-                     borderwidth=3)
+        # Load the example file
+        example_file_name = "example_flow.txt"
+        if Path(example_file_name).exists():
+            with open(example_file_name, 'r') as f:
+                text_help.insert(1.0, f.read())
+                if self.debug:
+                    # It's faster to debug the app when the text area is already filled with an example
+                    self.text.insert(1.0, text_help.get(1.0, END))
 
-    example_file_name = "example_flow.txt"
-    if Path(example_file_name).exists():
-        with open(example_file_name, 'r') as f:
-            text_help.insert(1.0, f.read())
-            if debug:
-                text.insert(1.0, text_help.get(1.0, END))
+        text_help.pack(expand=True, fill='both')
+        text_help.config(state=DISABLED)
 
-    text_help.pack(expand=True, fill='both')
-    text_help.config(state=DISABLED)
+        # Configure the scrollbars
+        x_scrollbar.config(command=self.text.xview)
+        y_scrollbar.config(command=self.text.yview)
 
-    # Configure the scrollbars
-    x_scrollbar.config(command=text.xview)
-    y_scrollbar.config(command=text.yview)
+        x_scrollbar_help.config(command=text_help.xview)
+        y_scrollbar_help.config(command=text_help.yview)
 
-    x_scrollbar_help.config(command=text_help.xview)
-    y_scrollbar_help.config(command=text_help.yview)
+        button_frame = Frame(self.root)
+        button_frame.pack(fill=X)
 
-    button_frame = Frame(root)
-    button_frame.pack(fill=X)
+        generate_svg_button = Button(button_frame, text="Generate and View SVG", command=self.generate_and_view)
+        generate_svg_button.pack(side=RIGHT, padx=5, pady=5)
 
-    generate_svg_button = Button(button_frame, text="Generate and View SVG", command=generate_and_view)
-    generate_svg_button.pack(side=RIGHT, padx=5, pady=5)
+        self.label_design_file = Label(button_frame)
+        self.label_design_file.pack(side=LEFT, padx=5, pady=5)
 
-    label_design_file = Label(button_frame)
-    label_design_file.pack(side=LEFT, padx=5, pady=5)
+        # Menu
+        menu_bar = Menu(self.root)
+        file_menu = Menu(menu_bar, tearoff=0)
+        file_menu.add_command(label="New", command=lambda: self.text.delete(1.0, END))
+        file_menu.add_command(label="Open", command=self.select_and_load_file)
+        file_menu.add_command(label="Save", command=self.save_file)
+        file_menu.add_command(label="Save as...", command=self.save_file_as)
+        file_menu.add_command(label="Close", command=self.on_closing)
+        menu_bar.add_cascade(label="File", menu=file_menu)
 
-    # Menu
-    menu_bar = Menu(root)
-    file_menu = Menu(menu_bar, tearoff=0)
-    file_menu.add_command(label="New", command=lambda: text.delete(1.0, END))
-    file_menu.add_command(label="Open", command=select_and_load_file)
-    file_menu.add_command(label="Save", command=do_nothing)
-    file_menu.add_command(label="Save as...", command=save_file_as)
-    file_menu.add_command(label="Close", command=on_closing)
+        self.create_settings_dir_if_needed()
 
-    menu_bar.add_cascade(label="File", menu=file_menu)
-
-    create_settings_dir_if_needed()
-
-    # show window
-    root.config(menu=menu_bar)
-    root.protocol("WM_DELETE_WINDOW", on_closing)
-    root.mainloop()
+        # show window
+        self.root.config(menu=menu_bar)
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.root.mainloop()
 
 
 if __name__ == "__main__":
-    draw_window()
+    MainUI().draw_window()
