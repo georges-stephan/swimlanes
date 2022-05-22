@@ -8,7 +8,7 @@ import yaml
 from json import JSONDecodeError
 
 from tkinter import Frame, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
-    messagebox, Menu, BOTH, LEFT, END, PanedWindow, DISABLED
+    Menu, BOTH, LEFT, END, PanedWindow, DISABLED
 from tkinter import filedialog as fd
 
 from pathlib import Path
@@ -22,10 +22,11 @@ from tkinter.messagebox import showinfo
 from ui.SwimlaneEditorModel import SwimlaneEditorModel
 
 # Logging configuration
-with open(f'{os.path.abspath("..//")}{os.path.sep}logging-properties.yml', 'r') as stream:
+with open(f'{os.path.abspath(".."+os.path.sep)}{os.path.sep}logging-properties.yml', 'r') as stream:
     config = yaml.load(stream, Loader=yaml.FullLoader)
 logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
+
 
 class MainUI:
 
@@ -48,6 +49,10 @@ class MainUI:
         )
 
     def on_closing(self) -> None:
+        """
+        Should be invoked when a window closing event is trigerred
+        :return:
+        """
         if self.debug:
             logger.info("Exiting immediately when running in Debug mode")
             sys.exit(0)
@@ -68,7 +73,7 @@ class MainUI:
         svg_text = self.text.get(1.0, END)
         tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.txt', delete=False)
         self.dir_name, ignore_attribute = os.path.split(tmp_design_filename.name)
-        self.dir_name = f"{self.dir_name}\\"
+        self.dir_name = f"{self.dir_name}{os.path.sep}"
 
         with open(tmp_design_filename.name, 'w') as f:
             f.write(svg_text)
@@ -81,6 +86,11 @@ class MainUI:
         self.save_file(save_as=True)
 
     def save_file(self, save_as=False) -> None:
+        """
+        Should be invoked to save the content in the editor
+        :param save_as: should we prompt the user for a name?
+        :return:
+        """
         if save_as:
             logger.debug("Saving file as...")
         else:
@@ -111,8 +121,12 @@ class MainUI:
                 sys.exit(0)
 
     def create_settings_dir_if_needed(self) -> None:
-        self.home_dir = Path(f"{str(Path.home())}/.py-swimlanes/")
-        self.config_file = f"{self.home_dir}/py-swimlanes-config.json"
+        """
+        Create the default config file if no config file is available
+        :return:
+        """
+        self.home_dir = Path(f"{str(Path.home())}{os.path.sep}.py-swimlanes{os.path.sep}")
+        self.config_file = f"{self.home_dir}{os.path.sep}py-swimlanes-config.json"
 
         if self.home_dir.exists() and self.home_dir.is_dir() and Path(self.config_file).exists():
             with open(self.config_file, 'r') as f:
@@ -140,12 +154,20 @@ class MainUI:
             self.home_dir = str(Path.home())
 
     def update_config_file(self) -> None:
+        """
+        Update the content of the config file
+        :return:
+        """
         self.config = {"design_file": self.design_filename, "out_dir": self.dir_name}
 
         with open(self.config_file, 'w') as f:
             json.dump(self.config, f)
 
     def select_and_load_file(self) -> None:
+        """
+        Allow the user to load a file
+        :return:
+        """
         self.design_filename = fd.askopenfilename(
             title='Open a Design File',
             initialdir=str(self.design_filename),
@@ -160,7 +182,11 @@ class MainUI:
         self.swimlaneEditorModel = SwimlaneEditorModel(self.text.get('1.0', END))
 
     def generate_svg_file(self, update_conf_file_after_gen=True) -> None:
-
+        """
+        Use the content of the editor to convert the content of the editor into an SVG file
+        :param update_conf_file_after_gen:
+        :return:
+        """
         logger.info(f"Design filename is {self.design_filename}, result will be saved in {self.dir_name}")
 
         input_file_dir, input_file_name = os.path.split(self.design_filename)
@@ -196,11 +222,14 @@ class MainUI:
                     f.close()
                     with open(self.output_file_name, 'w') as fii:
                         fii.write(generator.get_svg_string())
-                        # showinfo("Feedback", "Completed")
                         if update_conf_file_after_gen:
                             self.update_config_file()
 
     def draw_window(self) -> None:
+        """
+        Draw the window
+        :return:
+        """
         # initialize tkinter
         self.root = Tk()
 

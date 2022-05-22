@@ -1,5 +1,4 @@
 from templates.Template import Template
-import platform
 
 
 class DefaultTemplate(Template):
