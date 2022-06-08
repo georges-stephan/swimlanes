@@ -1,4 +1,7 @@
-class SVGSizeError(Exception):
+from dataclasses import dataclass
 
-    def __init__(self, *args, **kwargs):
-        pass
+
+@dataclass
+class SVGSizeError(Exception):
+    height: int
+    preferred_height: int

@@ -1,4 +1,11 @@
-class RenderingError(Exception):
+from dataclasses import dataclass
 
-    def __init__(self, *args, **kwargs):
-        pass
+
+@dataclass
+class RenderingConnectionError(Exception):
+    connection_no: int
+
+
+@dataclass
+class RenderingStyleError(Exception):
+    style_name: str

@@ -1,3 +1,4 @@
+from parsing.ParseError import ParsingUnknownStateError
 from svg.text.StyledText import StyledText
 
 
@@ -135,7 +136,7 @@ class ParseStyles:
                             style = "code"
                             text_buffer += c
                 case _:
-                    raise Exception(f"Unknown state {state}.")
+                    raise ParsingUnknownStateError(state_number=state)
 
     def get_styled_words_count(self):
         return len(self.styled_texts)

@@ -1,4 +1,3 @@
-from configparser import ParsingError
 
 from parsing import constant
 from swimlane.Diagram import Diagram
@@ -6,6 +5,7 @@ from swimlane.Divider import Divider
 from swimlane.Note import Note
 from swimlane.Task import Task
 from swimlane.TaskConnection import TaskConnection
+from parsing.ParseError import ParsingError
 
 import logging
 logger = logging.getLogger(__name__)
@@ -134,13 +134,11 @@ class SwimlaneParser:
 
             elif len(note_boundaries) == 3:  # Parsing note 1,4: Some text
                 if int(note_boundaries[1]) < 0:
-                    raise ParsingError(f"At line {line_number}:Note boundaries should be a positive integer, not"
-                                       f"{note_boundaries[1]}")
+                    raise ParsingError(line_number=line_number, note_boundaries=note_boundaries[1])
                 if int(note_boundaries[2]) < int(note_boundaries[1]):
-                    raise ParsingError(f"At line {line_number}:Second note boundary:{note_boundaries[2]} cannot be "
-                                       f"smaller than the first:{note_boundaries[1]}.")
+                    raise ParsingError(line_number=line_number, note_boundaries=note_boundaries[1])
                 if int(note_boundaries[2]) == int(note_boundaries[1]):
-                    raise ParsingError(f"At line {line_number}:Note boundary should not be equal:{note_boundaries[1]}.")
+                    raise ParsingError(line_number=line_number, note_boundaries=note_boundaries[1])
 
                 self.note_task_from = int(note_boundaries[1])
                 self.note_task_to = int(note_boundaries[2])

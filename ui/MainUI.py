@@ -215,7 +215,7 @@ class MainUI:
                     if update_conf_file_after_gen:
                         self.update_config_file()
                 except SVGSizeError as svg_error:
-                    preferred_height = int(svg_error.__str__().split(':')[0])
+                    preferred_height = svg_error.preferred_height
                     logger.debug(f"Exception: {svg_error} preferred_height should be:{preferred_height}")
                     # TODO find a way to calculate the preferred width instead of hard-coding 800 on the first pass
                     generator = SVGRenderer(diagram, 800, preferred_height)

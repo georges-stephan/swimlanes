@@ -1,4 +1,4 @@
-from svg.RenderingError import RenderingError
+from svg.RenderingError import RenderingStyleError, RenderingConnectionError
 from templates.DefaultTemplate import DefaultTemplate
 from svg.SVGSizeError import SVGSizeError
 from swimlane.Diagram import Diagram
@@ -25,7 +25,7 @@ def get_stroke_from_style_name(style_name: str):
     elif style_name.lower() == "dashed":
         return 3, 'stroke-dasharray=" 10 5"'
     else:
-        raise RenderingError(f"Unknown style {style_name}.")
+        raise RenderingStyleError(style_name=style_name)
 
 
 class SVGRenderer:
@@ -163,8 +163,7 @@ class SVGRenderer:
 
         self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
         if self.preferred_height > self.height:
-            raise SVGSizeError(f"{self.preferred_height}:Diagram should have a height of at least"
-                               f" {self.preferred_height} instead of {self.height}.")
+            raise SVGSizeError(preferred_height=self.preferred_height,height=self.height)
 
     def add_note_to_svg(self, task_connection: TaskConnection, note: Note, graph_item_no: int, note_id: int):
         note_x, note_y, note_width, note_height = 0, 0, 0, 0
@@ -419,7 +418,7 @@ class SVGRenderer:
         to_task_id = self.diagram.get_task_id(task_connection.target_task)
 
         if from_task_id < 0 or to_task_id < 0:
-            raise RenderingError(f"Failed to find connection {connection_no}")
+            raise RenderingConnectionError(connection_no=connection_no)
 
         if from_task_id == to_task_id:
             to_self = True
