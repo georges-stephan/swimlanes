@@ -22,7 +22,7 @@ from tkinter.messagebox import showinfo
 from ui.SwimlaneEditorModel import SwimlaneEditorModel
 
 # Logging configuration
-with open(f'{os.path.abspath(".."+os.path.sep)}{os.path.sep}logging-properties.yml', 'r') as stream:
+with open(f'{os.path.dirname(os.path.realpath(__file__))}{os.path.sep}..{os.path.sep}logging-properties.yml', 'r') as stream:
     config = yaml.load(stream, Loader=yaml.FullLoader)
 logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
@@ -50,7 +50,7 @@ class MainUI:
 
     def on_closing(self) -> None:
         """
-        Should be invoked when a window closing event is trigerred
+        Should be invoked when a window closing event is triggered
         :return:
         """
         if self.debug:
