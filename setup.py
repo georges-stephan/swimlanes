@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='PySwimlanes',
     python_requires='>3.10.0',
-    version='3.0',
+    version='3.2',
     license='Apache 2.0',
     author='Georges Stephan',
     author_email='georges.stephan@icloud.com',
