@@ -37,7 +37,11 @@ The Python version I am using to develop this project is 3.10.0.
 # Running the Program
 The main class is `ui.MainUI`, so this is the class you want to execute. I am using the `tkinter` UI framework. Execute:
 ```
-Python ui.MainUI
+pythonw -m ui.MainUI
 ```
 From the root directory of this project to run the program. Windows users can link a shortcut to `swimlanes.vbs` instead
 of using the command line.
+
+Once started, the UI looks like that:
+![alt text](https://raw.githubusercontent.com/georges-stephan/swimlanes/master/doc/screenshot_main_with_example.png)
+
