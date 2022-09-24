@@ -10,6 +10,7 @@ class DefaultTemplate(Template):
             'task_width': 150,
             'task_height': 50,
             'stroke_width': 2,
+            'background_color': 'white',
             'task_line_color': 'grey',
             'task_fill_color': 'white',
             'space_between_connections': 50,

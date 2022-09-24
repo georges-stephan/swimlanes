@@ -3,6 +3,7 @@
   "arrow_stroke_width": 1,
   "body-font-family": "sans-serif",
   "body-font-size": 14,
+  "background_color": "white",
   "connection_line_color": "black",
   "space_between_connections": 50,
   "stroke_width": 2,

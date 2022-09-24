@@ -43,6 +43,7 @@ class SVGRenderer:
 
         self.graph_items_height = {}
         self.objects_to_move_to_front_ids = []
+        self.vertical_line_pointer_position = self.get_task_upper_mid()
 
     def add_definitions_to_svg(self):
 
@@ -54,7 +55,7 @@ class SVGRenderer:
         self.svg.write('\n<polygon points="0 0, 10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
 
-        # Lost Connection Arrow Style
+        # Lost Connection Arrow Head Style
         self.svg.write(
             '<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">\n')
         self.svg.write(f'<line x1="0" y1="0" x2="10" y2="10" '
@@ -99,7 +100,9 @@ class SVGRenderer:
         self.add_diagram_items_to_svg()
 
         self.svg.write(f'\n<!-- List of objects to moved to top -->\n')
-        # pop notes: <use xlink:href="#one" />
+
+        # I read about the controversy of using xlink. Unfortunately, for now, I don't know of a better option.
+        # Use of xlink is typically like: <use xlink:href="#one" />
         for o_id in self.objects_to_move_to_front_ids:
             if self.use_xlink:
                 self.svg.write(f'<use xlink:href="#{o_id}" />\n')
@@ -120,7 +123,7 @@ class SVGRenderer:
         svg_header.write(str(self.width))
         svg_header.write('" height="')
         svg_header.write(str(max(self.preferred_height, self.height)))
-        svg_header.write('">\n')
+        svg_header.write(f'" style="background-color:{self.template.get_parameter_value("background_color")}">\n')
 
         return svg_header.getvalue()
 
@@ -131,9 +134,11 @@ class SVGRenderer:
         note_id = 0
         graph_item_id = 0
         last_task_connection = None
+
         self.preferred_height = self.template.get_parameter_value('y_offset') + self.get_task_height() * 2
 
         for key in self.diagram.items:
+            dashed_vertical_line = False
             # If we are adding a task (or a the label of a lane)
             if isinstance(self.diagram.items[key], Task):
                 self.add_task_to_svg(self.diagram.items[key], task_id)
@@ -149,6 +154,10 @@ class SVGRenderer:
             # If we are adding divider (a horizontal separator with a title)
             elif isinstance(self.diagram.items[key], Divider):
                 self.add_divider_to_svg(self.diagram.items[key], graph_item_id, divider_id)
+                if self.diagram.items[key].style == 'Delay':
+                    dashed_vertical_line = True
+                else:
+                    dashed_vertical_line = False
                 divider_id += 1
                 graph_item_id += 1
 
@@ -161,9 +170,22 @@ class SVGRenderer:
                 note_id += 1
                 graph_item_id += 1
 
+            self.draw_vertical_lines(self.get_y_offset_for_graph_item(graph_item_id, last_item=False),
+                                     self.template.get_parameter_value("connection_line_color"),
+                                     self.template.get_parameter_value("stroke_width"),
+                                     dashed=dashed_vertical_line)
+
+        # Draw the last connector line and avoid writing over the lower task
+        self.draw_vertical_lines(self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
+                                 - self.get_task_height()
+                                 - self.template.get_parameter_value("stroke_width"),
+                                 self.template.get_parameter_value("connection_line_color"),
+                                 self.template.get_parameter_value("stroke_width"),
+                                 dashed=False)
+
         self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
         if self.preferred_height > self.height:
-            raise SVGSizeError(preferred_height=self.preferred_height,height=self.height)
+            raise SVGSizeError(preferred_height=self.preferred_height, height=self.height)
 
     def add_note_to_svg(self, task_connection: TaskConnection, note: Note, graph_item_no: int, note_id: int):
         note_x, note_y, note_width, note_height = 0, 0, 0, 0
@@ -226,16 +248,19 @@ class SVGRenderer:
         # The distance from the top of the graph is the offset until the previous graph item
         divider_y = self.get_y_offset_for_graph_item(graph_item_no)
 
+        text_box_height = 0;
         if divider.style.lower() == 'delay':
             # Delay are shown wider on the graph to better represent a wait
             self.graph_items_height[graph_item_no] = self.template.get_parameter_value('space_between_connections') * 2
+            text_box_height = int(self.graph_items_height[graph_item_no])
         else:
             self.graph_items_height[graph_item_no] = self.template.get_parameter_value('space_between_connections')
+            text_box_height = int(self.graph_items_height[graph_item_no] / 2)
 
         # Divider spread the whole diagram, so we just skip the margin
         divider_x = self.get_mid_task_x(0) + self.get_arrow_height()
         divider_to_x = ((self.get_task_width() + self.template.get_parameter_value('x_offset'))
-                               * self.diagram.get_id_of_last_task()) - self.get_arrow_height() * 2
+                        * self.diagram.get_id_of_last_task()) - self.get_arrow_height() * 2
 
         # The y coordinate for the end of the divider
         divider_to_y = divider_y + self.graph_items_height[graph_item_no]
@@ -246,8 +271,8 @@ class SVGRenderer:
                                 divider_x,
                                 divider_y,
                                 divider_to_x,
-                                int(self.graph_items_height[graph_item_no] / 2),
-                                fill_color='white',  # TODO parametrize me
+                                text_box_height,
+                                fill_color=self.template.get_parameter_value("background_color"),
                                 stroke_color='none',
                                 font_weight='bold',
                                 move_to_front=True,
@@ -259,13 +284,6 @@ class SVGRenderer:
             # TODO this line is not as long as it should be
             # Draw the delay divider. A white line to overwrite the background and make it look transparent
             for task_no in range(0, self.diagram.tasks_count):
-                eraser_line_name = f"delay_vertical_{graph_item_no}_{task_no}_back"
-                self.svg.write(f'<path id="{eraser_line_name}" d="M '
-                               f'{self.get_mid_task_x(task_no)} {divider_to_y - self.graph_items_height[graph_item_no]}'
-                               f' L{self.get_mid_task_x(task_no)} {divider_to_y}'
-                               f'" stroke-width="4" fill="none" '
-                               f'stroke="white" '  # TODO parametrize the background color
-                               f'/>\n')
                 # And a dashed line above the white line
                 dotted_line_name = f"delay_vertical_{graph_item_no}_{task_no}_front"
                 self.svg.write(f'<path id="{dotted_line_name}" d="M '
@@ -275,7 +293,7 @@ class SVGRenderer:
                                f'stroke="{self.template.get_parameter_value("connection_line_color")}" '
                                f'stroke-dasharray=" 10 5"'
                                f'/>\n')
-                self.objects_to_move_to_front_ids.append(eraser_line_name)
+                # self.objects_to_move_to_front_ids.append(eraser_line_name)
                 self.objects_to_move_to_front_ids.append(dotted_line_name)
         else:
             self.svg.write(
@@ -286,17 +304,18 @@ class SVGRenderer:
                 f'{style}'
                 f'/>\n')
 
-    def add_task_to_svg(self, task: Task, task_no: int):
+    def add_task_to_svg(self, task: Task, task_no: int, draw_verticals=False):
         """
         Draw the upper and lower tasks and the line connecting them
         :param task: the task to be drawn
         :param task_no: the id of the task
+        :param draw_verticals: if the vertical lines should be drawn
         :return:
         """
         self.svg.write(f'\n<!-- Task {task_no + 1} Node -->\n')
         y_offsets = [self.get_y_offset(), self.get_y_lower_node_offset()]
         for i in y_offsets:
-            self.draw_box_with_text("task", task.description,
+            self.draw_box_with_text(f"task_cell_{i}_", task.description,
                                     self.template.get_parameter_value("body-font-size"),
                                     self.get_x_offset(task_no),
                                     i,
@@ -307,12 +326,33 @@ class SVGRenderer:
                                     stroke_color=self.template.get_parameter_value("task_line_color")
                                     )
 
-        self.svg.write(f'<!-- Task {task_no + 1} Upper Lower Connector -->\n')
-        self.svg.write(
-            f'<path id="line_task_{task_no + 1}" d="M {self.get_mid_task_x(task_no)} '
-            f'{self.get_task_upper_mid()} L {self.get_mid_task_x(task_no)} '
-            f'{self.get_y_lower_node_offset()}" stroke="{self.template.get_parameter_value("connection_line_color")}" '
-            f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none"/>\n')
+        # if draw_verticals:
+        #     self.svg.write(f'<!-- Task {task_no + 1} Vertical Connector -->\n')
+        #     self.svg.write(
+        #         f'<path id="line_task_{task_no + 1}" d="M {self.get_mid_task_x(task_no)} '
+        #         f'{self.get_task_upper_mid()} L {self.get_mid_task_x(task_no)} '
+        #         f'{self.get_y_lower_node_offset()}" stroke="{self.template.get_parameter_value("connection_line_color")}" '
+        #         f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none"/>\n')
+
+    def draw_vertical_lines(self, lines_height, line_color: str, stroke_width: int, dashed=False):
+        task_no = 0
+        for key in self.diagram.items:
+            if not isinstance(self.diagram.items[key],Task):
+                continue
+            self.svg.write(f'\n<!-- Task {task_no + 1} Vertical Connector -->\n')
+            self.svg.write(
+                f'<path id="line_task_{task_no + 1}" d="M {self.get_mid_task_x(task_no)} '
+                f'{self.vertical_line_pointer_position} L {self.get_mid_task_x(task_no)} '
+                f'{lines_height}" stroke="{self.template.get_parameter_value("connection_line_color")}" '
+                f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none" ')
+
+            if dashed:
+                self.svg.write('stroke-dasharray=" 10 5" ')
+            self.svg.write('/>')
+
+            task_no += 1
+        # self.vertical_line_pointer_position = self.vertical_line_pointer_position + lines_height;
+        self.vertical_line_pointer_position = lines_height;
 
     @lru_cache(maxsize=256)
     def get_mid_task_x(self, task_no: int):
@@ -338,7 +378,7 @@ class SVGRenderer:
         """
         <--x offset--> + ( <--Task--> + <--x offset--> + <--Task--> ) x number of tasks
         :param task_no:
-        :return:
+        :return: the horizontal coordinate of the point in the center of a task node
         """
         return self.template.get_parameter_value('x_offset') + (
                 (self.get_task_width() + self.template.get_parameter_value('x_offset')) * task_no)
@@ -346,6 +386,10 @@ class SVGRenderer:
     @lru_cache(maxsize=2)
     def get_task_upper_mid(self) -> int:
         return self.template.get_parameter_value('task_height') + self.get_y_offset()
+
+    @lru_cache(maxsize=2)
+    def get_task_height(self) -> int:
+        return self.template.get_parameter_value('task_height')
 
     @lru_cache(maxsize=2)
     def get_y_offset(self) -> int:
@@ -386,7 +430,8 @@ class SVGRenderer:
     def get_target_x_for_connection(self, from_task_id: int, to_task_id: int, lost_message=False):
         """
         Calculate where a connection should en
-        :param to_task_id: The id of the task where the connection is going
+        :param from_task_id the id of the task where the connection is starting
+        :param to_task_id: The id of the task where the connection is ending
         :param lost_message: Flag whether the connection should end with an arrow or not reach the task and end with 'x'
         :return: the horizontal coordinate of where the arrow should reach
         """
@@ -434,7 +479,7 @@ class SVGRenderer:
         stroke, style = get_stroke_from_style_name(task_connection.style)
 
         if to_self:
-            # Now add the label associated to that swim lane
+            # Now add the label associated to that swimlane
             text_y = self.get_y_offset_for_graph_item(graph_item_offset) \
                      - 2 * self.template.get_parameter_value('space_between_connections') \
                      + self.template.get_parameter_value('arrow_height')
@@ -543,6 +588,7 @@ class SVGRenderer:
         :param justification: either left or centered
         :param apply_margin: whether a top margin should be added between the text and the top of the rectangle
         :param move_to_front: should the text be moved to the front of all SVG components?
+        :param opacity: transparency ratio
         :return:
         """
         # Draw the box
@@ -566,7 +612,7 @@ class SVGRenderer:
         if len(lines) < 1:
             return
 
-        if lines[0][2] < 1:  # Use a logger and write a warning
+        if lines[0][2] < 1:
             logger.warning(f"Text '{text}' was width {lines[0][1]} and height {lines[0][2]} in a rectangle of height "
                            f"{box_height} and width {box_width}.")
             return

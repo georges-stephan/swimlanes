@@ -22,7 +22,8 @@ from tkinter.messagebox import showinfo
 from ui.SwimlaneEditorModel import SwimlaneEditorModel
 
 # Logging configuration
-with open(f'{os.path.dirname(os.path.realpath(__file__))}{os.path.sep}..{os.path.sep}logging-properties.yml', 'r') as stream:
+with open(f'{os.path.dirname(os.path.realpath(__file__))}{os.path.sep}..{os.path.sep}'
+          f'logging-properties.yml', 'r') as stream:
     config = yaml.load(stream, Loader=yaml.FullLoader)
 logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
@@ -41,7 +42,7 @@ class MainUI:
         self.label_design_file = None
         self.root = None
         self.swimlaneEditorModel = None  # TODO init to blank when starting the UI
-        self.debug = False  # This flag changes the behavior of the application to make testing easier
+        self.debug = True  # This flag changes the behavior of the application to make testing easier
 
         self.filetypes = (
             ('text files', '*.txt'),
@@ -276,7 +277,7 @@ class MainUI:
                          borderwidth=3)
 
         # Load the example file
-        example_file_name = "example_flow.txt"
+        example_file_name = f"{os.path.dirname(os.path.realpath(__file__))}{os.path.sep}example_flow.txt"
         if Path(example_file_name).exists():
             with open(example_file_name, 'r') as f:
                 text_help.insert(1.0, f.read())
