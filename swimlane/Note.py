@@ -36,6 +36,4 @@ class Note(DiagramItem):
             pass
             # return True
         return False
-
-    def __str__(self):
-        return f"Note starts from  task #{self.__start_task_id} to task #{self.__end_task_id}, text is {self.note_text}."
+s

@@ -22,25 +22,3 @@ class Divider(DiagramItem):
                             f" Supported styles are 'Regular', 'Dashed', 'Thin','Bold' and 'Delay'.")
 
         self.style = style
-
-    def __str__(self):
-        divider_as_string = io.StringIO()
-
-        if self.style.lower() == 'regular':
-            separator = "=="
-        elif self.style.lower() == 'dashed':
-            separator = ".."
-        elif self.style.lower() == 'bold':
-            separator = "##"
-        elif self.style.lower() == 'thin':
-            separator = "--"
-        elif self.style.lower() == 'delay':
-            separator = "@."
-
-        divider_as_string.write(separator)
-        divider_as_string.write(separator)
-        divider_as_string.write(self.label)
-        divider_as_string.write(separator)
-        divider_as_string.write(separator)
-
-        return divider_as_string.getvalue()

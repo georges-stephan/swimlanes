@@ -216,14 +216,3 @@ class Diagram:
             if isinstance(self.items[key], Task):
                 logger.info(f"At {index}, task is {str(self.items[key])}.")
                 index += 1
-
-    def __repr__(self) -> str:
-        return self.__str__()
-
-    def __str__(self) -> str:
-        diagram_as_text = io.StringIO()
-
-        for key in self.items:
-            diagram_as_text.write(str(self.items[key]))
-
-        return diagram_as_text.getvalue()

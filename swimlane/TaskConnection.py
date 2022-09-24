@@ -38,24 +38,3 @@ class TaskConnection(DiagramItem):
         else:
             self.looping_connection = False
             self.target_task = target_task
-
-    def __repr__(self) -> str:
-        task_connection_as_string = io.StringIO()
-        task_connection_as_string.write("From ")
-        task_connection_as_string.write(str(self.source_task))
-
-        if self.style.lower() == 'regular':
-            separator = "--"
-        elif self.style.lower() == 'dashed':
-            separator = ".."
-        elif self.style.lower() == 'bold':
-            separator = "##"
-
-        task_connection_as_string.write(separator)
-        task_connection_as_string.write(self.label)
-        task_connection_as_string.write(separator)
-
-        task_connection_as_string.write(" To ")
-        task_connection_as_string.write(str(self.target_task))
-
-        return task_connection_as_string.getvalue()
