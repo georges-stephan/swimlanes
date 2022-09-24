@@ -82,7 +82,7 @@ class SVGRenderer:
                        f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
-        # TODO Fix the tip of the open arrow so that it look pointy
+        # TODO Fix the tip of the open arrow so that it looks pointy. Pointy is scary.
 
         # End of the styles definitions block
         self.svg.write('</defs>\n')
@@ -258,9 +258,17 @@ class SVGRenderer:
             text_box_height = int(self.graph_items_height[graph_item_no] / 2)
 
         # Divider spread the whole diagram, so we just skip the margin
-        divider_x = self.get_mid_task_x(0) + self.get_arrow_height()
-        divider_to_x = ((self.get_task_width() + self.template.get_parameter_value('x_offset'))
-                        * self.diagram.get_id_of_last_task()) - self.get_arrow_height() * 2
+        if divider.style.lower() == 'delay':
+            divider_x = self.get_mid_task_x(0) - self.get_arrow_height()
+        else:
+            divider_x = self.get_mid_task_x(0) + self.get_arrow_height()
+
+        if divider.style.lower() == 'delay':
+            divider_to_x = ((self.get_task_width() + self.template.get_parameter_value('x_offset'))
+                        * self.diagram.get_id_of_last_task()) + self.get_arrow_height() * 2
+        else:
+            divider_to_x = ((self.get_task_width() + self.template.get_parameter_value('x_offset'))
+                            * self.diagram.get_id_of_last_task()) - self.get_arrow_height() * 2
 
         # The y coordinate for the end of the divider
         divider_to_y = divider_y + self.graph_items_height[graph_item_no]
@@ -291,6 +299,7 @@ class SVGRenderer:
                                f' L{self.get_mid_task_x(task_no)} {divider_to_y}'
                                f'" stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none" '
                                f'stroke="{self.template.get_parameter_value("connection_line_color")}" '
+                               f'opacity="0.3" '
                                f'stroke-dasharray=" 10 5"'
                                f'/>\n')
                 # self.objects_to_move_to_front_ids.append(eraser_line_name)
@@ -326,14 +335,6 @@ class SVGRenderer:
                                     stroke_color=self.template.get_parameter_value("task_line_color")
                                     )
 
-        # if draw_verticals:
-        #     self.svg.write(f'<!-- Task {task_no + 1} Vertical Connector -->\n')
-        #     self.svg.write(
-        #         f'<path id="line_task_{task_no + 1}" d="M {self.get_mid_task_x(task_no)} '
-        #         f'{self.get_task_upper_mid()} L {self.get_mid_task_x(task_no)} '
-        #         f'{self.get_y_lower_node_offset()}" stroke="{self.template.get_parameter_value("connection_line_color")}" '
-        #         f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none"/>\n')
-
     def draw_vertical_lines(self, lines_height, line_color: str, stroke_width: int, dashed=False):
         task_no = 0
         for key in self.diagram.items:
@@ -344,14 +345,14 @@ class SVGRenderer:
                 f'<path id="line_task_{task_no + 1}" d="M {self.get_mid_task_x(task_no)} '
                 f'{self.vertical_line_pointer_position} L {self.get_mid_task_x(task_no)} '
                 f'{lines_height}" stroke="{self.template.get_parameter_value("connection_line_color")}" '
-                f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none" ')
+                f'stroke-width="{self.template.get_parameter_value("stroke_width")}" fill="none" '
+                f'opacity="0.3" ')
 
             if dashed:
                 self.svg.write('stroke-dasharray=" 10 5" ')
             self.svg.write('/>')
 
             task_no += 1
-        # self.vertical_line_pointer_position = self.vertical_line_pointer_position + lines_height;
         self.vertical_line_pointer_position = lines_height;
 
     @lru_cache(maxsize=256)
@@ -394,10 +395,6 @@ class SVGRenderer:
     @lru_cache(maxsize=2)
     def get_y_offset(self) -> int:
         return self.template.get_parameter_value('y_offset')
-
-    @lru_cache(maxsize=2)
-    def get_task_height(self) -> int:
-        return self.template.get_parameter_value('task_height')
 
     @lru_cache(maxsize=2)
     def get_y_lower_node_offset(self):
@@ -493,7 +490,8 @@ class SVGRenderer:
                                     - self.template.get_parameter_value('arrow_height')
                                     , fill_color='white'
                                     , stroke_color='none'
-                                    , move_to_front=True)
+                                    , move_to_front=True
+                                    , opacity=0.8)
 
             arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) - self.template.get_parameter_value(
                 'space_between_connections') + self.template.get_parameter_value('arrow_height')
@@ -602,7 +600,7 @@ class SVGRenderer:
             f'style="fill:{fill_color};stroke:{stroke_color}'
             f';stroke-width:{self.template.get_parameter_value("stroke_width")}"')
         if opacity != 1.0:
-            self.svg.write(f' fill-opacity="{opacity}"')
+            self.svg.write(f' opacity="{opacity}"')
         self.svg.write("/>\n")
 
         # Split the text into lines that fit in the box based on the font type and size
@@ -642,6 +640,7 @@ class SVGRenderer:
             self.svg.write(
                 f'<text id="{svg_text_object_id}" x="{line_x}" y="{line_y}" '
                 f'font-size="{font_size}" font-weight="{font_weight}" '
+                f'opacity="{opacity}" '
                 f'font-family="{font_family}">'
                 f'{line[0]}'
                 f'</text>\n')
