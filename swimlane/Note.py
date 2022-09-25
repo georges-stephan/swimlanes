@@ -36,4 +36,3 @@ class Note(DiagramItem):
             pass
             # return True
         return False
-s
