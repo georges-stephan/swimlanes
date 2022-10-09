@@ -13,7 +13,6 @@ parsing/DrawSwimlaneDiagram.py
 parsing/Parser_test.py
 parsing/SwimlaneParser.py
 parsing/__init__.py
-svg/Errors.py
 svg/FontFunctions.py
 svg/FontFunctions_test.py
 svg/SVGGenerator.py

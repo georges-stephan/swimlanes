@@ -1,0 +1,1 @@
+pythonw -m diagram.ui.MainUI

@@ -1,6 +1,6 @@
 .idea
 *.pyc
 **/__pycache__/
-examples/live-test.svg
+data/examples/live-test.svg
 build/
 dist/

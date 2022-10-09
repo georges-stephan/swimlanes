@@ -1,1 +1,0 @@
-pythonw -m ui.MainUI
