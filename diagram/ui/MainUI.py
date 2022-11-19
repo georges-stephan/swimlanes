@@ -64,7 +64,7 @@ class MainUI:
             sys.exit(0)
 
         # Editor model is None (no data loaded from a previous file) and there is content in the text area
-        self.save_file(save_as=True)
+        self.save_file(save_as=True, exit_after_save=True)
 
     def generate_and_view(self) -> None:
         """
@@ -86,9 +86,10 @@ class MainUI:
     def save_file_as(self) -> None:
         self.save_file(save_as=True)
 
-    def save_file(self, save_as=False) -> None:
+    def save_file(self, save_as=False, exit_after_save=False) -> None:
         """
         Should be invoked to save the content in the editor
+        :param exit_after_save: should we exit the program save is completed?
         :param save_as: should we prompt the user for a name?
         :return:
         """
@@ -113,13 +114,15 @@ class MainUI:
                 if design_file_text_io is not None:
                     design_file_text_io.close()
                     logger.info("Saved content.")
-                sys.exit(0)
+                if exit_after_save:
+                        sys.exit(0)
         else:
             # A design file name is defined at the class level
             with open(self.design_filename, 'w') as f:
                 f.write(self.text.get('1.0', END))
                 logger.info(f"Saved content to {self.design_filename}.")
-                sys.exit(0)
+                if exit_after_save:
+                    sys.exit(0)
 
     def create_settings_dir_if_needed(self) -> None:
         """
