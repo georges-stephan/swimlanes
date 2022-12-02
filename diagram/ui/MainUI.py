@@ -3,12 +3,14 @@ import json
 import sys
 import tempfile
 import logging.config
+from tkinter.ttk import Entry
+
 import yaml
 
 from json import JSONDecodeError
 
 from tkinter import Frame, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
-    Menu, BOTH, LEFT, END, PanedWindow, DISABLED
+    Menu, BOTH, LEFT, END, PanedWindow, DISABLED, messagebox
 from tkinter import filedialog as fd
 
 from pathlib import Path
@@ -42,6 +44,7 @@ class MainUI:
         self.root = None
         self.swimlaneEditorModel = None  # TODO init to blank when starting the UI
         self.debug = False  # This flag changes the behavior of the application to make testing easier
+        self.output_image_width_entry = None
 
         self.filetypes = (
             ('text files', '*.txt'),
@@ -209,9 +212,23 @@ class MainUI:
             generate_design = False
 
         if generate_design:
+            # Check if image width is valid
+            width_as_string = self.output_image_width_entry.get()
+            try:
+                width_as_int = int(width_as_string)
+            except ValueError:
+                messagebox.showerror(title="Width Error", message="Image width should be an integer")
+                return
+
+            if 200 < width_as_int < 2500:
+                pass
+            else:
+                messagebox.showerror(title="Width Error", message="Image width should be an integer between 200 and 2,500")
+                return
+
             parser = SwimlaneParser()
             diagram = parser.load_file(self.design_filename)
-            generator = SVGRenderer(diagram, 800)
+            generator = SVGRenderer(diagram, width_as_int)
             with open(self.output_file_name, 'w') as f:
                 f.write(generator.get_svg_string())
                 if update_conf_file_after_gen:
@@ -228,7 +245,7 @@ class MainUI:
         # set window props
         self.root.wm_title("Swimlanes Diagram")
         self.root.resizable(True, True)
-        self.root.geometry('800x500')
+        self.root.geometry("800x500")
 
         paned_window = PanedWindow(self.root, orient=HORIZONTAL, showhandle=True)
         paned_window.pack(fill=BOTH, expand=1)
@@ -242,6 +259,17 @@ class MainUI:
         editor_help_frame = Frame(paned_window)
         editor_help_frame.pack(fill=BOTH, expand=True)
         paned_window.add(editor_help_frame)
+
+        # Output Image Width Label +  Text
+        output_image_size_frame = Frame(editor_frame)
+        output_image_size_frame.pack(fill=X)
+
+        output_image_width_label = Label(output_image_size_frame, text="Image Width", width=15, anchor='w')
+        output_image_width_label.pack(side=LEFT, padx=5, pady=5)
+
+        self.output_image_width_entry = Entry(output_image_size_frame)
+        self.output_image_width_entry.pack(fill=X, padx=5, expand=True)
+        self.output_image_width_entry.insert(END, "800")  # Default entry
 
         # Horizontal (x) Scroll bar
         x_scrollbar = Scrollbar(editor_frame, orient=HORIZONTAL)
@@ -306,6 +334,7 @@ class MainUI:
         menu_bar.add_cascade(label="File", menu=file_menu)
 
         self.create_settings_dir_if_needed()
+        self.text.focus_set()
 
         # show window
         self.root.config(menu=menu_bar)
