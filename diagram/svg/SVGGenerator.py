@@ -1,6 +1,5 @@
 from diagram.svg.RenderingError import RenderingStyleError, RenderingConnectionError
 from diagram.templates.DefaultTemplate import DefaultTemplate
-from diagram.svg.SVGSizeError import SVGSizeError
 from diagram.components.Diagram import Diagram
 from functools import lru_cache
 import io
@@ -30,10 +29,9 @@ def get_stroke_from_style_name(style_name: str):
 
 class SVGRenderer:
 
-    def __init__(self, diagram: Diagram, width: int, height: int, template=DefaultTemplate(), use_xlink=True):
+    def __init__(self, diagram: Diagram, width: int, template=DefaultTemplate(), use_xlink=True):
         self.diagram = diagram
         self.width = width
-        self.height = height
         self.template = template
         self.use_xlink = use_xlink
 
@@ -99,7 +97,7 @@ class SVGRenderer:
         self.add_title_to_svg()
         self.add_diagram_items_to_svg()
 
-        self.svg.write(f'\n<!-- List of objects to moved to top -->\n')
+        self.svg.write(f'\n<!-- List of objects to moved to front -->\n')
 
         # I read about the controversy of using xlink. Unfortunately, for now, I don't know of a better option.
         # Use of xlink is typically like: <use xlink:href="#one" />
@@ -122,7 +120,7 @@ class SVGRenderer:
                          ' xmlns:xlink="http://www.w3.org/1999/xlink" width="')
         svg_header.write(str(self.width))
         svg_header.write('" height="')
-        svg_header.write(str(max(self.preferred_height, self.height)))
+        svg_header.write(str(self.preferred_height))
         svg_header.write(f'" style="background-color:{self.template.get_parameter_value("background_color")}">\n')
 
         return svg_header.getvalue()
@@ -184,8 +182,14 @@ class SVGRenderer:
                                  dashed=False)
 
         self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
-        if self.preferred_height > self.height:
-            raise SVGSizeError(preferred_height=self.preferred_height, height=self.height)
+
+        # ici
+        task_id = 0
+        for key in self.diagram.items:
+            # If we are adding a task (or a the label of a lane)
+            if isinstance(self.diagram.items[key], Task):
+                self.add_task_to_svg(self.diagram.items[key], task_id, top_tasks=False)
+                task_id += 1
 
     def add_note_to_svg(self, task_connection: TaskConnection, note: Note, graph_item_no: int, note_id: int):
         note_x, note_y, note_width, note_height = 0, 0, 0, 0
@@ -248,7 +252,7 @@ class SVGRenderer:
         # The distance from the top of the graph is the offset until the previous graph item
         divider_y = self.get_y_offset_for_graph_item(graph_item_no)
 
-        text_box_height = 0;
+        text_box_height = 0
         if divider.style.lower() == 'delay':
             # Delay are shown wider on the graph to better represent a wait
             self.graph_items_height[graph_item_no] = self.template.get_parameter_value('space_between_connections') * 2
@@ -265,7 +269,7 @@ class SVGRenderer:
 
         if divider.style.lower() == 'delay':
             divider_to_x = ((self.get_task_width() + self.template.get_parameter_value('x_offset'))
-                        * self.diagram.get_id_of_last_task()) + self.get_arrow_height() * 2
+                            * self.diagram.get_id_of_last_task()) + self.get_arrow_height() * 2
         else:
             divider_to_x = ((self.get_task_width() + self.template.get_parameter_value('x_offset'))
                             * self.diagram.get_id_of_last_task()) - self.get_arrow_height() * 2
@@ -313,32 +317,31 @@ class SVGRenderer:
                 f'{style}'
                 f'/>\n')
 
-    def add_task_to_svg(self, task: Task, task_no: int, draw_verticals=False):
+    def add_task_to_svg(self, task: Task, task_no: int, top_tasks=True):
         """
-        Draw the upper and lower tasks and the line connecting them
+        Draw the upper tasks
         :param task: the task to be drawn
         :param task_no: the id of the task
-        :param draw_verticals: if the vertical lines should be drawn
         :return:
         """
         self.svg.write(f'\n<!-- Task {task_no + 1} Node -->\n')
-        y_offsets = [self.get_y_offset(), self.get_y_lower_node_offset()]
-        for i in y_offsets:
-            self.draw_box_with_text(f"task_cell_{i}_", task.description,
-                                    self.template.get_parameter_value("body-font-size"),
-                                    self.get_x_offset(task_no),
-                                    i,
-                                    self.get_task_width(),
-                                    self.get_task_height(),
-                                    box_corner=10,
-                                    fill_color=self.template.get_parameter_value("task_fill_color"),
-                                    stroke_color=self.template.get_parameter_value("task_line_color")
-                                    )
+        # aussi
+        self.draw_box_with_text(f"task_cell_{self.get_y_offset()}_",
+                                task.description,
+                                self.template.get_parameter_value("body-font-size"),
+                                self.get_x_offset(task_no),
+                                self.get_y_offset() if top_tasks else (self.preferred_height - self.template.get_parameter_value('stroke_width') - self.template.get_parameter_value('task_height')),
+                                self.get_task_width(),
+                                self.get_task_height(),
+                                box_corner=10,
+                                fill_color=self.template.get_parameter_value("task_fill_color"),
+                                stroke_color=self.template.get_parameter_value("task_line_color")
+                                )
 
     def draw_vertical_lines(self, lines_height, line_color: str, stroke_width: int, dashed=False):
         task_no = 0
         for key in self.diagram.items:
-            if not isinstance(self.diagram.items[key],Task):
+            if not isinstance(self.diagram.items[key], Task):
                 continue
             self.svg.write(f'\n<!-- Task {task_no + 1} Vertical Connector -->\n')
             self.svg.write(
@@ -353,7 +356,7 @@ class SVGRenderer:
             self.svg.write('/>')
 
             task_no += 1
-        self.vertical_line_pointer_position = lines_height;
+        self.vertical_line_pointer_position = lines_height
 
     @lru_cache(maxsize=256)
     def get_mid_task_x(self, task_no: int):
@@ -395,11 +398,6 @@ class SVGRenderer:
     @lru_cache(maxsize=2)
     def get_y_offset(self) -> int:
         return self.template.get_parameter_value('y_offset')
-
-    @lru_cache(maxsize=2)
-    def get_y_lower_node_offset(self):
-        return self.height - self.template.get_parameter_value(
-            'stroke_width') - self.template.get_parameter_value('task_height')
 
     @lru_cache(maxsize=256)
     def get_y_offset_for_graph_item(self, graph_item_no: int, last_item=False):

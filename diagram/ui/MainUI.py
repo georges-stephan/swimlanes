@@ -14,7 +14,6 @@ from tkinter import filedialog as fd
 from pathlib import Path
 
 from diagram.parsing.SwimlaneParser import SwimlaneParser
-from diagram.svg.SVGSizeError import SVGSizeError
 from diagram.svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
@@ -42,7 +41,7 @@ class MainUI:
         self.label_design_file = None
         self.root = None
         self.swimlaneEditorModel = None  # TODO init to blank when starting the UI
-        self.debug = False  # This flag changes the behavior of the application to make testing easier
+        self.debug = True  # This flag changes the behavior of the application to make testing easier
 
         self.filetypes = (
             ('text files', '*.txt'),
@@ -212,22 +211,11 @@ class MainUI:
         if generate_design:
             parser = SwimlaneParser()
             diagram = parser.load_file(self.design_filename)
-            generator = SVGRenderer(diagram, 800, 2)
+            generator = SVGRenderer(diagram, 800)
             with open(self.output_file_name, 'w') as f:
-                try:
-                    f.write(generator.get_svg_string())
-                    if update_conf_file_after_gen:
-                        self.update_config_file()
-                except SVGSizeError as svg_error:
-                    preferred_height = svg_error.preferred_height
-                    logger.debug(f"Exception: {svg_error} preferred_height should be:{preferred_height}")
-                    # TODO find a way to calculate the preferred width instead of hard-coding 800 on the first pass
-                    generator = SVGRenderer(diagram, 800, preferred_height)
-                    f.close()
-                    with open(self.output_file_name, 'w') as fii:
-                        fii.write(generator.get_svg_string())
-                        if update_conf_file_after_gen:
-                            self.update_config_file()
+                f.write(generator.get_svg_string())
+                if update_conf_file_after_gen:
+                    self.update_config_file()
 
     def draw_window(self) -> None:
         """
