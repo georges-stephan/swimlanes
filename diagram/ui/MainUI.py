@@ -41,7 +41,7 @@ class MainUI:
         self.label_design_file = None
         self.root = None
         self.swimlaneEditorModel = None  # TODO init to blank when starting the UI
-        self.debug = True  # This flag changes the behavior of the application to make testing easier
+        self.debug = False  # This flag changes the behavior of the application to make testing easier
 
         self.filetypes = (
             ('text files', '*.txt'),
