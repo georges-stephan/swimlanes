@@ -72,7 +72,7 @@ class SwimlaneParser:
     def get_diagram_from_lines(self, lines: list):
         line_number = 1
         for line in lines:
-            self.parse_line(line, line_number) # Used to strip the line, but it interferences with note's text
+            self.parse_line(line, line_number)  # Used to strip the line, but it interferences with note's text
             line_number += 1
 
         # Since notes can span over multiple lines, we need to check if the last line/command was part of node
@@ -109,7 +109,7 @@ class SwimlaneParser:
 
             # In the previous iteration, we had a one-line comment, so we are in comment mode. Since the current line
             # has a command in it, we need to turn off the in comment mode and re-invoke the same function
-            self.parse_line(line,line_number)
+            self.parse_line(line, line_number)
         elif line.lower().startswith(constant.START_CODE[0]):  # Title
             self.diagram.title = line[6:len(line)]
         elif line.lower().startswith(constant.START_CODE[1]):  # Note Declaration
@@ -123,7 +123,7 @@ class SwimlaneParser:
             # Check if the user specified the start and optionally the end task id
             note_boundaries = note_command.replace(',', ' ').split()
 
-            if len(note_boundaries) == 1: # Parsing note: Some text
+            if len(note_boundaries) == 1:  # Parsing note: Some text
                 # No start or end task specified, the will horizontally fill the entire diagram
                 # TODO when no boundaries are specified, get the "node from" and "node to" of the previous arrow entry
                 self.note_task_from, self.note_task_to = self.diagram.get_last_arrow_connections()
@@ -190,7 +190,7 @@ class SwimlaneParser:
                 open_arrow = False
 
             self.task_number += 1
-            task_connection = TaskConnection(label, task_from, task_to, lost_message
-                                             , style, bi_directional, open_arrow, self.diagram.auto_number,
+            task_connection = TaskConnection(label, task_from, task_to, lost_message,
+                                             style, bi_directional, open_arrow, self.diagram.auto_number,
                                              self.task_number)
             self.diagram.add_diagram_item(task_connection)

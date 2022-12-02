@@ -29,7 +29,7 @@ def get_stroke_from_style_name(style_name: str):
 
 class SVGRenderer:
 
-    def __init__(self, diagram: Diagram, width: int, template=DefaultTemplate(), use_xlink=True):
+    def __init__(self, diagram: Diagram, width: int, template=DefaultTemplate({}), use_xlink=True):
         self.diagram = diagram
         self.width = width
         self.template = template
@@ -169,16 +169,12 @@ class SVGRenderer:
                 graph_item_id += 1
 
             self.draw_vertical_lines(self.get_y_offset_for_graph_item(graph_item_id, last_item=False),
-                                     self.template.get_parameter_value("connection_line_color"),
-                                     self.template.get_parameter_value("stroke_width"),
                                      dashed=dashed_vertical_line)
 
         # Draw the last connector line and avoid writing over the lower task
         self.draw_vertical_lines(self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
                                  - self.get_task_height()
                                  - self.template.get_parameter_value("stroke_width"),
-                                 self.template.get_parameter_value("connection_line_color"),
-                                 self.template.get_parameter_value("stroke_width"),
                                  dashed=False)
 
         self.preferred_height = self.get_y_offset_for_graph_item(graph_item_id, last_item=True)
@@ -192,13 +188,13 @@ class SVGRenderer:
                 task_id += 1
 
     def add_note_to_svg(self, task_connection: TaskConnection, note: Note, graph_item_no: int, note_id: int):
-        note_x, note_y, note_width, note_height = 0, 0, 0, 0
+        # note_x, note_y, note_width, note_height = 0, 0, 0, 0
 
         if task_connection is None:
             # No boundaries was specified, spawn the note from the first task till the last
             note_x = self.get_mid_task_x(0) - self.template.get_parameter_value('arrow_height')
-            note_width = self.get_mid_task_x(self.diagram.tasks_count - 1) \
-                         + self.template.get_parameter_value('arrow_height') - note_x
+            note_width = self.get_mid_task_x(self.diagram.tasks_count - 1) + self.template.get_parameter_value(
+                'arrow_height') - note_x
         elif note.is_boundary_defined():
             # Support for this feature is on hold now, we need to find a better to allow the user to express
             # the boundaries of a note. The code will never run the lines in this block
@@ -218,11 +214,10 @@ class SVGRenderer:
                              + self.template.get_parameter_value('arrow_height') - note_x)
 
         note_y = self.get_y_offset_for_graph_item(graph_item_no) + self.template.get_parameter_value('arrow_height') * 2
-        note_height = get_text_height(note.note_text
-                                      , self.template.get_font_name_from_font_family_name('body-font-family')
-                                      , self.template.get_parameter_value('body-font-size')
-
-                                      , note_width) + self.template.get_parameter_value(
+        note_height = get_text_height(note.note_text,
+                                      self.template.get_font_name_from_font_family_name('body-font-family'),
+                                      self.template.get_parameter_value('body-font-size'),
+                                      note_width) + self.template.get_parameter_value(
             'text_margin-top') + self.template.get_parameter_value('text_margin-bottom')
 
         logger.debug(
@@ -231,18 +226,10 @@ class SVGRenderer:
             f"note_x={note_x}, note_y={note_y},note_width={note_width} and note_height={note_height}")
 
         self.svg.write(f'\n<!-- Note #{note_id + 1}, object #{graph_item_no + 1} -->\n')
-        self.draw_box_with_text(f"note_{note_id + 1}"
-                                , note.note_text
-                                , self.template.get_parameter_value("body-font-size")
-                                , note_x
-                                , note_y
-                                , note_width
-                                , note_height
-                                , fill_color='rgb(255, 253, 238)'
-                                , stroke_color='rgb(221, 219, 204)'
-                                , justification='left'
-                                , apply_margin=True
-                                , move_to_front=True)
+        self.draw_box_with_text(f"note_{note_id + 1}", note.note_text,
+                                self.template.get_parameter_value("body-font-size"), note_x, note_y, note_width,
+                                note_height, fill_color='rgb(255, 253, 238)', stroke_color='rgb(221, 219, 204)',
+                                justification='left', apply_margin=True, move_to_front=True)
 
         self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2
 
@@ -252,7 +239,7 @@ class SVGRenderer:
         # The distance from the top of the graph is the offset until the previous graph item
         divider_y = self.get_y_offset_for_graph_item(graph_item_no)
 
-        text_box_height = 0
+        # text_box_height = 0
         if divider.style.lower() == 'delay':
             # Delay are shown wider on the graph to better represent a wait
             self.graph_items_height[graph_item_no] = self.template.get_parameter_value('space_between_connections') * 2
@@ -320,17 +307,19 @@ class SVGRenderer:
     def add_task_to_svg(self, task: Task, task_no: int, top_tasks=True):
         """
         Draw the upper tasks
+        :param top_tasks: True if we are rendering the tasks at the top
         :param task: the task to be drawn
         :param task_no: the id of the task
         :return:
         """
         self.svg.write(f'\n<!-- Task {task_no + 1} Node -->\n')
-        # aussi
         self.draw_box_with_text(f"task_cell_{self.get_y_offset()}_",
                                 task.description,
                                 self.template.get_parameter_value("body-font-size"),
                                 self.get_x_offset(task_no),
-                                self.get_y_offset() if top_tasks else (self.preferred_height - self.template.get_parameter_value('stroke_width') - self.template.get_parameter_value('task_height')),
+                                self.get_y_offset() if top_tasks else (
+                                        self.preferred_height - self.template.get_parameter_value(
+                                    'stroke_width') - self.template.get_parameter_value('task_height')),
                                 self.get_task_width(),
                                 self.get_task_height(),
                                 box_corner=10,
@@ -338,7 +327,7 @@ class SVGRenderer:
                                 stroke_color=self.template.get_parameter_value("task_line_color")
                                 )
 
-    def draw_vertical_lines(self, lines_height, line_color: str, stroke_width: int, dashed=False):
+    def draw_vertical_lines(self, lines_height, dashed=False):
         task_no = 0
         for key in self.diagram.items:
             if not isinstance(self.diagram.items[key], Task):
@@ -479,17 +468,12 @@ class SVGRenderer:
                      - 2 * self.template.get_parameter_value('space_between_connections') \
                      + self.template.get_parameter_value('arrow_height')
 
-            self.draw_box_with_text(f"self_connection_text_{connection_no + 1}", task_connection.label
-                                    , self.template.get_parameter_value('body-font-size')
-                                    , self.get_x_offset(from_task_id)
-                                    , text_y
-                                    , self.get_task_width()
-                                    , self.template.get_parameter_value('space_between_connections')
-                                    - self.template.get_parameter_value('arrow_height')
-                                    , fill_color='white'
-                                    , stroke_color='none'
-                                    , move_to_front=True
-                                    , opacity=0.8)
+            self.draw_box_with_text(f"self_connection_text_{connection_no + 1}", task_connection.label,
+                                    self.template.get_parameter_value('body-font-size'),
+                                    self.get_x_offset(from_task_id), text_y, self.get_task_width(),
+                                    self.template.get_parameter_value('space_between_connections') -
+                                    self.template.get_parameter_value('arrow_height'),
+                                    fill_color='white', stroke_color='none', move_to_front=True, opacity=0.8)
 
             arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) - self.template.get_parameter_value(
                 'space_between_connections') + self.template.get_parameter_value('arrow_height')
@@ -559,14 +543,14 @@ class SVGRenderer:
                 from_task_id)) - 2 * self.template.get_parameter_value('arrow_height')
 
     def add_title_to_svg(self):
-        self.draw_box_with_text("title", self.diagram.title, self.template.get_parameter_value('title-font-size')
-                                , 0, 0, self.width, self.template.get_parameter_value('y_offset')
-                                , fill_color='none', stroke_color='none', font_family_param='title-font-family')
+        self.draw_box_with_text("title", self.diagram.title, self.template.get_parameter_value('title-font-size'), 0, 0,
+                                self.width, self.template.get_parameter_value('y_offset'), fill_color='none',
+                                stroke_color='none', font_family_param='title-font-family')
 
-    def draw_box_with_text(self, box_name: str, text: str, font_size: int, box_x: int, box_y: int, box_width: int
-                           , box_height: int, box_corner=0, fill_color='white', stroke_color='black'
-                           , font_family_param='body-font-family', font_weight='normal', justification='center'
-                           , apply_margin=False, move_to_front=False, opacity=1.0):
+    def draw_box_with_text(self, box_name: str, text: str, font_size: int, box_x: int, box_y: int, box_width: int,
+                           box_height: int, box_corner=0, fill_color='white', stroke_color='black',
+                           font_family_param='body-font-family', font_weight='normal', justification='center',
+                           apply_margin=False, move_to_front=False, opacity=1.0):
         """
         Draw a box and render a text inside it. Handle text alignment and text wrapping
         :param font_family_param:
@@ -602,8 +586,8 @@ class SVGRenderer:
         self.svg.write("/>\n")
 
         # Split the text into lines that fit in the box based on the font type and size
-        lines = split_text(text, self.template.get_font_name_from_font_family_name('body-font-family')
-                           , box_width, self.template.get_parameter_value('body-font-size'))
+        lines = split_text(text, self.template.get_font_name_from_font_family_name('body-font-family'), box_width,
+                           self.template.get_parameter_value('body-font-size'))
 
         if len(lines) < 1:
             return

@@ -18,7 +18,7 @@ class FileTemplate(Template, ABC):
             except JSONDecodeError as e:
                 logger.error(f"Template file {json_file_name} is corrupted:{e.msg}")
             except FileNotFoundError as e:
-                logger.error(f"Config file {json_file_name} was not found:{e.msg}")
+                logger.error(f"Config file {json_file_name} was not found:{e.filename}")
 
     def get_parameter_value(self, parameter_name: str) -> int | str:
         return self.template[parameter_name]

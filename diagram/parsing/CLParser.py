@@ -1,8 +1,8 @@
 import os
 import sys
 
-from diagram.parsing import SwimlaneParser
 from diagram import svg
+from diagram.parsing.SwimlaneParser import SwimlaneParser
 from diagram.svg.SVGGenerator import SVGRenderer
 from os.path import exists
 from pathlib import Path
@@ -49,7 +49,8 @@ def check_paths():
 
 def parse_in_file(input_file: str, output_file: str):
     print(dir(svg))
-    diagram = SwimlaneParser.load_file(input_file)
+    swimlane_parser = SwimlaneParser()
+    diagram = swimlane_parser.load_file(input_file)
 
     generator = SVGRenderer(diagram, 2, 2)
     with open(output_file, 'w') as f:

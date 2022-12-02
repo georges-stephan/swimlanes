@@ -25,4 +25,3 @@ class SwimlaneEditorModel:
     @classmethod
     def remove_control_characters(cls, s):
         return remove_control_characters(s)
-

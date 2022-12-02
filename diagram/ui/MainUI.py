@@ -114,7 +114,7 @@ class MainUI:
                     design_file_text_io.close()
                     logger.info("Saved content.")
                 if exit_after_save:
-                        sys.exit(0)
+                    sys.exit(0)
         else:
             # A design file name is defined at the class level
             with open(self.design_filename, 'w') as f:

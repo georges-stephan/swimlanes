@@ -7,7 +7,7 @@ import yaml
 
 from json import JSONDecodeError
 
-from tkinter import Frame, PhotoImage,Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
+from tkinter import Frame, PhotoImage, Tk, Label, Button, Scrollbar, Text, HORIZONTAL, BOTTOM, RIGHT, NONE, X, Y, \
     Menu, BOTH, LEFT, END, PanedWindow, DISABLED
 from tkinter import filedialog as fd
 
@@ -29,6 +29,7 @@ logging.config.dictConfig(config)
 logger = logging.getLogger(__name__)
 
 
+# Under construction, do not use
 class MainUIPro:
 
     def __init__(self):
@@ -249,7 +250,7 @@ class MainUIPro:
 
         # Preview Panel
         preview_image = PhotoImage(file='data/sasuke.svg')
-        Label(ws,image=img).pack()
+        # Label(ws,image=img).pack()
 
         # Text area - Help Window
         editor_help_frame = Frame(paned_window)
@@ -260,7 +261,6 @@ class MainUIPro:
         logs_frame = Frame()
         logs_frame.pack(fill=BOTH, expand=True)
         paned_window.add(logs_frame)
-
 
         # Horizontal (x) Scroll bar
         x_scrollbar = Scrollbar(editor_frame, orient=HORIZONTAL)

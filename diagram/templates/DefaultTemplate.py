@@ -3,7 +3,8 @@ from diagram.templates.Template import Template
 
 class DefaultTemplate(Template):
 
-    def __init__(self):
+    def __init__(self, parameters_dict):
+        super().__init__(parameters_dict)
         self.parameters_dict = {
             'x_offset': 50,
             'y_offset': 70,

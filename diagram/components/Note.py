@@ -32,7 +32,7 @@ class Note(DiagramItem):
         self.__arrange_orders()
 
     def is_boundary_defined(self):
-        if self.__start_task_id>-1 and self.__end_task_id>-1:
+        if self.__start_task_id > -1 and self.__end_task_id > -1:
             pass
             # return True
         return False

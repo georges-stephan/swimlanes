@@ -185,7 +185,7 @@ class Diagram:
         # example new_order_indexes was [0,3,1,2]
         diagram_tasks_items = []
         i = 0
-        for task_index in new_order_indexes:
+        for _ in new_order_indexes:
             # Convert the relative task index to an  index in the graph
             # ie find the diagram item index
             diagram_task_item_id = self.get_item_index_for_task_number(new_order_indexes[i])

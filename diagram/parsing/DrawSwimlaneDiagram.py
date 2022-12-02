@@ -1,11 +1,12 @@
 import sys
 
-from diagram.parsing import SwimlaneParser
+from diagram.parsing.SwimlaneParser import SwimlaneParser
 from diagram.svg.SVGGenerator import SVGRenderer
 
 
 def load_file(instruction_file_full_path: str, image_width, image_height, svg_output_file='out.SVG'):
-    diagram = SwimlaneParser.load_file(instruction_file_full_path)
+    swimlane_parser = SwimlaneParser()
+    diagram = swimlane_parser.load_file(instruction_file_full_path)
 
     generator = SVGRenderer(diagram, image_width, image_height)  # TODO which resolution to choose?
     with open(svg_output_file, 'w') as f:

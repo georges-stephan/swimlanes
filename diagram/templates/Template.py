@@ -4,6 +4,9 @@ from abc import ABC, abstractmethod
 
 class Template(ABC):
 
+    def __init__(self, parameters_dict):
+        self.parameters_dict = parameters_dict
+
     @abstractmethod
     def get_parameter_value(self, parameter_name: str) -> int | str:
         pass
