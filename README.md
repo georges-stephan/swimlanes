@@ -42,6 +42,8 @@ pythonw -m ui.MainUI
 From the root directory of this project to run the program. Windows users can link a shortcut to `swimlanes.vbs` instead
 of using the command line.
 
-Once started, the UI looks like that:
+Below is a screenshot of the UI:
 ![alt text](https://raw.githubusercontent.com/georges-stephan/swimlanes/master/doc/screenshot_main_with_example.png)
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
