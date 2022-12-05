@@ -264,7 +264,7 @@ class MainUI:
         output_image_size_frame = Frame(editor_frame)
         output_image_size_frame.pack(fill=X)
 
-        output_image_width_label = Label(output_image_size_frame, text="Image Width", width=15, anchor='w')
+        output_image_width_label = Label(output_image_size_frame, text="Image Width:", width=15, anchor='w')
         output_image_width_label.pack(side=LEFT, padx=5, pady=5)
 
         self.output_image_width_entry = Entry(output_image_size_frame)
