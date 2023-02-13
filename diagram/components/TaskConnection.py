@@ -1,4 +1,5 @@
 from diagram.components.DiagramItems import DiagramItem
+from diagram.components.StyleError import StyleError
 from diagram.components.Task import Task
 from dataclasses import dataclass
 
@@ -26,10 +27,8 @@ class TaskConnection(DiagramItem):
         self.auto_number = auto_number
         self.task_number = task_number
 
-        if check_style(style):
-            pass
-        else:
-            raise TypeError(f"Un-supported style {style}. Supported styles are 'Regular', 'Dashed' and 'Bold'.")
+        if not check_style(style):
+            raise StyleError(f"Un-supported style {style}. Supported styles are 'Regular', 'Dashed' and 'Bold'.")
 
         if target_task is None:
             self.looping_connection = True

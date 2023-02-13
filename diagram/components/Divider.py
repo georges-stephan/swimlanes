@@ -1,4 +1,5 @@
 from diagram.components.DiagramItems import DiagramItem
+from diagram.components.StyleError import StyleError
 
 
 def check_style(style: str):
@@ -17,7 +18,7 @@ class Divider(DiagramItem):
         if check_style(style):
             pass
         else:
-            raise TypeError(f"Un-supported style {style}."
-                            f" Supported styles are 'Regular', 'Dashed', 'Thin','Bold' and 'Delay'.")
+            raise StyleError(f"Un-supported style {style}. The supported styles are"
+                             f" 'Regular', 'Dashed', 'Thin','Bold' and 'Delay'.")
 
         self.style = style

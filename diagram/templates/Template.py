@@ -1,6 +1,8 @@
 import platform
 from abc import ABC, abstractmethod
 
+from diagram.components.StyleError import StyleError
+
 
 class Template(ABC):
 
@@ -13,7 +15,7 @@ class Template(ABC):
 
     def get_font_name_from_font_family_name(self, font_family_name) -> str:
         if self.parameters_dict[font_family_name] is None:
-            raise TypeError(f'Unknown font family {font_family_name}')
+            raise StyleError(f'Unknown font family {font_family_name}')
 
         if self.parameters_dict[font_family_name].strip().lower() == 'sans-serif':
             if platform.system() == 'Windows':

@@ -38,6 +38,7 @@ def check_paths():
     output_file = Path(output_file_name)
 
     if output_file.exists():
+        # TODO add optional command line argument to automatically overwrite an existing file
         overwrite_decision = input(f"Output file {output_file} already exists, overwrite? Y=Yes.")
         if overwrite_decision != 'Y':
             sys.exit()

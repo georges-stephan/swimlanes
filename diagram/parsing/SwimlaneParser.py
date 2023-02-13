@@ -143,7 +143,7 @@ class SwimlaneParser:
                 self.note_task_from = int(note_boundaries[1])
                 self.note_task_to = int(note_boundaries[2])
             else:
-                raise ValueError(f"Error in file at line {line}, command is not know.")
+                raise ParsingError(line_number=line_number, note_boundaries=f"Error in file at line {line}, command is not know.")
         elif line.startswith(constant.START_CODE[2]):  # Thin Divider
             self.diagram.add_divider(Divider(line[2:len(line)], style="Thin"))
         elif line.startswith(constant.START_CODE[3]):  # Regular Divider
