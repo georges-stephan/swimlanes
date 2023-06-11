@@ -47,7 +47,7 @@ class MainUI:
         self.output_image_width_entry = None
 
         self.filetypes = (
-            ('text files', '*.txt'),
+            ('text files', '*.flow'),
             ('All files', '*.*')
         )
 
@@ -74,7 +74,7 @@ class MainUI:
         :return:
         """
         svg_text = self.text.get(1.0, END)
-        tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.txt', delete=False)
+        tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.flow', delete=False)
         self.dir_name, ignore_attribute = os.path.split(tmp_design_filename.name)
         self.dir_name = f"{self.dir_name}{os.path.sep}"
 
@@ -223,7 +223,8 @@ class MainUI:
             if 200 < width_as_int < 2500:
                 pass
             else:
-                messagebox.showerror(title="Width Error", message="Image width should be an integer between 200 and 2,500")
+                messagebox.showerror(title="Width Error", message="Image width should be an integer between 200 and "
+                                                                  "2,500")
                 return
 
             parser = SwimlaneParser()

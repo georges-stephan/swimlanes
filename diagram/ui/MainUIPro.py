@@ -46,7 +46,7 @@ class MainUIPro:
         self.debug = False  # This flag changes the behavior of the application to make testing easier
 
         self.filetypes = (
-            ('text files', '*.txt'),
+            ('text files', '*.flow'),
             ('All files', '*.*')
         )
 
@@ -73,7 +73,7 @@ class MainUIPro:
         :return:
         """
         svg_text = self.text.get(1.0, END)
-        tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.txt', delete=False)
+        tmp_design_filename = tempfile.TemporaryFile(mode='w+b', suffix='.flow', delete=False)
         self.dir_name, ignore_attribute = os.path.split(tmp_design_filename.name)
         self.dir_name = f"{self.dir_name}{os.path.sep}"
 
