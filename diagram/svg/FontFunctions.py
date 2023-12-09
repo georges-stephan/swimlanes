@@ -21,10 +21,10 @@ def get_text_height(text: str, font_file_name: str, font_size: int, box_width: i
     lines = split_text(text, font_file_name, box_width, font_size)
     font = ImageFont.truetype(f'{font_file_name}.ttf', font_size)
 
-    logger.debug(f'Text will split over {len(lines)} lines. Text height is {font.getsize(text)[1]},'
-                 f' text width is {font.getsize(text)[0]}. Box width={box_width}')
+    logger.debug(f'Text will split over {len(lines)} lines. Text height is {font.getbbox(text)[3]},'
+                 f' text width is {font.getbbox(text)[2]}. Box width={box_width}')
 
-    return font.getsize(text)[1] * len(lines)
+    return font.getbbox(text)[3] * len(lines)
 
 
 def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
@@ -39,16 +39,16 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
     """
     lines = []
     font = ImageFont.truetype(f'{font_file_name}.ttf', font_size)
-    size = font.getsize(text)
-    rendered_font_width = size[0]
-    rendered_font_height = size[1]
+    size = font.getbbox(text)
+    rendered_font_width = size[2]
+    rendered_font_height = size[3]
 
     # Best case scenario, the rendered text fits
     if box_width > rendered_font_width:
         lines.append((text, rendered_font_width, rendered_font_height))
         return lines
 
-    space_width = font.getsize(' ')[0]
+    space_width = font.getbbox(' ')[2]
 
     words = text.split()  # Split a line of text into words
     remaining_words_count = len(words)
@@ -58,12 +58,12 @@ def split_text(text: str, font_file_name: str, box_width: int, font_size: int):
     current_string_font_height = 0
     while remaining_words_count > 0:
         for word in words:
-            size_current_string = font.getsize(current_string)
-            current_string_font_width = size_current_string[0]
-            current_string_font_height = size_current_string[1]
+            size_current_string = font.getbbox(current_string)
+            current_string_font_width = size_current_string[2]
+            current_string_font_height = size_current_string[3]
 
-            size_new_word = font.getsize(word.strip())
-            new_word_font_width = size_new_word[0]
+            size_new_word = font.getbbox(word.strip())
+            new_word_font_width = size_new_word[2]
 
             if (new_word_font_width + space_width + current_string_font_width) < box_width:
                 # The word can be added to the current line
