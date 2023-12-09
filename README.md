@@ -32,7 +32,7 @@ The following SVG image will be generated:
 The other constraint is to avoid, as much as possible, any dependency on any library (because I am still learning). The only library I am using is called Pillow, for measuring the dimension of a text given font size, Yaml to read configuration files and setuptools for the build.
 
 # Requirements
-The Python version I am using to develop this project is 3.10.0.
+The Python version I am using to develop this project is 3.11.4.
 
 # Running the Program
 The main class is `ui.MainUI`, so this is the class you want to execute. I am using the `tkinter` UI framework. Execute:
