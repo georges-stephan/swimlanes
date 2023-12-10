@@ -11,6 +11,7 @@
   "task_height": 50,
   "task_line_color": "grey",
   "task_width": 150,
+  "task_text_color": "red",
   "text_margin-bottom": 4,
   "text_margin-left": 4,
   "text_margin-right": 4,

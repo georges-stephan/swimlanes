@@ -13,11 +13,11 @@ class Template(ABC):
     def get_parameter_value(self, parameter_name: str) -> int | str:
         pass
 
-    def get_font_name_from_font_family_name(self, font_family_name) -> str:
-        if self.parameters_dict[font_family_name] is None:
-            raise StyleError(f'Unknown font family {font_family_name}')
+    def get_font_name_from_font_family_name(self, template_parameter_font_family) -> str:
+        if self.get_parameter_value(template_parameter_font_family) is None:
+            raise StyleError(f'Unknown template parameter {template_parameter_font_family}')
 
-        if self.parameters_dict[font_family_name].strip().lower() == 'sans-serif':
+        if self.get_parameter_value(template_parameter_font_family).strip().lower() == 'sans-serif':
             if platform.system() == 'Windows':
                 return 'arial'
             else:

@@ -22,6 +22,3 @@ class FileTemplate(Template, ABC):
 
     def get_parameter_value(self, parameter_name: str) -> int | str:
         return self.template[parameter_name]
-
-    def get_font_name_from_font_family_name(self, font_family_name) -> str:
-        pass

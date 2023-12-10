@@ -1,14 +1,13 @@
 from PIL import ImageFont
 
-from diagram.templates.DefaultTemplate import DefaultTemplate
+# from diagram.templates.DefaultTemplate import DefaultTemplate
 
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int,
-                    template=DefaultTemplate({})):
+def get_text_height(text: str, font_file_name: str, font_size: int, box_width: int):
     """
     A function to return the estimated height of  a text
     :param text: the text to be rendered

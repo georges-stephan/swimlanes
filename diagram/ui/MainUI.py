@@ -20,6 +20,9 @@ from diagram.svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
 
+# from diagram.templates.DefaultTemplate import DefaultTemplate
+from diagram.templates.FileTemplate import FileTemplate
+from diagram.templates.Template import Template
 from diagram.ui.SwimlaneEditorModel import SwimlaneEditorModel
 
 # Logging configuration
@@ -229,17 +232,18 @@ class MainUI:
 
             parser = SwimlaneParser()
             diagram = parser.load_file(self.design_filename)
-            generator = SVGRenderer(diagram, width_as_int)
+            generator = SVGRenderer(diagram, width_as_int, template=template)  # TODO add template as a parameter
             with open(self.output_file_name, 'w') as f:
                 f.write(generator.get_svg_string())
                 if update_conf_file_after_gen:
                     self.update_config_file()
 
-    def draw_window(self) -> None:
+    def draw_window(self, template: Template) -> None:
         """
         Draw the window
         :return:
         """
+
         # initialize tkinter
         self.root = Tk()
 
@@ -344,4 +348,13 @@ class MainUI:
 
 
 if __name__ == "__main__":
-    MainUI().draw_window()
+    if len(sys.argv) > 1:
+        json_template_file_name = sys.argv[1]
+        logger.info(f"Using template {json_template_file_name}")
+    else:
+        json_template_file_name = (f"{os.path.dirname(os.path.realpath(__file__))}{os.path.sep}"
+                                   f"../templates/default-template.json")
+        logger.info("Using default template."
+                    "Start the program with a template file name if you want to use a custom template")
+    template = FileTemplate(json_template_file_name)
+    MainUI().draw_window(template)

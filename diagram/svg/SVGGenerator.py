@@ -1,5 +1,5 @@
 from diagram.svg.RenderingError import RenderingStyleError, RenderingConnectionError
-from diagram.templates.DefaultTemplate import DefaultTemplate
+# from diagram.templates.DefaultTemplate import DefaultTemplate
 from diagram.components.Diagram import Diagram
 from functools import lru_cache
 import io
@@ -29,7 +29,7 @@ def get_stroke_from_style_name(style_name: str):
 
 class SVGRenderer:
 
-    def __init__(self, diagram: Diagram, width: int, template=DefaultTemplate({}), use_xlink=True):
+    def __init__(self, diagram: Diagram, width: int, template, use_xlink=True):
         self.diagram = diagram
         self.width = width
         self.template = template
@@ -324,7 +324,8 @@ class SVGRenderer:
                                 self.get_task_height(),
                                 box_corner=10,
                                 fill_color=self.template.get_parameter_value("task_fill_color"),
-                                stroke_color=self.template.get_parameter_value("task_line_color")
+                                stroke_color=self.template.get_parameter_value("task_line_color"),
+                                text_color=self.template.get_parameter_value("task_text_color")
                                 )
 
     def draw_vertical_lines(self, lines_height, dashed=False):
@@ -550,7 +551,7 @@ class SVGRenderer:
     def draw_box_with_text(self, box_name: str, text: str, font_size: int, box_x: int, box_y: int, box_width: int,
                            box_height: int, box_corner=0, fill_color='white', stroke_color='black',
                            font_family_param='body-font-family', font_weight='normal', justification='center',
-                           apply_margin=False, move_to_front=False, opacity=1.0):
+                           apply_margin=False, move_to_front=False, opacity=1.0, text_color='black'):
         """
         Draw a box and render a text inside it. Handle text alignment and text wrapping
         :param font_family_param:
@@ -569,6 +570,7 @@ class SVGRenderer:
         :param apply_margin: whether a top margin should be added between the text and the top of the rectangle
         :param move_to_front: should the text be moved to the front of all SVG components?
         :param opacity: transparency ratio
+        :param text_color: the color of the text to be rendered
         :return:
         """
         # Draw the box
@@ -622,6 +624,7 @@ class SVGRenderer:
             self.svg.write(
                 f'<text id="{svg_text_object_id}" x="{line_x}" y="{line_y}" '
                 f'font-size="{font_size}" font-weight="{font_weight}" '
+                f'fill="{text_color}" '
                 f'opacity="{opacity}" '
                 f'font-family="{font_family}">'
                 f'{line[0]}'
