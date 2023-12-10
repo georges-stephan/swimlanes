@@ -49,7 +49,9 @@ class SVGRenderer:
         self.svg.write('<defs>\n')
         # Add the arrows style in the header of the SVG file
         # Normal Arrow Style
-        self.svg.write('<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto">')
+        self.svg.write(f'<marker id="arrow_head" markerWidth="10" markerHeight="7" refX="3.5" refY="3.5" orient="auto"'
+                       f' stroke="{self.template.get_parameter_value("arrow_color")}"'
+                       f' fill="{self.template.get_parameter_value("arrow_color")}">')
         self.svg.write('\n<polygon points="0 0, 10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
 
@@ -57,15 +59,16 @@ class SVGRenderer:
         self.svg.write(
             '<marker id="lost_arrow_head" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">\n')
         self.svg.write(f'<line x1="0" y1="0" x2="10" y2="10" '
-                       f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
+                       f'style="stroke:{self.template.get_parameter_value("arrow_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write(f'<line x1="0" y1="10" x2="10" y2="0" '
-                       f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
+                       f'style="stroke:{self.template.get_parameter_value("arrow_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
 
         # Reverse Arrow Head Style
-        self.svg.write('\n<marker id="reverse_arrow_head" markerWidth="10" '
+        self.svg.write(f'\n<marker id="reverse_arrow_head" markerWidth="10"'
+                       f' stroke="{self.template.get_parameter_value("arrow_color")}" '
                        'markerHeight="7" refX="-3.5" refY="3.5" orient="auto">\n')
         self.svg.write('<polygon points="0 0, -10 3.5, 0 7"/>\n')
         self.svg.write('</marker>\n')
@@ -74,10 +77,10 @@ class SVGRenderer:
         self.svg.write(
             '<marker id="open_arrow_head" markerWidth="10" markerHeight="11" refX="5" refY="5" orient="auto">\n')
         self.svg.write(f'<line x1="5" y1="5" x2="-3" y2="8" '
-                       f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
+                       f'style="stroke:{self.template.get_parameter_value("arrow_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write(f'<line x1="5" y1="5" x2="-3" y2="2" '
-                       f'style="stroke:{self.template.get_parameter_value("connection_line_color")};'
+                       f'style="stroke:{self.template.get_parameter_value("arrow_color")};'
                        f'stroke-width:{self.template.get_parameter_value("arrow_stroke_width")}"/>\n')
         self.svg.write('</marker>\n')
         # TODO Fix the tip of the open arrow so that it looks pointy. Pointy is scary.
@@ -228,8 +231,10 @@ class SVGRenderer:
         self.svg.write(f'\n<!-- Note #{note_id + 1}, object #{graph_item_no + 1} -->\n')
         self.draw_box_with_text(f"note_{note_id + 1}", note.note_text,
                                 self.template.get_parameter_value("body-font-size"), note_x, note_y, note_width,
-                                note_height, fill_color='rgb(255, 253, 238)', stroke_color='rgb(221, 219, 204)',
-                                justification='left', apply_margin=True, move_to_front=True)
+                                note_height, fill_color=self.template.get_parameter_value("note_fill_color"),
+                                stroke_color=self.template.get_parameter_value("note_line_color"),
+                                justification='left', apply_margin=True, move_to_front=True,
+                                text_color= self.template.get_parameter_value("note_text_color"))
 
         self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2
 
@@ -280,7 +285,6 @@ class SVGRenderer:
         # Draw The Divider Line
         stroke, style = get_stroke_from_style_name(divider.style)
         if divider.style.lower() == 'delay':
-            # TODO this line is not as long as it should be
             # Draw the delay divider. A white line to overwrite the background and make it look transparent
             for task_no in range(0, self.diagram.tasks_count):
                 # And a dashed line above the white line
@@ -293,7 +297,6 @@ class SVGRenderer:
                                f'opacity="0.3" '
                                f'stroke-dasharray=" 10 5"'
                                f'/>\n')
-                # self.objects_to_move_to_front_ids.append(eraser_line_name)
                 self.objects_to_move_to_front_ids.append(dotted_line_name)
         else:
             self.svg.write(
@@ -318,8 +321,9 @@ class SVGRenderer:
                                 self.template.get_parameter_value("body-font-size"),
                                 self.get_x_offset(task_no),
                                 self.get_y_offset() if top_tasks else (
-                                        self.preferred_height - self.template.get_parameter_value(
-                                    'stroke_width') - self.template.get_parameter_value('task_height')),
+                                        self.preferred_height -
+                                        self.template.get_parameter_value('stroke_width') -
+                                        self.template.get_parameter_value('task_height')),
                                 self.get_task_width(),
                                 self.get_task_height(),
                                 box_corner=10,
@@ -488,7 +492,7 @@ class SVGRenderer:
                 f'{arrow_y_offset + self.get_self_connection_height()} '
                 f'{self.get_mid_task_x(from_task_id)} '
                 f'{arrow_y_offset + self.get_self_connection_height()} '
-                f'" stroke="{self.template.get_parameter_value("connection_line_color")}" stroke-linejoin="round" ')
+                f'" stroke="{self.template.get_parameter_value("arrow_color")}" stroke-linejoin="round" ')
         else:
             # Now add the label associated to that swim lane
             self.draw_box_with_text("connection_text",
@@ -519,7 +523,7 @@ class SVGRenderer:
                 f'{self.get_y_offset_for_graph_item(graph_item_offset)} L '
                 f'{path_l} '
                 f'{self.get_y_offset_for_graph_item(graph_item_offset)}" '
-                f'stroke="{self.template.get_parameter_value("connection_line_color")}" ')
+                f'stroke="{self.template.get_parameter_value("arrow_color")}" ')
         self.svg.write(f'stroke-width="{stroke}" fill="none" {style}')
 
         if task_connection.lost_message:

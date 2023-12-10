@@ -1,6 +1,7 @@
 {
   "arrow_height": 10,
   "arrow_stroke_width": 1,
+  "arrow_color":"black",
   "body-font-family": "sans-serif",
   "body-font-size": 14,
   "background_color": "white",
@@ -11,7 +12,7 @@
   "task_height": 50,
   "task_line_color": "grey",
   "task_width": 150,
-  "task_text_color": "red",
+  "task_text_color": "black",
   "text_margin-bottom": 4,
   "text_margin-left": 4,
   "text_margin-right": 4,
@@ -19,5 +20,8 @@
   "title-font-family": "sans-serif",
   "title-font-size": 16,
   "x_offset": 50,
-  "y_offset": 70
+  "y_offset": 70,
+  "note_line_color":"rgb(221, 219, 204)",
+  "note_fill_color":"rgb(255, 253, 238)",
+  "note_text_color":"black"
 }
