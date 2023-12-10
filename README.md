@@ -34,13 +34,48 @@ The other constraint is to avoid, as much as possible, any dependency on any lib
 # Requirements
 The Python version I am using to develop this project is 3.11.4.
 
+# Defining a Template
+A Template is a JSON file which, when provided as a command line argument, will allow you to determine the colors of the elements in the generated graph. The example below lists the currently available parameters:
+```json
+{
+  "arrow_height": 10,
+  "arrow_stroke_width": 1,
+  "arrow_color":"black",
+  "body-font-family": "sans-serif",
+  "body-font-size": 14,
+  "background_color": "white",
+  "connection_line_color": "black",
+  "space_between_connections": 50,
+  "stroke_width": 2,
+  "task_fill_color": "white",
+  "task_height": 50,
+  "task_line_color": "grey",
+  "task_width": 150,
+  "task_text_color": "black",
+  "text_margin-bottom": 4,
+  "text_margin-left": 4,
+  "text_margin-right": 4,
+  "text_margin-top": 4,
+  "title-font-family": "sans-serif",
+  "title-font-size": 16,
+  "x_offset": 50,
+  "y_offset": 70,
+  "note_line_color":"rgb(221, 219, 204)",
+  "note_fill_color":"rgb(255, 253, 238)",
+  "note_text_color":"black"
+}
+```
+
 # Running the Program
 The main class is `ui.MainUI`, so this is the class you want to execute. I am using the `tkinter` UI framework. Execute:
 ```
 pythonw -m ui.MainUI
 ```
 From the root directory of this project to run the program. Windows users can link a shortcut to `swimlanes.vbs` instead
-of using the command line.
+of using the command line. This will use the default color template. To force the program to use specific template, run:
+```
+pythonw -m ui.MainUI /path/to/template.json
+```
 
 Below is a screenshot of the UI:
 ![alt text](https://raw.githubusercontent.com/georges-stephan/swimlanes/master/doc/screenshot_main_with_example.png)
