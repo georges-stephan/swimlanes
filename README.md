@@ -29,7 +29,7 @@ The following SVG image will be generated:
 
 ![alt text](https://raw.githubusercontent.com/georges-stephan/swimlanes/master/doc/pizza_example.svg)
 
-The other constraint is to avoid, as much as possible, any dependency on any library (because I am still learning). The only library I am using is called Pillow, for measuring the dimension of a text given font size, Yaml to read configuration files and setuptools for the build.
+The other constraint is to avoid, as much as possible, any dependency on any library (because I am still learning). The only libraries I am using are Pillow, for measuring the dimension of a text given font size, Yaml to read configuration files and setuptools for the build.
 
 # Requirements
 The Python version I am using to develop this project is 3.11.4.
