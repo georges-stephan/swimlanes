@@ -22,7 +22,7 @@
 
 <!-- Task 1 Node -->
 <rect id="task_cell_70__rectangle_3" x="50" y="70" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_4" x="87" y="102" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Customer</text>
+<text id="task_cell_70__text_4" x="87" y="102" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Customer</text>
 
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 120 L 118 130" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -34,7 +34,7 @@
 <path id="line_task_4" d="M 679 120 L 679 130" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Task 2 Node -->
 <rect id="task_cell_70__rectangle_5" x="237" y="70" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_6" x="286" y="102" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Driver</text>
+<text id="task_cell_70__text_6" x="286" y="102" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Driver</text>
 
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 130 L 118 130" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -46,7 +46,7 @@
 <path id="line_task_4" d="M 679 130 L 679 130" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Connection 1 -->
 <rect id="connection_text_rectangle_7" x="128" y="140" rx="0" ry="0" width="354" height="40" style="fill:white;stroke:none;stroke-width:2"/>
-<text id="connection_text_text_8" x="267" y="167" font-size="14" font-weight="normal" fill="black" opacity="1.0" font-family="sans-serif">Pizza Order</text>
+<text id="connection_text_text_8" x="267" y="167" font-size="14" font-weight="bold" fill="black" opacity="1.0" font-family="sans-serif">Pizza Order</text>
 <path id="connection_arrow_1" d="M 118 190 L 492 190" stroke="rgb(6, 82, 128)" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 130 L 118 190" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -58,7 +58,7 @@
 <path id="line_task_4" d="M 679 130 L 679 190" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Task 3 Node -->
 <rect id="task_cell_70__rectangle_9" x="424" y="70" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_10" x="438" y="102" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Pizza Call Center</text>
+<text id="task_cell_70__text_10" x="438" y="102" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Pizza Call Center</text>
 
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 190 L 118 190" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -70,7 +70,7 @@
 <path id="line_task_4" d="M 679 190 L 679 190" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Connection 2 -->
 <rect id="connection_text_rectangle_11" x="502" y="200" rx="0" ry="0" width="167" height="40" style="fill:white;stroke:none;stroke-width:2"/>
-<text id="connection_text_text_12" x="548" y="227" font-size="14" font-weight="normal" fill="black" opacity="1.0" font-family="sans-serif">Pizza Order</text>
+<text id="connection_text_text_12" x="548" y="227" font-size="14" font-weight="bold" fill="black" opacity="1.0" font-family="sans-serif">Pizza Order</text>
 <path id="connection_arrow_2" d="M 492 250 L 679 250" stroke="rgb(6, 82, 128)" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 190 L 118 250" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -82,7 +82,7 @@
 <path id="line_task_4" d="M 679 190 L 679 250" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Connection 3 -->
 <rect id="connection_text_rectangle_13" x="128" y="260" rx="0" ry="0" width="541" height="40" style="fill:white;stroke:none;stroke-width:2"/>
-<text id="connection_text_text_14" x="309" y="286" font-size="14" font-weight="normal" fill="black" opacity="1.0" font-family="sans-serif">Pizza is Cooking Notification</text>
+<text id="connection_text_text_14" x="309" y="286" font-size="14" font-weight="bold" fill="black" opacity="1.0" font-family="sans-serif">Pizza is Cooking Notification</text>
 <path id="connection_arrow_3" d="M 679 310 L 108 310" stroke="rgb(6, 82, 128)" stroke-width="3" fill="none" stroke-dasharray=" 10 5" marker-end="url(#open_arrow_head)"/>
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 250 L 118 310" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -122,7 +122,7 @@
 <path id="line_task_4" d="M 679 410 L 679 510" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray=" 10 5" />
 <!-- Task 4 Node -->
 <rect id="task_cell_70__rectangle_19" x="611" y="70" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_20" x="656" y="102" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Kitchen</text>
+<text id="task_cell_70__text_20" x="656" y="102" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Kitchen</text>
 
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 510 L 118 510" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -134,7 +134,7 @@
 <path id="line_task_4" d="M 679 510 L 679 510" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Connection 5 -->
 <rect id="connection_text_rectangle_21" x="315" y="520" rx="0" ry="0" width="354" height="40" style="fill:white;stroke:none;stroke-width:2"/>
-<text id="connection_text_text_22" x="445" y="546" font-size="14" font-weight="normal" fill="black" opacity="1.0" font-family="sans-serif">Pizza is Ready</text>
+<text id="connection_text_text_22" x="445" y="546" font-size="14" font-weight="bold" fill="black" opacity="1.0" font-family="sans-serif">Pizza is Ready</text>
 <path id="connection_arrow_5" d="M 679 570 L 305 570" stroke="rgb(6, 82, 128)" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 510 L 118 570" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -146,7 +146,7 @@
 <path id="line_task_4" d="M 679 510 L 679 570" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Connection 6 -->
 <rect id="connection_text_rectangle_23" x="128" y="580" rx="0" ry="0" width="167" height="40" style="fill:white;stroke:none;stroke-width:2"/>
-<text id="connection_text_text_24" x="181" y="607" font-size="14" font-weight="normal" fill="black" opacity="1.0" font-family="sans-serif">Hot Pizza</text>
+<text id="connection_text_text_24" x="181" y="607" font-size="14" font-weight="bold" fill="black" opacity="1.0" font-family="sans-serif">Hot Pizza</text>
 <path id="connection_arrow_6" d="M 305 630 L 118 630" stroke="rgb(6, 82, 128)" stroke-width="2" fill="none"  marker-end="url(#arrow_head)"/>
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 570 L 118 630" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -171,7 +171,7 @@
 <path id="line_task_4" d="M 679 630 L 679 690" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Connection 7 -->
 <rect id="connection_text_rectangle_28" x="148" y="700" rx="0" ry="0" width="334" height="40" style="fill:white;stroke:none;stroke-width:2"/>
-<text id="connection_text_text_29" x="254" y="726" font-size="14" font-weight="normal" fill="black" opacity="1.0" font-family="sans-serif">Satisfaction Survey</text>
+<text id="connection_text_text_29" x="254" y="726" font-size="14" font-weight="bold" fill="black" opacity="1.0" font-family="sans-serif">Satisfaction Survey</text>
 <path id="connection_arrow_7" d="M 492 750 L 138 750" stroke="rgb(6, 82, 128)" stroke-width="2" fill="none"  marker-end="url(#lost_arrow_head)"/>
 <!-- Task 1 Vertical Connector -->
 <path id="line_task_1" d="M 118 690 L 118 750" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
@@ -191,19 +191,19 @@
 <path id="line_task_4" d="M 679 750 L 679 828" stroke="rgb(253, 197, 0)" stroke-width="2" fill="none" opacity="0.3" />
 <!-- Task 1 Node -->
 <rect id="task_cell_70__rectangle_30" x="50" y="828" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_31" x="87" y="860" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Customer</text>
+<text id="task_cell_70__text_31" x="87" y="860" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Customer</text>
 
 <!-- Task 2 Node -->
 <rect id="task_cell_70__rectangle_32" x="237" y="828" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_33" x="286" y="860" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Driver</text>
+<text id="task_cell_70__text_33" x="286" y="860" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Driver</text>
 
 <!-- Task 3 Node -->
 <rect id="task_cell_70__rectangle_34" x="424" y="828" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_35" x="438" y="860" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Pizza Call Center</text>
+<text id="task_cell_70__text_35" x="438" y="860" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Pizza Call Center</text>
 
 <!-- Task 4 Node -->
 <rect id="task_cell_70__rectangle_36" x="611" y="828" rx="10" ry="10" width="137" height="50" style="fill:rgb(253, 197, 0);stroke:rgb(253, 197, 0);stroke-width:2"/>
-<text id="task_cell_70__text_37" x="656" y="860" font-size="14" font-weight="normal" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Kitchen</text>
+<text id="task_cell_70__text_37" x="656" y="860" font-size="14" font-weight="bold" fill="rgb(6, 82, 128)" opacity="1.0" font-family="sans-serif">Kitchen</text>
 
 <!-- List of objects to moved to front -->
 <use xlink:href="#self_connection_text_4_rectangle_15" />

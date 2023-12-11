@@ -234,6 +234,7 @@ class SVGRenderer:
                                 note_height, fill_color=self.template.get_parameter_value("note_fill_color"),
                                 stroke_color=self.template.get_parameter_value("note_line_color"),
                                 justification='left', apply_margin=True, move_to_front=True,
+                                font_weight=self.template.get_parameter_value("title-font-style"),
                                 text_color= self.template.get_parameter_value("note_text_color"))
 
         self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2
@@ -327,6 +328,7 @@ class SVGRenderer:
                                 self.get_task_width(),
                                 self.get_task_height(),
                                 box_corner=10,
+                                font_weight=self.template.get_parameter_value("body-font-style"),
                                 fill_color=self.template.get_parameter_value("task_fill_color"),
                                 stroke_color=self.template.get_parameter_value("task_line_color"),
                                 text_color=self.template.get_parameter_value("task_text_color")
@@ -478,6 +480,7 @@ class SVGRenderer:
                                     self.get_x_offset(from_task_id), text_y, self.get_task_width(),
                                     self.template.get_parameter_value('space_between_connections') -
                                     self.template.get_parameter_value('arrow_height'),
+                                    font_weight=self.template.get_parameter_value("title-font-style"),
                                     fill_color='white', stroke_color='none', move_to_front=True, opacity=0.8)
 
             arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) - self.template.get_parameter_value(
@@ -507,6 +510,7 @@ class SVGRenderer:
                                     self.get_label_box_width(from_task_id, to_task_id, task_connection.lost_message),
                                     self.template.get_parameter_value('space_between_connections')
                                     - self.template.get_parameter_value('arrow_height'),
+                                    font_weight=self.template.get_parameter_value("body-font-style"),
                                     fill_color='white',
                                     stroke_color='none')
 
@@ -550,7 +554,8 @@ class SVGRenderer:
     def add_title_to_svg(self):
         self.draw_box_with_text("title", self.diagram.title, self.template.get_parameter_value('title-font-size'), 0, 0,
                                 self.width, self.template.get_parameter_value('y_offset'), fill_color='none',
-                                stroke_color='none', font_family_param='title-font-family')
+                                stroke_color='none', font_family_param='title-font-family',
+                                font_weight=self.template.get_parameter_value("title-font-style"))
 
     def draw_box_with_text(self, box_name: str, text: str, font_size: int, box_x: int, box_y: int, box_width: int,
                            box_height: int, box_corner=0, fill_color='white', stroke_color='black',
