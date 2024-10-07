@@ -20,7 +20,6 @@ from diagram.svg.SVGGenerator import SVGRenderer
 from tkinter.messagebox import askyesno
 from tkinter.messagebox import showinfo
 
-# from diagram.templates.DefaultTemplate import DefaultTemplate
 from diagram.templates.FileTemplate import FileTemplate
 from diagram.templates.Template import Template
 from diagram.ui.SwimlaneEditorModel import SwimlaneEditorModel

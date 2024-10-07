@@ -10,11 +10,15 @@ handlers:
     formatter: simple
     stream: ext://sys.stdout
 loggers:
-  svg.SVGGenerator:
+  diagram.svg.SVGGenerator:
+    level: INFO
+    handlers: [console]
+    propagate: no
+  diagram.svg.FontFunctions:
     level: DEBUG
     handlers: [console]
     propagate: no
-  parsing.SwimlaneParser:
+  diagram.parsing.SwimlaneParser:
     level: DEBUG
     handlers: [ console ]
     propagate: no

@@ -234,7 +234,7 @@ class SVGRenderer:
                                 note_height, fill_color=self.template.get_parameter_value("note_fill_color"),
                                 stroke_color=self.template.get_parameter_value("note_line_color"),
                                 justification='left', apply_margin=True, move_to_front=True,
-                                font_weight=self.template.get_parameter_value("title-font-style"),
+                                font_weight=self.template.get_parameter_value("body-font-style"),
                                 text_color= self.template.get_parameter_value("note_text_color"))
 
         self.graph_items_height[graph_item_no] = note_height + self.template.get_parameter_value('arrow_height') * 2
@@ -480,7 +480,7 @@ class SVGRenderer:
                                     self.get_x_offset(from_task_id), text_y, self.get_task_width(),
                                     self.template.get_parameter_value('space_between_connections') -
                                     self.template.get_parameter_value('arrow_height'),
-                                    font_weight=self.template.get_parameter_value("title-font-style"),
+                                    font_weight=self.template.get_parameter_value("body-font-style"),
                                     fill_color='white', stroke_color='none', move_to_front=True, opacity=0.8)
 
             arrow_y_offset = self.get_y_offset_for_graph_item(graph_item_offset) - self.template.get_parameter_value(
@@ -597,8 +597,13 @@ class SVGRenderer:
         self.svg.write("/>\n")
 
         # Split the text into lines that fit in the box based on the font type and size
+        if font_weight=="normal":
+            stroke_width = 1
+        else:
+            stroke_width = 2
+
         lines = split_text(text, self.template.get_font_name_from_font_family_name('body-font-family'), box_width,
-                           self.template.get_parameter_value('body-font-size'))
+                           self.template.get_parameter_value('body-font-size'), stroke_width_in_pts=stroke_width)
 
         if len(lines) < 1:
             return
